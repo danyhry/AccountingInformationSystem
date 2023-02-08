@@ -22,4 +22,12 @@ export class UserService {
   deleteUser(id: number): Observable<User> {
     return this.http.delete<User>(this.path + '/' + id);
   }
+
+  getCurrentUser(): Observable<User> {
+    return this.http.get<User>(this.path + '/user/me');
+  }
+
+  isAuthenticated(): boolean {
+    return Boolean(localStorage.getItem('access_token') || Boolean(sessionStorage.getItem('access_token')));
+  }
 }

@@ -1,7 +1,7 @@
 import { User } from "../user";
 
 export class AuthResponse {
-  jwt!: string;
+  token!: string;
   user!: User;
 }
 

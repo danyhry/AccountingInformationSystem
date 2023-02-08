@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, Subscription, tap} from 'rxjs';
+import {Observable, ReplaySubject, Subject, Subscription, tap} from 'rxjs';
 import {User} from "../models/user";
 import {AuthResponse} from "../models/auth/auth";
 import {LoginRequest} from "../models/auth/login";
@@ -12,6 +12,8 @@ export class AuthService {
 
   path?: '';
 
+  private loggedIn: Subject<boolean> = new ReplaySubject<boolean>(1);
+
   constructor(private http: HttpClient) {
   }
 
@@ -20,13 +22,15 @@ export class AuthService {
   }
 
   login(data: LoginRequest, remember: boolean): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>('auth/login', data).pipe(
-      tap(authResponse => this.setTokens(authResponse, remember))
-    );
+    return this.http.post<AuthResponse>('auth/login', data)
+      .pipe(tap(authResponse => {
+          this.setTokens(authResponse, remember);
+          this.loggedIn.next(true);
+        })
+      );
   }
 
   logout() {
-    console.log("auth.service logout");
     return this.http.post<any>('auth/logout', null);
   }
 
@@ -34,20 +38,18 @@ export class AuthService {
     console.log("remember?" + remember);
     if (remember) {
       console.log("localStorage was set")
-      localStorage.setItem('access_token', authResponse.jwt)
+      localStorage.setItem('access_token', authResponse.token)
     } else {
       console.log("sessionStorage was set")
-      sessionStorage.setItem('access_token', authResponse.jwt);
+      sessionStorage.setItem('access_token', authResponse.token);
     }
   }
 
   isAuthenticated(): boolean {
-    console.log("isAuthenticated");
     return Boolean(localStorage.getItem('access_token') || Boolean(sessionStorage.getItem('access_token')));
   }
 
   getToken(): string | null {
-    console.log('get token');
     return localStorage.getItem('access_token') ?? sessionStorage.getItem('access_token');
   }
 

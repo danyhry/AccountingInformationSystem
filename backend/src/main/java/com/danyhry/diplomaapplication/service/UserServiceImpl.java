@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -51,5 +52,36 @@ public class UserServiceImpl implements UserService {
         if (result != 1) {
             throw new IllegalStateException("Could not add User");
         }
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        Optional<User> users = userDao.getUserById(id);
+        users.ifPresentOrElse(User -> {
+            int result = userDao.deleteUserById(id);
+            if (result != 1) {
+                log.error("Could not delete User");
+                throw new IllegalStateException("Could not delete User");
+            }
+        }, () -> {
+            log.error(String.format("User with id %s not found", id));
+            throw new NotFoundException(String.format("User with id %s not found", id));
+        });
+    }
+
+    @Override
+    public void editUser(User user, Long id) {
+        Optional<User> users = userDao.getUserById(id);
+        users.ifPresentOrElse(firstUser -> {
+            int result = userDao.editUser(user, id);
+            if (result != 1) {
+                log.error("Could not update User");
+                throw new IllegalStateException("Could not update User");
+            }
+            log.info("User was updated");
+        }, () -> {
+            log.error(String.format("User with id %s not found", id));
+            throw new NotFoundException(String.format("User with id %s not found", id));
+        });
     }
 }

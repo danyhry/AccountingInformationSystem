@@ -28,4 +28,19 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @PutMapping("/{id}")
+    public void editUser(@RequestBody User user, @PathVariable Long id) {
+        userService.editUser(user, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUserById(@PathVariable Long id) {
+        userService.deleteUserById(id);
+    }
+
+    @GetMapping("/user/me")
+    public User getUserByToken(@RequestHeader(name = "Authorization") String token) {
+//        TODO: need to be implemented
+        return null;
+    }
 }

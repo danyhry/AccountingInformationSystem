@@ -54,4 +54,23 @@ public class UserDaoImpl implements UserDao {
                 .stream()
                 .findFirst();
     }
+
+    @Override
+    public int deleteUserById(Long id) {
+        String sql = "DELETE FROM users WHERE user_id = ?";
+        return jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public int editUser(User user, Long id) {
+        String sql = "UPDATE users SET name = ?, surname = ?, email = ?, role = ? " +
+                "WHERE user_id = ?";
+        log.info("user: {}", user);
+        return jdbcTemplate.update(sql,
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                convertFromRoleToInt(user.getRole()),
+                id);
+    }
 }

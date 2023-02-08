@@ -18,10 +18,17 @@ const routes: Routes = [
       }
     ]
   },
+  {path: 'auth', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)},
+  {
+    path: 'users', loadChildren: () =>
+      import('./pages/user/user.module')
+        .then(m => m.UserModule)
+  },
   {
     path: "**",
     redirectTo: "dashboard"
-  }];
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {useHash: true})],

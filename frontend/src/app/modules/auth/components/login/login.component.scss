@@ -1,0 +1,43 @@
+//@media screen and (min-width: 576px) {
+//  .modal-dialog {
+//    max-width: 432px;
+//    margin: 1.75rem auto;
+//  }
+//}
+//
+//.custom_body {
+//  padding: 0 !important;
+//}
+//
+//.pointer {
+//  cursor: pointer;
+//}
+//
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
+}
+
+.copyright {
+  background: #57989a;
+}
+
+.register {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

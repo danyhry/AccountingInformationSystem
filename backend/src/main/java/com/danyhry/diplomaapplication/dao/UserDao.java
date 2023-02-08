@@ -13,4 +13,8 @@ public interface UserDao {
     int createUser(User user);
 
     Optional<User> findByEmail(String username);
+
+    int deleteUserById(Long id);
+
+    int editUser(User user, Long id);
 }

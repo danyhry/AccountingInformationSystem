@@ -1,44 +1,30 @@
-import {Component, ElementRef, OnInit} from "@angular/core";
-import {ROUTES} from "../sidebar/sidebar.component";
-import {Location} from "@angular/common";
+import {Component, OnInit} from "@angular/core";
+import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",
   styleUrls: ["./navbar.component.scss"]
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit{
+  _isAuthenticated!: boolean;
 
-  // @ts-ignore
-  private listTitles: any[];
-  location: Location;
-
-  constructor(
-    location: Location,
-    private element: ElementRef,
-    private router: Router,
-    private modalService: NgbModal
+  constructor(private userService: UserService,
+              private toastr: ToastrService
   ) {
-    this.location = location;
   }
 
-  ngOnInit() {
-    this.listTitles = ROUTES.filter(listTitle => listTitle);
+  ngOnInit(): void {
+    this._isAuthenticated = this.userService.isAuthenticated();
+    console.log("_isAuthenticated: ", this._isAuthenticated);
   }
 
-  getTitle() {
-    let title = this.location.prepareExternalUrl(this.location.path());
-    if (title.charAt(0) === "#") {
-      title = title.slice(1);
-    }
-
-    for (let item = 0; item < this.listTitles.length; item++) {
-      if (this.listTitles[item].path === title) {
-        return this.listTitles[item].title;
-      }
-    }
-    return "Dashboard";
+  _logOut() {
+    localStorage.removeItem('access_token');
+    sessionStorage.removeItem('access_token');
+    window.location.reload();
   }
+
 }

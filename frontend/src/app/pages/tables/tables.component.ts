@@ -18,16 +18,6 @@ export class TablesComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllUsers();
   }
 
-  getAllUsers() {
-    this.userService.getAllUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (users) => {
-          this.users = users;
-        }
-      })
-  }
 }

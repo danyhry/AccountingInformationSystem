@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, ReplaySubject, Subject, Subscription, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {User} from "../models/user";
 import {AuthResponse} from "../models/auth/auth";
 import {LoginRequest} from "../models/auth/login";
@@ -12,7 +12,7 @@ export class AuthService {
 
   path?: '';
 
-  private loggedIn: Subject<boolean> = new ReplaySubject<boolean>(1);
+  public isAuth!: boolean;
 
   constructor(private http: HttpClient) {
   }
@@ -25,7 +25,6 @@ export class AuthService {
     return this.http.post<AuthResponse>('auth/login', data)
       .pipe(tap(authResponse => {
           this.setTokens(authResponse, remember);
-          this.loggedIn.next(true);
         })
       );
   }
@@ -35,22 +34,16 @@ export class AuthService {
   }
 
   setTokens(authResponse: AuthResponse, remember: boolean): void {
-    console.log("remember?" + remember);
-    if (remember) {
-      console.log("localStorage was set")
-      localStorage.setItem('access_token', authResponse.token)
-    } else {
-      console.log("sessionStorage was set")
-      sessionStorage.setItem('access_token', authResponse.token);
-    }
+    remember ? localStorage.setItem('access_token', authResponse.token)
+      : sessionStorage.setItem('access_token', authResponse.token);
   }
 
   isAuthenticated(): boolean {
-    return Boolean(localStorage.getItem('access_token') || Boolean(sessionStorage.getItem('access_token')));
+    this.isAuth = Boolean(localStorage.getItem('access_token') || Boolean(sessionStorage.getItem('access_token')));
+    return this.isAuth;
   }
 
   getToken(): string | null {
     return localStorage.getItem('access_token') ?? sessionStorage.getItem('access_token');
   }
-
 }

@@ -21,11 +21,12 @@ export class LoginComponent extends Base implements OnInit {
 
   _showErrors!: boolean;
 
-  private userId!: number;
+  user!: User;
 
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.minLength(8), Validators.required]]
+    password: ['', [Validators.minLength(8), Validators.required]],
+    remember: [false]
   });
 
   constructor(private router: Router,
@@ -33,14 +34,14 @@ export class LoginComponent extends Base implements OnInit {
               private authService: AuthService,
               private userService: UserService,
               private modal: NgbModal,
-              private config: NgbModalConfig
+              private config: NgbModalConfig,
   ) {
     super();
     config.backdrop = false;
   }
 
   ngOnInit(): void {
-    this.getUser();
+    // this.getUser();
     this.loginForm.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this._showErrors = false);
@@ -57,31 +58,21 @@ export class LoginComponent extends Base implements OnInit {
       sessionStorage.removeItem('access_token');
       this.authService.login(data, data.remember)
         .pipe(takeUntil(this.destroy$))
-        .subscribe((userData: AuthResponse) => {
-          if (data.remember === true) {
-            localStorage.setItem('access_token', userData.token);
-          } else {
-            sessionStorage.setItem('access_token', userData.token);
+        .subscribe({
+          next: (userData: AuthResponse) => {
+            data.remember ? localStorage.setItem('access_token', userData.token)
+              : sessionStorage.setItem('access_token', userData.token);
             this.router.navigateByUrl('/dashboard');
+          },
+          error: () => {
+            this._showErrors = true;
           }
-        }, () => {
-          this._showErrors = true;
         });
     }
-
   }
 
   _onEyeClick() {
     this._showPassword = !this._showPassword;
   }
 
-  private getUser(): void {
-    this.userService.getCurrentUser()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user: User) => {
-        if (!!user) {
-          this.router.navigateByUrl("/dashboard");
-        }
-      });
-  }
 }

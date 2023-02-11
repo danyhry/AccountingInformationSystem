@@ -3,18 +3,18 @@ import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SidebarComponent} from "./sidebar/sidebar.component";
-import {NavbarComponent} from "./navbar/navbar.component";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDividerModule} from "@angular/material/divider";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatIconModule} from "@angular/material/icon";
-import {MatMenuModule} from "@angular/material/menu";
+import {SharedModule} from "../shared/shared.module";
+import {FooterComponent} from './footer/footer.component';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, NgbModule, MatToolbarModule, MatButtonModule, MatDividerModule, MatSidenavModule, MatIconModule, MatMenuModule],
-  declarations: [SidebarComponent, NavbarComponent],
-  exports: [SidebarComponent, NavbarComponent]
+  imports: [
+    CommonModule,
+    RouterModule,
+    NgbModule,
+    SharedModule,
+  ],
+  declarations: [SidebarComponent, FooterComponent],
+  exports: [SidebarComponent, FooterComponent]
 })
 
 export class ComponentsModule {

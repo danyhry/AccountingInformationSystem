@@ -1,38 +1,7 @@
-import {Component, OnInit} from "@angular/core";
-
-declare interface RouteInfo {
-  path: string;
-  title: string;
-  icon: string;
-  class: string;
-}
-
-export const ROUTES: RouteInfo[] = [
-  {
-    path: "/dashboard",
-    title: "Dashboard",
-    icon: "icon-chart-pie-36",
-    class: ""
-  },
-  {
-    path: "/user",
-    title: "User Profile",
-    icon: "icon-single-02",
-    class: ""
-  },
-  {
-    path: "/tables",
-    title: "Table List",
-    icon: "icon-puzzle-10",
-    class: ""
-  },
-  {
-    path: "/support",
-    title: "Support",
-    icon: "icon-world",
-    class: ""
-  }
-];
+import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import {MediaMatcher} from "@angular/cdk/layout";
+import {AuthService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "app-sidebar",
@@ -40,9 +9,30 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ["./sidebar.component.scss"]
 })
 export class SidebarComponent implements OnInit {
-  menuItems!: any[];
+
+  mobileQuery: MediaQueryList;
+
+  _isAuthenticated!: boolean;
+
+  private readonly _mobileQueryListener: () => void;
+
+  constructor(private changeDetectorRef: ChangeDetectorRef,
+              private media: MediaMatcher,
+              public authService: AuthService,
+              private router: Router,
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this._isAuthenticated = this.authService.isAuthenticated();
+  }
+
+  _logOut() {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigateByUrl('/login');
   }
 }

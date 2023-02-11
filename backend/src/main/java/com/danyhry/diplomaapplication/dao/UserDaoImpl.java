@@ -1,5 +1,6 @@
 package com.danyhry.diplomaapplication.dao;
 
+import com.danyhry.diplomaapplication.exception.NotFoundException;
 import com.danyhry.diplomaapplication.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,7 +49,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
         return jdbcTemplate.query(sql, new UserRowMapper(), email)
                 .stream()
@@ -72,5 +73,20 @@ public class UserDaoImpl implements UserDao {
                 user.getEmail(),
                 convertFromRoleToInt(user.getRole()),
                 id);
+    }
+
+    @Override
+    public int updateUserPassword(Long id, String newPassword) {
+        String sql = "UPDATE users SET password=? WHERE user_id=?";
+        log.info("updateUsersPassword begin");
+        return jdbcTemplate.update(sql, newPassword, id);
+    }
+
+    @Override
+    public String getUserPasswordByEmail(String email) {
+        Optional<User> dbUser = getUserByEmail(email);
+        return dbUser.stream()
+                .findFirst().orElseThrow(() -> new NotFoundException("User not found"))
+                .getPassword();
     }
 }

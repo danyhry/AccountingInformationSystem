@@ -1,0 +1,116 @@
+<div class="example-container"
+     [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary">
+
+    <button mat-icon-button
+            (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+      <!--      <mat-icon *ngIf="sidenav.opened">close</mat-icon>-->
+    </button>
+
+    <span>Danyhry App</span>
+
+    <div class="spacer"></div>
+
+    <a mat-button routerLink="dashboard">Dashboard</a>
+    <a mat-button routerLink="users">Users</a>
+    <a mat-button routerLink="tables">Tables</a>
+
+    <div class="spacer"></div>
+
+    <div *ngIf="!authService.isAuthenticated(); else showProfile">
+      <a mat-raised-button color="accent" class="me-1" routerLink="login">Login</a>
+      <a mat-raised-button color="warn" routerLink="register">Register</a>
+    </div>
+
+  </mat-toolbar>
+
+  <mat-sidenav-container [style.margin-top.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #sidenav="matSidenav"
+                 class="mat-elevation-z8"
+                 fixedTopGap="56"
+                 [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches"
+                 [opened]="true">
+      <mat-nav-list>
+        <mat-list-item class="menu-button"
+                       routerLink="/dashboard">
+          <mat-icon>home</mat-icon>
+          <span>Dashboard</span>
+        </mat-list-item>
+        <mat-list-item *ngIf="true"
+                       class="menu-button"
+                       routerLink="/users">
+          <mat-icon>person</mat-icon>
+          <span>Users</span>
+        </mat-list-item>
+        <mat-list-item class="menu-button"
+                       routerLink="/tables">
+          <mat-icon>info</mat-icon>
+          <span>Tables</span>
+        </mat-list-item>
+
+
+        <!--        <div class="control">-->
+        <!--          <mat-divider></mat-divider>-->
+
+        <!--          <mat-list-item class="menu-button"-->
+        <!--                         [matMenuTriggerFor]="menu">-->
+        <!--            <mat-icon>settings</mat-icon>-->
+        <!--            <span>Settings</span>-->
+        <!--          </mat-list-item>-->
+        <!--          <mat-menu #menu="matMenu">-->
+        <!--            <button mat-menu-item-->
+        <!--                    routerLink="/settings/password">-->
+        <!--              <img src="/assets/img/account_circle_black_24dp.svg" alt="image">-->
+        <!--              Change Password-->
+        <!--            </button>-->
+        <!--            <button mat-menu-item-->
+        <!--                    routerLink="/settings/edit">-->
+        <!--              <img src="/assets/img/account_circle_black_24dp.svg" alt="image">-->
+        <!--              Edit Profile-->
+        <!--            </button>-->
+        <!--          </mat-menu>-->
+        <!--          <mat-list-item class="menu-button"-->
+        <!--                         routerLink="/auth/logout">-->
+        <!--            <mat-icon>exit_to_app</mat-icon>-->
+        <!--            <span>Logout</span>-->
+        <!--          </mat-list-item>-->
+        <!--        </div>-->
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+
+      <div class="content mat-elevation-z8">
+        <router-outlet></router-outlet>
+      </div>
+
+      <div class="footer">
+        <app-footer></app-footer>
+      </div>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+
+<ng-template #showProfile>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>person</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/profile">
+      <mat-icon>person_outline</mat-icon>
+      <span class="custom-menu">
+        Profile
+      </span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="_logOut()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span class="custom-menu">
+        Logout
+      </span>
+    </button>
+  </mat-menu>
+</ng-template>

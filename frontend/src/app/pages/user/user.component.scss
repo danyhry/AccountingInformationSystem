@@ -2,6 +2,10 @@ table {
   width: 100%;
 }
 
+th {
+  border-bottom: 1px solid currentColor;
+}
+
 .mat-form-field {
   margin-left: 10px;
 }

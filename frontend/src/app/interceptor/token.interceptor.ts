@@ -15,9 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
     req = req.clone({
       url: environment.API_URL + req.url,
       setHeaders: this.authService.isAuthenticated() ? {
-        Authorization: `${
-          this.authService.getToken()
-        }`
+        Authorization: `${this.authService.getToken()}`
       } : {}
     });
     return next.handle(req)

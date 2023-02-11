@@ -12,9 +12,13 @@ public interface UserDao {
 
     int createUser(User user);
 
-    Optional<User> findByEmail(String username);
+    Optional<User> getUserByEmail(String username);
 
     int deleteUserById(Long id);
 
     int editUser(User user, Long id);
+
+    int updateUserPassword(Long id, String newPassword);
+
+    String getUserPasswordByEmail(String email);
 }

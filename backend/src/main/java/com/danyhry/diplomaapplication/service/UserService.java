@@ -15,4 +15,11 @@ public interface UserService {
     void deleteUserById(Long id);
 
     void editUser(User user, Long id);
+
+    User findByEmail(String email);
+
+    void updateUserPassword(Long id,
+                            String oldPassword,
+                            String newPassword,
+                            String confirmPassword) throws UserException;
 }

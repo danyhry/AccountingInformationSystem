@@ -5,6 +5,7 @@ import com.danyhry.diplomaapplication.exception.NotFoundException;
 import com.danyhry.diplomaapplication.exception.UserException;
 import com.danyhry.diplomaapplication.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -83,5 +84,35 @@ public class UserServiceImpl implements UserService {
             log.error(String.format("User with id %s not found", id));
             throw new NotFoundException(String.format("User with id %s not found", id));
         });
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return this.userDao.getUserByEmail(email).orElseThrow();
+    }
+
+    @Override
+    public void updateUserPassword(Long id,
+                                   String oldPassword,
+                                   String newPassword,
+                                   String confirmPassword) throws UserException {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        try {
+            if (!newPassword.equals(confirmPassword)) {
+                throw new UserException("Passwords must be same");
+            }
+            String email = userDao.getUserById(id)
+                    .orElseThrow(() -> new UserException("User not found"))
+                    .getEmail();
+            String dbPass = userDao.getUserPasswordByEmail(email);
+            if (!encoder.matches(oldPassword, dbPass) || StringUtils.isBlank(newPassword)) {
+                throw new UserException("Wrong Password");
+            }
+        } catch (UserException e) {
+            throw new UserException(e.getMessage());
+        }
+
+        userDao.updateUserPassword(id, encoder.encode(newPassword));
     }
 }

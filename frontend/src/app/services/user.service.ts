@@ -23,11 +23,11 @@ export class UserService {
     return this.http.delete<User>(this.path + '/' + id);
   }
 
-  getCurrentUser(): Observable<User> {
+  getUser(): Observable<User> {
     return this.http.get<User>(this.path + '/user/me');
   }
 
-  isAuthenticated(): boolean {
-    return Boolean(localStorage.getItem('access_token') || Boolean(sessionStorage.getItem('access_token')));
+  updatePassword(data: { newPassword: any; renewPassword: any; currentPassword: any }, id: number): Observable<Object> {
+    return this.http.put(this.path + `/updatePassword/${id}`, data);
   }
 }

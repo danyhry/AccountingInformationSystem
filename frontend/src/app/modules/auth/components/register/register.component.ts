@@ -48,6 +48,7 @@ export class RegisterComponent extends Base implements OnInit {
   }
 
   _onSubmit(): void {
+    console.log(this._registerForm);
     if (this._registerForm.valid) {
       const data = {
         firstName: this._registerForm.value.firstName,
@@ -56,7 +57,7 @@ export class RegisterComponent extends Base implements OnInit {
         password: this._registerForm.value.password,
         confirmPassword: this._registerForm.value.confirmPassword,
       };
-
+      console.log(data);
       this.authService.register(data)
         .pipe(takeUntil(this.destroy$))
         .subscribe(() =>

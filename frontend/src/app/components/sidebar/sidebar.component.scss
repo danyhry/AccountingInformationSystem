@@ -1,39 +1,93 @@
-body {
-  background-color: #fbfbfb;
+mat-sidenav {
+  //margin: 16px 0 16px 0;
+  width: 150px;
+  background: #57989a;
+  //border-top-right-radius: 10px;
+  //border-bottom-right-radius: 10px;
+  padding: 16px 0 16px 0;
+  text-align: center;
 }
-@media (min-width: 991.98px) {
-  main {
-    padding-left: 240px;
+
+mat-sidenav-container {
+  //height: calc(100vh - 65px);
+  margin-top: 0 !important;
+}
+
+.content {
+  height: calc(100vh - 65px);
+  //border-radius: 10px;
+  //margin: 16px;
+  //padding: 16px;
+  overflow: auto;
+  //background-color: #bbe0e0;
+}
+
+.menu-button {
+  width: 100%;
+  display: flex;
+  //align-items: center;
+  //justify-content: flex-start;
+  font-size: 1rem;
+  font-weight: 500;
+
+  mat-icon {
+    margin-right: 8px;
   }
 }
 
-/* Sidebar */
-.sidebar {
+button.mat-menu-item {
+  font-weight: 500;
+}
+
+//mat-divider {
+//  //margin-top: 16px;
+//  //margin-bottom: 16px;
+//  background-color: rgba(255, 255, 255, 0.5);
+//}
+
+
+.example-is-mobile .example-toolbar {
   position: fixed;
+  z-index: 2;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  padding: 58px 0 0; /* Height of navbar */
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-  width: 240px;
-  z-index: 600;
+  right: 0;
+  background-color: #88b9b9;
 }
 
-@media (max-width: 991.98px) {
-  .sidebar {
-    width: 100%;
-  }
-}
-.sidebar .active {
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+//
+//.control {
+//  position: absolute;
+//  bottom: 0;
+//}
+
+//.sidenav-collapsed {
+//  width: 34px;
+//}
+
+//.mat-button {
+//  padding: 0 4px;
+//}
+
+.spacer {
+  flex: 1 1 auto;
 }
 
-.sidebar-sticky {
-  position: relative;
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: 0.5rem;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+.mat-toolbar.mat-primary {
+  color: black;
+}
+
+a:hover {
+  color: #312c2c
+}
+
+.custom-menu {
+  margin-right: 20px;
 }

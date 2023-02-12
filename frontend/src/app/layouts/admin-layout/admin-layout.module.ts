@@ -9,6 +9,7 @@ import {UserComponent} from "../../pages/user/user.component";
 import {TablesComponent} from "../../pages/tables/tables.component";
 import {SharedModule} from "../../shared/shared.module";
 import {EditUserComponent} from "../../pages/user/edit-user/edit-user.component";
+import {ProfileComponent} from "../../pages/profile/profile.component";
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import {EditUserComponent} from "../../pages/user/edit-user/edit-user.component"
     DashboardComponent,
     UserComponent,
     EditUserComponent,
-    TablesComponent
+    TablesComponent,
+    ProfileComponent
   ],
   providers: [NgbActiveModal]
 })

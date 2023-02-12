@@ -50,43 +50,13 @@
           <span>Tables</span>
         </mat-list-item>
 
-
-        <!--        <div class="control">-->
-        <!--          <mat-divider></mat-divider>-->
-
-        <!--          <mat-list-item class="menu-button"-->
-        <!--                         [matMenuTriggerFor]="menu">-->
-        <!--            <mat-icon>settings</mat-icon>-->
-        <!--            <span>Settings</span>-->
-        <!--          </mat-list-item>-->
-        <!--          <mat-menu #menu="matMenu">-->
-        <!--            <button mat-menu-item-->
-        <!--                    routerLink="/settings/password">-->
-        <!--              <img src="/assets/img/account_circle_black_24dp.svg" alt="image">-->
-        <!--              Change Password-->
-        <!--            </button>-->
-        <!--            <button mat-menu-item-->
-        <!--                    routerLink="/settings/edit">-->
-        <!--              <img src="/assets/img/account_circle_black_24dp.svg" alt="image">-->
-        <!--              Edit Profile-->
-        <!--            </button>-->
-        <!--          </mat-menu>-->
-        <!--          <mat-list-item class="menu-button"-->
-        <!--                         routerLink="/auth/logout">-->
-        <!--            <mat-icon>exit_to_app</mat-icon>-->
-        <!--            <span>Logout</span>-->
-        <!--          </mat-list-item>-->
-        <!--        </div>-->
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
 
-      <div class="content mat-elevation-z8">
+      <div class="content">
         <router-outlet></router-outlet>
-      </div>
-
-      <div class="footer">
-        <app-footer></app-footer>
+<!--        <app-footer></app-footer>-->
       </div>
 
     </mat-sidenav-content>
@@ -97,6 +67,8 @@
 <ng-template #showProfile>
   <button mat-button [matMenuTriggerFor]="menu">
     <mat-icon>person</mat-icon>
+<!--    <span class="m-1">{{_user?.firstName}} {{_user?.lastName}}</span>-->
+    <mat-icon>keyboard_arrow_down</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="/profile">

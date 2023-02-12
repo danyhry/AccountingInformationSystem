@@ -52,7 +52,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatSortModule,
     MatTooltipModule,
     MatSidenavModule,
-    MatExpansionModule
+    MatExpansionModule,
   ]
 })
 export class SharedModule {

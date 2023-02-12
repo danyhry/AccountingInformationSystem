@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ToastrService} from "ngx-toastr";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {takeUntil} from "rxjs";
 import {User} from "../../../models/user";
 import {UserService} from "../../../services/user.service";
 import {Base} from "../../../services/destroy.service";
+import {NotificationService} from "../../../services/notification.service";
 
 @Component({
   selector: 'app-edit-user',
@@ -19,7 +19,7 @@ export class EditUserComponent extends Base implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public userEditData: User,
               private formBuilder: FormBuilder,
               private userService: UserService,
-              private toastr: ToastrService,
+              private notificationService: NotificationService,
               private dialogRef: MatDialogRef<EditUserComponent>
   ) {
     super();
@@ -49,16 +49,12 @@ export class EditUserComponent extends Base implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.toastr.success(`User was successfully updated.`, 'Success', {
-              timeOut: 4000,
-            });
+            this.notificationService.showSuccessMessage(`User was successfully updated.`);
             this.dialogRef.close('update');
           },
           error: () => {
             console.log("error");
-            this.toastr.error(`Something is wrong`, '', {
-              timeOut: 4000,
-            });
+            this.notificationService.showErrorMessage(`Something is wrong.`);
           }
         })
     }

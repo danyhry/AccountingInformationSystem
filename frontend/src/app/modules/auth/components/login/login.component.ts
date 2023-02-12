@@ -31,7 +31,7 @@ export class LoginComponent extends Base implements OnInit {
 
   constructor(private router: Router,
               private fb: FormBuilder,
-              private authService: AuthService,
+              public authService: AuthService,
               private userService: UserService,
               private modal: NgbModal,
               private config: NgbModalConfig,

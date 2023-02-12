@@ -11,14 +11,10 @@ import {AppRoutingModule} from "./app-routing.module";
 import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.component";
 import {TokenInterceptor} from "./interceptor/token.interceptor";
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {MatSidenavModule} from "@angular/material/sidenav";
 import {SharedModule} from "./shared/shared.module";
-import {MatExpansionModule} from "@angular/material/expansion";
-import {SettingsComponent} from './pages/settings/settings.component';
-import {ProfileComponent} from './pages/profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, AdminLayoutComponent, SettingsComponent, ProfileComponent],
+  declarations: [AppComponent, AdminLayoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,9 +25,7 @@ import {ProfileComponent} from './pages/profile/profile.component';
     ToastrModule.forRoot(),
     ComponentsModule,
     FontAwesomeModule,
-    MatSidenavModule,
     SharedModule,
-    MatExpansionModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {User} from "../../models/user";
 import {UserService} from "../../services/user.service";
-import {ToastrService} from "ngx-toastr";
 import {MatPaginator} from "@angular/material/paginator";
 import {Base} from "../../services/destroy.service";
 import {MatTableDataSource} from "@angular/material/table";
@@ -10,6 +9,7 @@ import {MatSort} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
 import {takeUntil} from "rxjs";
 import {EditUserComponent} from "./edit-user/edit-user.component";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: "app-user",
@@ -27,12 +27,11 @@ export class UserComponent extends Base implements OnInit {
   _displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'action'];
 
   _users!: MatTableDataSource<any>;
-  // users !: any;
 
   _userForm!: FormGroup;
 
   constructor(private userService: UserService,
-              private toastr: ToastrService,
+              private notificationService: NotificationService,
               private formBuilder: FormBuilder,
               private dialog: MatDialog
   ) {
@@ -78,13 +77,10 @@ export class UserComponent extends Base implements OnInit {
   }
 
   deleteUser(user: User) {
-    this.userService
-      .deleteUser(user.id)
+    this.userService.deleteUser(user.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-          this.toastr.success(`User was successfully deleted.`, 'Success', {
-            timeOut: 4000,
-          });
+          this.notificationService.showSuccessMessage(`User was successfully deleted.`);
           this.getAllUsers();
         }
       )

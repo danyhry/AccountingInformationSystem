@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
 import {AuthService} from "../../../../services/auth.service";
 import {MustMatch} from "../../validators/must-match.validator";
 import {Base} from "../../../../services/destroy.service";
 import {takeUntil} from "rxjs";
+import {NotificationService} from "../../../../services/notification.service";
 
 @Component({
   selector: 'app-register',
@@ -36,7 +36,7 @@ export class RegisterComponent extends Base implements OnInit {
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private router: Router,
-              private toastr: ToastrService
+              private notificationService: NotificationService
   ) {
     super();
   }
@@ -48,7 +48,6 @@ export class RegisterComponent extends Base implements OnInit {
   }
 
   _onSubmit(): void {
-    console.log(this._registerForm);
     if (this._registerForm.valid) {
       const data = {
         firstName: this._registerForm.value.firstName,
@@ -57,13 +56,10 @@ export class RegisterComponent extends Base implements OnInit {
         password: this._registerForm.value.password,
         confirmPassword: this._registerForm.value.confirmPassword,
       };
-      console.log(data);
       this.authService.register(data)
         .pipe(takeUntil(this.destroy$))
         .subscribe(() =>
-          this.toastr.success(`User was successfully registered.`, '', {
-            timeOut: 4000,
-          })
+          this.notificationService.showSuccessMessage(`User was successfully registered.`)
         );
       this.router.navigateByUrl('/login');
     } else {

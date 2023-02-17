@@ -89,4 +89,10 @@ public class UserDaoImpl implements UserDao {
                 .findFirst().orElseThrow(() -> new NotFoundException("User not found"))
                 .getPassword();
     }
+
+    @Override
+    public String getAdminEmail() {
+        String sql = "SELECT email FROM users WHERE role = 2 LIMIT 1";
+        return jdbcTemplate.queryForObject(sql, String.class);
+    }
 }

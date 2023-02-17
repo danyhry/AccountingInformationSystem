@@ -21,4 +21,6 @@ public interface UserDao {
     int updateUserPassword(Long id, String newPassword);
 
     String getUserPasswordByEmail(String email);
+
+    String getAdminEmail();
 }

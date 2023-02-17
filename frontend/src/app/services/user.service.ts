@@ -2,12 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../models/user";
+import {Message} from "../models/message";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   path = 'users';
+
   constructor(private http: HttpClient) {
   }
 
@@ -30,5 +32,14 @@ export class UserService {
 
   updatePassword(data: { newPassword: any; renewPassword: any; currentPassword: any }, id: number): Observable<Object> {
     return this.http.put(this.path + `/updatePassword/${id}`, data);
+  }
+
+  sendMessageToAdmin(contactFormValues: string): Observable<Message> {
+    console.log(contactFormValues);
+    return this.http.post<Message>(this.path + '/message', contactFormValues);
+  }
+
+  isAuthenticated(): boolean {
+    return Boolean(localStorage.getItem('access_token') || Boolean(sessionStorage.getItem('access_token')));
   }
 }

@@ -15,9 +15,14 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {CanvasJSChart} from "../../assets/canvasjs/canvasjs.angular.component";
+import {NgStyle} from "@angular/common";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CanvasJSChart
+  ],
   imports: [
     MatToolbarModule,
     MatIconModule,
@@ -34,7 +39,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatSortModule,
     MatTooltipModule,
     MatSidenavModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgStyle,
+    MatTabsModule,
   ],
   exports: [
     MatToolbarModule,
@@ -53,6 +60,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatTooltipModule,
     MatSidenavModule,
     MatExpansionModule,
+    CanvasJSChart,
+    MatTabsModule,
   ]
 })
 export class SharedModule {

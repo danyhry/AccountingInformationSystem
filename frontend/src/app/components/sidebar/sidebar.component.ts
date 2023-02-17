@@ -36,11 +36,13 @@ export class SidebarComponent extends Base implements OnInit {
 
   ngOnInit() {
     this._isAuthenticated = this.authService.isAuthenticated();
-    this.userService.getUser()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user: User) => {
-        this._user = user;
-      });
+    if(this._isAuthenticated) {
+      this.userService.getUser()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((user: User) => {
+          this._user = user;
+        });
+    }
   }
 
   _logOut() {

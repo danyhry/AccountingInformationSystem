@@ -6,10 +6,14 @@ import {AdminLayoutRoutes} from "./admin-layout.routing";
 import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {DashboardComponent} from "../../pages/dashboard/dashboard.component";
 import {UserComponent} from "../../pages/user/user.component";
-import {TablesComponent} from "../../pages/tables/tables.component";
+import {IdeasComponent} from "../../pages/ideas/ideas.component";
 import {SharedModule} from "../../shared/shared.module";
 import {EditUserComponent} from "../../pages/user/edit-user/edit-user.component";
 import {ProfileComponent} from "../../pages/profile/profile.component";
+import {IncomesComponent} from "../../pages/incomes/incomes.component";
+import {ExpansesComponent} from "../../pages/expanses/expanses.component";
+import {FaqComponent} from "../../pages/faq/faq.component";
+import {ContactComponent} from "../../pages/contact/contact.component";
 
 @NgModule({
   imports: [
@@ -24,8 +28,12 @@ import {ProfileComponent} from "../../pages/profile/profile.component";
     DashboardComponent,
     UserComponent,
     EditUserComponent,
-    TablesComponent,
-    ProfileComponent
+    IdeasComponent,
+    ProfileComponent,
+    IncomesComponent,
+    ExpansesComponent,
+    FaqComponent,
+    ContactComponent
   ],
   providers: [NgbActiveModal]
 })

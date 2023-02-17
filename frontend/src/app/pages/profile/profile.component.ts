@@ -62,12 +62,22 @@ export class ProfileComponent extends Base implements OnInit {
         newPassword: this._changePasswordForm.value.newPassword,
         renewPassword: this._changePasswordForm.value.renewPassword
       }
+
       // @ts-ignore
       this.userService.updatePassword(data, this.user.id)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-          this.notificationService.showSuccessMessage(`Password was successfully changed.`);
-        });
+        .subscribe({
+            next: () => {
+              this.notificationService.showSuccessMessage(`Password was successfully changed.`);
+            },
+            error: err => {
+              this.notificationService.showErrorMessage(err.error.message);
+            }
+          }
+        );
+
+    } else {
+      this.notificationService.showErrorMessage("Form is not valid");
     }
   }
 

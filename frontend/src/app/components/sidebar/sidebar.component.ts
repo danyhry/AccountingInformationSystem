@@ -39,6 +39,10 @@ export class SidebarComponent extends Base implements OnInit {
       .subscribe(user => {
         this.user = user;
         console.log(user);
+        if (user?.id == 0) {
+          //TODO: edit
+          this.getUser();
+        }
       });
     if (this.authService.isAuthenticated()) {
 
@@ -46,8 +50,7 @@ export class SidebarComponent extends Base implements OnInit {
   }
 
   getUser() {
-    // @ts-ignore
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
+    this.user = JSON.parse(localStorage.getItem('currentUser') ?? '{}');
   }
 
   _logOut() {

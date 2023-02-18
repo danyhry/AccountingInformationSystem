@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -40,22 +41,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(User user) throws UserException {
-        boolean isUserExists = userDao.getUserById(user.getId()).stream().findFirst().isPresent();
-        if (isUserExists) {
-            throw new UserException("User already exists");
-        }
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
-
-        int result = userDao.createUser(user);
-        if (result != 1) {
-            throw new IllegalStateException("Could not add User");
-        }
-    }
-
-    @Override
     public void deleteUserById(Long id) {
         Optional<User> users = userDao.getUserById(id);
         users.ifPresentOrElse(User -> {
@@ -71,19 +56,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void editUser(User user, Long id) {
+    public User editUser(User updatedUser, Long id) {
         Optional<User> users = userDao.getUserById(id);
-        users.ifPresentOrElse(firstUser -> {
-            int result = userDao.editUser(user, id);
-            if (result != 1) {
-                log.error("Could not update User");
-                throw new IllegalStateException("Could not update User");
-            }
-            log.info("User was updated");
-        }, () -> {
-            log.error(String.format("User with id %s not found", id));
-            throw new NotFoundException(String.format("User with id %s not found", id));
-        });
+
+        return users.stream()
+                .filter(Objects::nonNull)
+                .findFirst()
+                .map(firstUser -> {
+                    User user = userDao.editUser(updatedUser, firstUser.getId());
+                    if (user == null) {
+                        log.error("Could not update User");
+                        throw new IllegalStateException("Could not update User");
+                    }
+                    user.setId(id);
+                    return user;
+                })
+                .orElseThrow(() -> new NotFoundException(String.format("User with id %s not found", id)));
+
+//        users.ifPresentOrElse(firstUser -> {
+//            User user = userDao.editUser(updatedUser, id);
+//            if (user == null) {
+//                log.error("Could not update User");
+//                throw new IllegalStateException("Could not update User");
+//            }
+//            log.info("User was updated");
+//        }, () -> {
+//            log.error(String.format("User with id %s not found", id));
+//            throw new NotFoundException(String.format("User with id %s not found", id));
+//        });
     }
 
     @Override

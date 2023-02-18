@@ -16,9 +16,7 @@ export class SidebarComponent extends Base implements OnInit {
 
   mobileQuery: MediaQueryList;
 
-  _isAuthenticated!: boolean;
-
-  _user!: User | undefined;
+  user!: User | undefined;
 
   private readonly _mobileQueryListener: () => void;
 
@@ -35,19 +33,28 @@ export class SidebarComponent extends Base implements OnInit {
   }
 
   ngOnInit() {
-    this._isAuthenticated = this.authService.isAuthenticated();
-    if(this._isAuthenticated) {
-      this.userService.getUser()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((user: User) => {
-          this._user = user;
-        });
+    console.log(this.authService.isAuthenticated());
+    this.userService.userChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => {
+        this.user = user;
+        console.log(user);
+      });
+    if (this.authService.isAuthenticated()) {
+
     }
+  }
+
+  getUser() {
+    // @ts-ignore
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   _logOut() {
     localStorage.clear();
     sessionStorage.clear();
+
+    this.userService.clearUser();
     this.router.navigateByUrl('/login');
   }
 }

@@ -20,8 +20,8 @@
                     novalidate>
 
                 <div class="col-12">
-                  <label for="emailField1" class="form-label" [class.text-danger]="_showErrors">Email</label>
-                  <div *ngIf="_showErrors"
+                  <label for="emailField1" class="form-label" [class.text-danger]="showErrors">Email</label>
+                  <div *ngIf="showErrors"
                        class="text-danger">
                     Incorrectly entered data
                   </div>
@@ -31,21 +31,21 @@
                            class="form-control"
                            id="emailField1"
                            placeholder="Enter a valid email address"
-                           [class.border-danger]="_showErrors"
+                           [class.border-danger]="showErrors"
                            required>
                     <div class="invalid-feedback">Please enter your email.</div>
                   </div>
                 </div>
 
                 <div class="col-12">
-                  <label for="passwordField1" class="form-label" [class.text-danger]="_showErrors">Password</label>
+                  <label for="passwordField1" class="form-label" [class.text-danger]="showErrors">Password</label>
                   <input type="password"
                          formControlName="password"
                          class="form-control"
                          id="passwordField1"
                          placeholder="Enter a password"
-                         [class.border-danger]="_showErrors"
-                         [type]="_showPassword ? 'text' : 'password'"
+                         [class.border-danger]="showErrors"
+                         [type]="showPassword ? 'text' : 'password'"
                          required>
 <!--                  <div class="input-group-append">-->
 <!--                    <span class="input-group-text text-center" (click)="_onEyeClick()">-->

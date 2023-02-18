@@ -16,7 +16,7 @@ public interface UserDao {
 
     int deleteUserById(Long id);
 
-    int editUser(User user, Long id);
+    User editUser(User user, Long id);
 
     int updateUserPassword(Long id, String newPassword);
 

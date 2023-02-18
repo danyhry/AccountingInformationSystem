@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, tap} from 'rxjs';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {map, Observable, tap, throwError} from 'rxjs';
 import {User} from "../models/user";
 import {AuthResponse} from "../models/auth/auth";
 import {LoginRequest} from "../models/auth/login";
+import {catchError} from "rxjs/operators";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +14,9 @@ export class AuthService {
 
   path?: '';
 
-  public isAuth!: boolean;
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private userService: UserService
+  ) {
   }
 
   register(data: any): Observable<User> {
@@ -23,8 +25,19 @@ export class AuthService {
 
   login(data: LoginRequest, remember: boolean): Observable<AuthResponse> {
     return this.http.post<AuthResponse>('auth/login', data)
-      .pipe(tap(authResponse => {
-          this.setTokens(authResponse, remember);
+      .pipe(
+        tap(authResponse => this.setTokens(authResponse, remember)),
+        map((authResponse: AuthResponse) => {
+          this.userService.updateUser(authResponse.user);
+          console.log(authResponse);
+
+          localStorage.setItem('access_token', authResponse.token);
+
+          return authResponse;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          const errorMessage = error.status === 401 ? 'Invalid username or password' : 'An error occurred while logging in';
+          return throwError(errorMessage);
         })
       );
   }
@@ -34,8 +47,13 @@ export class AuthService {
   }
 
   setTokens(authResponse: AuthResponse, remember: boolean): void {
-    remember ? localStorage.setItem('access_token', authResponse.token)
-      : sessionStorage.setItem('access_token', authResponse.token);
+    if (remember) {
+      localStorage.setItem('access_token', authResponse.token);
+      localStorage.setItem('currentUser', JSON.stringify(authResponse.user));
+    } else {
+      localStorage.setItem('access_token', authResponse.token);
+      localStorage.setItem('currentUser', JSON.stringify(authResponse.user));
+    }
   }
 
   isAuthenticated(): boolean {
@@ -45,4 +63,5 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('access_token') ?? sessionStorage.getItem('access_token');
   }
+
 }

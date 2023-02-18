@@ -2,7 +2,7 @@
   <h1 class="text-center">Contact Us</h1>
   <div class="fs-6 fw-light mb-2">Post your message below. We will get back to you ASAP</div>
   <form id="contact_form" name="contact_form" method="post"
-        [formGroup]="_contactForm"
+        [formGroup]="contactForm"
         (ngSubmit)="_onSubmit()">
     <div class="mb-5">
       <label for="message">Message</label>
@@ -10,7 +10,7 @@
                 id="message"
                 formControlName="message"
                 rows="5"
-                [class.border-danger]="_showErrors"
+                [class.border-danger]="showErrors"
       ></textarea>
     </div>
     <div class="mb-5 row">
@@ -22,7 +22,7 @@
                class="form-control"
                id="firstName"
                formControlName="firstName"
-               [class.border-danger]="_showErrors">
+               [class.border-danger]="showErrors">
       </div>
       <div class="col">
         <label for="email">Your Email:</label>
@@ -33,11 +33,11 @@
                id="email"
                formControlName="email"
                placeholder="name@example.com"
-               [class.border-danger]="_showErrors">
+               [class.border-danger]="showErrors">
       </div>
     </div>
     <div class="d-grid">
-      <button type="submit" class="btn btn-success">Post</button>
+      <button type="submit" class="btn btn-primary">Post</button>
     </div>
   </form>
 </div>

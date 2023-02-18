@@ -15,9 +15,9 @@ export class ContactComponent extends Base implements OnInit {
 
   user!: User;
 
-  _showErrors!: boolean;
+  showErrors!: boolean;
 
-  _contactForm: FormGroup = this.fb.group({
+  contactForm: FormGroup = this.fb.group({
     firstName: [''],
     email: [''],
     message: ['']
@@ -43,25 +43,23 @@ export class ContactComponent extends Base implements OnInit {
   }
 
   _onSubmit() {
-    console.log(this._contactForm);
-    if (this._contactForm.valid) {
-      this.userService.sendMessageToAdmin(this._contactForm.value)
-        .pipe(
-          takeUntil(this.destroy$)
-        )
+    console.log(this.contactForm);
+    if (this.contactForm.valid) {
+      this.userService.sendMessageToAdmin(this.contactForm.value)
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
             // this.notificationService.showSuccessMessage('Message was sent');
           },
           error: () => {
             this.notificationService.showErrorMessage('Error');
-            this._showErrors = true;
+            this.showErrors = true;
           }
         });
       this.notificationService.showSuccessMessage('Message was sent');
     } else {
       this.notificationService.showErrorMessage('Form is not valid, please fill correct values');
-      this._showErrors = true;
+      this.showErrors = true;
     }
   }
 }

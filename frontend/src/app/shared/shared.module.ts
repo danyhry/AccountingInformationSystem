@@ -18,6 +18,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {CanvasJSChart} from "../../assets/canvasjs/canvasjs.angular.component";
 import {NgStyle} from "@angular/common";
 import {MatTabsModule} from "@angular/material/tabs";
+import {NgChartsModule} from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatExpansionModule,
     NgStyle,
     MatTabsModule,
+    NgChartsModule
   ],
   exports: [
     MatToolbarModule,
@@ -62,6 +64,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatExpansionModule,
     CanvasJSChart,
     MatTabsModule,
+    NgChartsModule,
   ]
 })
 export class SharedModule {

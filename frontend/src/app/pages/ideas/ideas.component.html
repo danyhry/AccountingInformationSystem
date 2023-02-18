@@ -1,1 +1,60 @@
 <h1 class="text-center">Capital Creation Calculator</h1>
+<form [formGroup]="investmentsForm">
+  <div class="container">
+    <p>
+      <mat-form-field class="w-100">
+        <mat-label>Starting capital</mat-label>
+        <input matInput formControlName="startingCapital" type="number" placeholder="0">
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field class="w-100">
+        <mat-label>Incomes</mat-label>
+        <input matInput formControlName="incomes" type="number" placeholder="0">
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field class="w-100">
+        <mat-label>Expanses</mat-label>
+        <input matInput formControlName="expanses" type="number" placeholder="0">
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field class="w-100">
+        <mat-label>Expected income growth / year</mat-label>
+        <input matInput formControlName="expectedIncome" type="number" placeholder="0">
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field class="w-100">
+        <mat-label>Rate % of your investment</mat-label>
+        <input matInput formControlName="rate" type="number" placeholder="0">
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field class="w-100">
+        <mat-label>Inflation</mat-label>
+        <input matInput formControlName="inflation" type="number" placeholder="0">
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field class="w-100">
+        <mat-label>Your age</mat-label>
+        <input matInput formControlName="age" type="number" placeholder="0">
+      </mat-form-field>
+    </p>
+  </div>
+</form>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close class="m-1">Close</button>
+  <button mat-raised-button color="primary" (click)="createInvestmentModel()">Update</button>
+</div>

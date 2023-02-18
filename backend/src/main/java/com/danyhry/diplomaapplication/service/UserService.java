@@ -10,11 +10,9 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    void createUser(User user) throws UserException;
-
     void deleteUserById(Long id);
 
-    void editUser(User user, Long id);
+    User editUser(User user, Long id);
 
     User findByEmail(String email);
 

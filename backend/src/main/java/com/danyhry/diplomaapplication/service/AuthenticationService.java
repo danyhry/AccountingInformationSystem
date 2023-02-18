@@ -27,7 +27,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(Role.USER)
                 .build();
-        userDao.createUser(user);
+        int result = userDao.createUser(user);
 
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

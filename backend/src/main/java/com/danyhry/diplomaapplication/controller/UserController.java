@@ -7,6 +7,8 @@ import com.danyhry.diplomaapplication.service.MailSenderService;
 import com.danyhry.diplomaapplication.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,8 +42,13 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public void editUser(@RequestBody User user, @PathVariable Long id) {
-        userService.editUser(user, id);
+    public ResponseEntity<User> editUser(@RequestBody User updatedUser, @PathVariable Long id) {
+        User user = userService.editUser(updatedUser, id);
+        log.info("Updated user: {}", user);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

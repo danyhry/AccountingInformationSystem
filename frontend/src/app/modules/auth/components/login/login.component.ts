@@ -7,7 +7,6 @@ import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
 import {Base} from "../../../../services/destroy.service";
 import {takeUntil} from "rxjs";
 import {User} from "../../../../models/user";
-import {AuthResponse} from "../../../../models/auth/auth";
 
 @Component({
   selector: 'app-login',
@@ -17,9 +16,9 @@ import {AuthResponse} from "../../../../models/auth/auth";
 })
 export class LoginComponent extends Base implements OnInit {
 
-  _showPassword!: boolean;
+  showPassword!: boolean;
 
-  _showErrors!: boolean;
+  showErrors!: boolean;
 
   user!: User;
 
@@ -29,9 +28,9 @@ export class LoginComponent extends Base implements OnInit {
     remember: [false]
   });
 
-  constructor(private router: Router,
+  constructor(public authService: AuthService,
+              private router: Router,
               private fb: FormBuilder,
-              public authService: AuthService,
               private userService: UserService,
               private modal: NgbModal,
               private config: NgbModalConfig,
@@ -41,10 +40,9 @@ export class LoginComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getUser();
     this.loginForm.valueChanges
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this._showErrors = false);
+      .subscribe(() => this.showErrors = false);
   }
 
   _onSubmit(): void {
@@ -54,25 +52,19 @@ export class LoginComponent extends Base implements OnInit {
         password: this.loginForm.value.password,
         remember: this.loginForm.value.remember
       };
-      localStorage.removeItem('access_token');
-      sessionStorage.removeItem('access_token');
+      localStorage.clear();
+      sessionStorage.clear();
+
       this.authService.login(data, data.remember)
-        .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (userData: AuthResponse) => {
-            data.remember ? localStorage.setItem('access_token', userData.token)
-              : sessionStorage.setItem('access_token', userData.token);
+          next: () => {
             this.router.navigateByUrl('/dashboard');
           },
           error: () => {
-            this._showErrors = true;
+            this.showErrors = true;
           }
         });
     }
-  }
-
-  _onEyeClick() {
-    this._showPassword = !this._showPassword;
   }
 
 }

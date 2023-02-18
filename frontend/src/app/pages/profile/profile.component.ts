@@ -16,9 +16,9 @@ export class ProfileComponent extends Base implements OnInit {
 
   user!: User | undefined;
 
-  _editForm!: FormGroup;
+  editForm!: FormGroup;
 
-  _changePasswordForm = this.fb.group({
+  changePasswordForm = this.fb.group({
     currentPassword: ['', [Validators.required]],
     newPassword: ['', [Validators.required]],
     renewPassword: ['', [Validators.required]],
@@ -35,32 +35,41 @@ export class ProfileComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUser()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user: User) => {
-        this.user = user;
-      });
-    this._editForm = this.fb.group({
+    this.editForm = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', []]//Validators.email, Validators.required
     });
-    setTimeout(() => {
-      this._editForm = this.fb.group({
-        firstName: [this.user?.firstName, [Validators.required]],
-        lastName: [this.user?.lastName, [Validators.required]],
-        email: [this.user?.email, []]//Validators.email, Validators.required
+
+    this.userService.getUser()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => {
+        this.user = user;
+        console.log(this.user);
+
+        this.editForm.setValue({
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          email: this.user.email
+        })
       });
-    }, 500);
+
+    //
+    // setTimeout(() => {
+    //   this._editForm = this.fb.group({
+    //     firstName: [this.user?.firstName, [Validators.required]],
+    //     lastName: [this.user?.lastName, [Validators.required]],
+    //     email: [this.user?.email, []]//Validators.email, Validators.required
+    //   });
+    // }, 500);
   }
 
   _onSubmitPassword() {
-    console.log(this._changePasswordForm);
-    if (this._changePasswordForm.valid) {
+    if (this.changePasswordForm.valid) {
       const data = {
-        currentPassword: this._changePasswordForm.value.currentPassword,
-        newPassword: this._changePasswordForm.value.newPassword,
-        renewPassword: this._changePasswordForm.value.renewPassword
+        currentPassword: this.changePasswordForm.value.currentPassword,
+        newPassword: this.changePasswordForm.value.newPassword,
+        renewPassword: this.changePasswordForm.value.renewPassword
       }
 
       // @ts-ignore
@@ -82,13 +91,11 @@ export class ProfileComponent extends Base implements OnInit {
   }
 
   _onSubmitEditProfile() {
-    console.log("onSubmit edit profile")
-    console.log(this._editForm);
-    if (this._editForm.valid) {
+    if (this.editForm.valid) {
       let data = {
-        firstName: this._editForm.value.firstName,
-        lastName: this._editForm.value.lastName,
-        email: this._editForm.value.email,
+        firstName: this.editForm.value.firstName,
+        lastName: this.editForm.value.lastName,
+        email: this.editForm.value.email,
         password: this.user?.password,
         role: this.user?.role,
       }
@@ -96,10 +103,10 @@ export class ProfileComponent extends Base implements OnInit {
         // @ts-ignore
         .editUser(this.user.id, data)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-          this.userService.getUser()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((user: User) => this.user = user);
+        .subscribe((user: User) => {
+          console.log(user);
+          this.user = user;
+          this.userService.setUser(user);
           this.notificationService.showSuccessMessage(`Information was successfully updated`);
         });
     } else {

@@ -8,16 +8,16 @@
       <!--      <mat-icon *ngIf="sidenav.opened">close</mat-icon>-->
     </button>
 
-<!--    <span>Control of income and expenses</span>-->
+    <!--    <span>Control of income and expenses</span>-->
     <span>Danyhry App</span>
 
     <div class="spacer"></div>
 
     <div class="items">
       <span>Control of income and expenses</span>
-<!--      <a mat-button routerLink="dashboard">Dashboard</a>-->
-<!--      <a mat-button routerLink="users">Users</a>-->
-<!--      <a mat-button routerLink="tables">Tables</a>-->
+      <!--      <a mat-button routerLink="dashboard">Dashboard</a>-->
+      <!--      <a mat-button routerLink="users">Users</a>-->
+      <!--      <a mat-button routerLink="tables">Tables</a>-->
     </div>
 
     <div class="spacer"></div>
@@ -29,7 +29,7 @@
 
   </mat-toolbar>
 
-  <mat-sidenav-container [style.margin-top.px]="mobileQuery.matches ? 56 : 0">
+  <mat-sidenav-container>
     <mat-sidenav #sidenav="matSidenav"
                  class="mat-elevation-z8"
                  fixedTopGap="56"
@@ -55,7 +55,7 @@
           <span>Expanses</span>
         </mat-list-item>
 
-        <mat-list-item *ngIf="true"
+        <mat-list-item *ngIf="user?.role==='ADMIN'"
                        class="menu-button"
                        routerLink="/users">
           <mat-icon>person</mat-icon>
@@ -97,7 +97,7 @@
 <ng-template #showProfile>
   <button mat-button [matMenuTriggerFor]="menu">
     <mat-icon>person</mat-icon>
-    <!--    <span class="m-1">{{_user?.firstName}} {{_user?.lastName}}</span>-->
+    <span class="m-1">{{user?.firstName}} {{user?.lastName}}</span>
     <mat-icon>keyboard_arrow_down</mat-icon>
   </button>
   <mat-menu #menu="matMenu">

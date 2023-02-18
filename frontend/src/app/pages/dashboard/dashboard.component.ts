@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {ChartConfiguration, ChartOptions} from "chart.js";
 
 @Component({
   selector: "app-dashboard",
@@ -16,11 +17,11 @@ export class DashboardComponent {
         // Change type to "doughnut", "line", "splineArea", etc.
         type: 'column',
         dataPoints: [
-          { label: 'apple', y: 10 },
-          { label: 'orange', y: 15 },
-          { label: 'banana', y: 25 },
-          { label: 'mango', y: 30 },
-          { label: 'grape', y: 28 },
+          {label: 'apple', y: 10},
+          {label: 'orange', y: 15},
+          {label: 'banana', y: 25},
+          {label: 'mango', y: 30},
+          {label: 'grape', y: 28},
         ],
       },
     ],
@@ -36,11 +37,11 @@ export class DashboardComponent {
       {
         type: 'pie',
         dataPoints: [
-          { label: 'apple', y: 10 },
-          { label: 'orange', y: 15 },
-          { label: 'banana', y: 25 },
-          { label: 'mango', y: 30 },
-          { label: 'grape', y: 28 },
+          {label: 'apple', y: 10},
+          {label: 'orange', y: 15},
+          {label: 'banana', y: 25},
+          {label: 'mango', y: 30},
+          {label: 'grape', y: 28},
         ],
       },
     ],
@@ -56,15 +57,41 @@ export class DashboardComponent {
       {
         type: 'line',
         dataPoints: [
-          { label: 1, y: 1105 },
-          { label: 'orange', y: 1555 },
-          { label: 'banana', y: 2555 },
-          { label: 'mango', y: 3055 },
-          { label: 'grape', y: 2855 },
+          {label: 1, y: 1105},
+          {label: 'orange', y: 1555},
+          {label: 'banana', y: 2555},
+          {label: 'mango', y: 3055},
+          {label: 'grape', y: 2855},
         ],
       },
     ],
   };
+
+  public lineChartData: ChartConfiguration<'line'>['data'] = {
+    labels: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July'
+    ],
+    datasets: [
+      {
+        data: [65, 59, 80, 81, 56, 55, 40],
+        label: 'Series A',
+        fill: true,
+        tension: 0.5,
+        borderColor: 'black',
+        backgroundColor: 'rgba(2,15,255,0.3)'
+      }
+    ]
+  };
+  public lineChartOptions2: ChartOptions<'line'> = {
+    responsive: false
+  };
+  public lineChartLegend = true;
 
   constructor() {
   }

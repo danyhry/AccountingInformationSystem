@@ -14,7 +14,7 @@ import {NotificationService} from "../../../services/notification.service";
 })
 export class EditUserComponent extends Base implements OnInit {
 
-  _userForm !: FormGroup;
+  userForm !: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public userEditData: User,
               private formBuilder: FormBuilder,
@@ -26,7 +26,7 @@ export class EditUserComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
-    this._userForm = this.formBuilder.group({
+    this.userForm = this.formBuilder.group({
       id: [''],
       firstName: [''],
       lastName: [''],
@@ -35,17 +35,17 @@ export class EditUserComponent extends Base implements OnInit {
     });
 
     if (this.userEditData) {
-      this._userForm.controls['firstName'].setValue(this.userEditData.firstName);
-      this._userForm.controls['lastName'].setValue(this.userEditData.lastName);
-      this._userForm.controls['email'].setValue(this.userEditData.email);
-      this._userForm.controls['role'].setValue(this.userEditData.role);
+      this.userForm.controls['firstName'].setValue(this.userEditData.firstName);
+      this.userForm.controls['lastName'].setValue(this.userEditData.lastName);
+      this.userForm.controls['email'].setValue(this.userEditData.email);
+      this.userForm.controls['role'].setValue(this.userEditData.role);
     }
   }
 
 
   _updateUser() {
-    if (this._userForm.valid) {
-      this.userService.editUser(this.userEditData.id, this._userForm.value)
+    if (this.userForm.valid) {
+      this.userService.editUser(this.userEditData.id, this.userForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {

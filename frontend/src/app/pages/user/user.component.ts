@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {User} from "../../models/user";
 import {UserService} from "../../services/user.service";
 import {MatPaginator} from "@angular/material/paginator";
@@ -24,11 +24,9 @@ export class UserComponent extends Base implements OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  _displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'action'];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'action'];
 
-  _users!: MatTableDataSource<any>;
-
-  _userForm!: FormGroup;
+  users!: MatTableDataSource<any>;
 
   constructor(private userService: UserService,
               private notificationService: NotificationService,
@@ -47,19 +45,19 @@ export class UserComponent extends Base implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
-          this._users = new MatTableDataSource(res);
-          this._users.paginator = this.paginator;
-          this._users.sort = this.sort;
+          this.users = new MatTableDataSource(res);
+          this.users.paginator = this.paginator;
+          this.users.sort = this.sort;
         }
       })
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this._users.filter = filterValue.trim().toLowerCase();
+    this.users.filter = filterValue.trim().toLowerCase();
 
-    if (this._users.paginator) {
-      this._users.paginator.firstPage();
+    if (this.users.paginator) {
+      this.users.paginator.firstPage();
     }
   }
 

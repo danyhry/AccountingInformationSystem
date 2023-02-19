@@ -14,6 +14,8 @@ import {IncomesComponent} from "../../pages/incomes/incomes.component";
 import {ExpansesComponent} from "../../pages/expanses/expanses.component";
 import {FaqComponent} from "../../pages/faq/faq.component";
 import {ContactComponent} from "../../pages/contact/contact.component";
+import {MatCardModule} from "@angular/material/card";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @NgModule({
   imports: [
@@ -23,6 +25,8 @@ import {ContactComponent} from "../../pages/contact/contact.component";
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    MatCardModule,
+    MatDatepickerModule,
   ],
   declarations: [
     DashboardComponent,

@@ -18,7 +18,7 @@ public enum Role {
         return switch (userRole) {
             case ADMIN -> 2;
             case USER -> 1;
-            case UNDEFINED, default -> 0;
+            case UNDEFINED -> 0;
         };
     }
 }

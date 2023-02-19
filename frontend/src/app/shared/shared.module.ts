@@ -19,10 +19,27 @@ import {CanvasJSChart} from "../../assets/canvasjs/canvasjs.angular.component";
 import {NgStyle} from "@angular/common";
 import {MatTabsModule} from "@angular/material/tabs";
 import {NgChartsModule} from "ng2-charts";
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+  NativeDateModule
+} from "@angular/material/core";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MatMomentDateModule,
+  MomentDateAdapter
+} from "@angular/material-moment-adapter";
+import {MY_DATE_FORMAT} from "../pages/incomes/incomes.component";
+import {CustomDatePipe} from "../utils/CustomDatePipe";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 @NgModule({
   declarations: [
-    CanvasJSChart
+    CanvasJSChart,
+    CustomDatePipe
   ],
   imports: [
     MatToolbarModule,
@@ -43,7 +60,10 @@ import {NgChartsModule} from "ng2-charts";
     MatExpansionModule,
     NgStyle,
     MatTabsModule,
-    NgChartsModule
+    NgChartsModule,
+    NativeDateModule,
+    MatMomentDateModule,
+    NgxChartsModule
   ],
   exports: [
     MatToolbarModule,
@@ -65,6 +85,16 @@ import {NgChartsModule} from "ng2-charts";
     CanvasJSChart,
     MatTabsModule,
     NgChartsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    CustomDatePipe,
+    MatMomentDateModule,
+    NgxChartsModule
+  ],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT},
+    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}
   ]
 })
 export class SharedModule {

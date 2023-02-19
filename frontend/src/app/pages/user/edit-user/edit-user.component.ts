@@ -43,7 +43,7 @@ export class EditUserComponent extends Base implements OnInit {
   }
 
 
-  _updateUser() {
+  updateUser() {
     if (this.userForm.valid) {
       this.userService.editUser(this.userEditData.id, this.userForm.value)
         .pipe(takeUntil(this.destroy$))

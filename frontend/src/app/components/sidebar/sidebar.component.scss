@@ -1,27 +1,17 @@
 mat-sidenav {
-  //margin: 16px 0 16px 0;
   width: 150px;
   background: #57989a;
-  //border-top-right-radius: 10px;
-  //border-bottom-right-radius: 10px;
   padding: 16px 0 16px 0;
   text-align: center;
 }
 
 .content {
   height: calc(100vh - 64px);
-  //border-radius: 10px;
-  //margin: 16px;
-  //padding: 16px;
-  //overflow: auto;
-  //background-color: #bbe0e0;
 }
 
 .menu-button {
   width: 100%;
   display: flex;
-  //align-items: center;
-  //justify-content: flex-start;
   font-size: 1rem;
   font-weight: 500;
 
@@ -34,42 +24,11 @@ button.mat-menu-item {
   font-weight: 500;
 }
 
-//mat-divider {
-//  //margin-top: 16px;
-//  //margin-bottom: 16px;
-//  background-color: rgba(255, 255, 255, 0.5);
-//}
-
 
 .example-is-mobile .example-toolbar {
   position: fixed;
   z-index: 2;
 }
-
-//.example-container {
-//  display: flex;
-//  flex-direction: column;
-//  position: absolute;
-//  top: 0;
-//  bottom: 0;
-//  left: 0;
-//  right: 0;
-//  background-color: #88b9b9;
-//}
-
-//
-//.control {
-//  position: absolute;
-//  bottom: 0;
-//}
-
-//.sidenav-collapsed {
-//  width: 34px;
-//}
-
-//.mat-button {
-//  padding: 0 4px;
-//}
 
 .spacer {
   flex: 1 1 auto;

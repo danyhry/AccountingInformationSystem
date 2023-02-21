@@ -6,6 +6,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {takeUntil} from "rxjs";
 import {Base} from "../../../services/destroy.service";
 import {NotificationService} from "../../../services/notification.service";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-update-income',
@@ -14,40 +15,40 @@ import {NotificationService} from "../../../services/notification.service";
 })
 export class UpdateIncomeComponent extends Base implements OnInit {
 
-  updateIncomeForm!: FormGroup;
+  incomeForm!: FormGroup;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public incomeUpdateData: Income,
-    private incomeService: IncomeService,
-    private fb: FormBuilder,
-    private notificationService: NotificationService,
-    private dialogRef: MatDialogRef<UpdateIncomeComponent>
+  constructor(@Inject(MAT_DIALOG_DATA) public incomeData: Income,
+              private incomeService: IncomeService,
+              private fb: FormBuilder,
+              private notificationService: NotificationService,
+              private dialogRef: MatDialogRef<UpdateIncomeComponent>,
+              private userService: UserService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.updateIncomeForm = this.fb.group({
+    this.incomeForm = this.fb.group({
       id: [''],
+      userId: ['', []],
       amount: ['', [Validators.required, Validators.pattern('^[0-9]+([,.][0-9]{1,2})?$')]],
       description: ['', [Validators.required, Validators.maxLength(50)]],
-      category: ['', [Validators.required, Validators.maxLength(30)]],
       date: ['', [Validators.required]]
     });
 
-    if (this.incomeUpdateData) {
-      console.log(this.incomeUpdateData);
-      this.updateIncomeForm.controls['amount'].setValue(this.incomeUpdateData.amount);
-      this.updateIncomeForm.controls['description'].setValue(this.incomeUpdateData.description);
-      this.updateIncomeForm.controls['category'].setValue(this.incomeUpdateData.category);
-      this.updateIncomeForm.controls['date'].setValue(this.incomeUpdateData.date);
+    if (this.incomeData) {
+      console.log(this.incomeData);
+      this.incomeForm.controls['amount'].setValue(this.incomeData.amount);
+      this.incomeForm.controls['description'].setValue(this.incomeData.description);
+      this.incomeForm.controls['date'].setValue(this.incomeData.date);
     }
 
   }
 
   updateIncome(): void {
-    if (this.updateIncomeForm.valid) {
-      this.incomeService.updateIncome(this.updateIncomeForm.value, this.incomeUpdateData.id)
+    console.log(this.incomeForm.value);
+    if (this.incomeForm.valid) {
+      this.incomeService.updateIncome(this.incomeForm.value, this.incomeData.id)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
@@ -59,6 +60,8 @@ export class UpdateIncomeComponent extends Base implements OnInit {
             this.notificationService.showErrorMessage(`Something is wrong.`);
           }
         })
+    } else {
+      this.notificationService.showErrorMessage(`Something is wrong.`);
     }
   }
 }

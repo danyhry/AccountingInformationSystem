@@ -10,6 +10,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {takeUntil} from "rxjs";
 import {EditUserComponent} from "./edit-user/edit-user.component";
 import {NotificationService} from "../../services/notification.service";
+import {CreateUserComponent} from "./create-user/create-user.component";
 
 @Component({
   selector: "app-user",
@@ -26,7 +27,7 @@ export class UserComponent extends Base implements OnInit {
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'action'];
 
-  users!: MatTableDataSource<any>;
+  usersDataSource!: MatTableDataSource<any>;
 
   constructor(private userService: UserService,
               private notificationService: NotificationService,
@@ -45,20 +46,33 @@ export class UserComponent extends Base implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
-          this.users = new MatTableDataSource(res);
-          this.users.paginator = this.paginator;
-          this.users.sort = this.sort;
+          this.usersDataSource = new MatTableDataSource(res);
+          this.usersDataSource.paginator = this.paginator;
+          this.usersDataSource.sort = this.sort;
         }
       })
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.users.filter = filterValue.trim().toLowerCase();
+    this.usersDataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.users.paginator) {
-      this.users.paginator.firstPage();
+    if (this.usersDataSource.paginator) {
+      this.usersDataSource.paginator.firstPage();
     }
+  }
+
+  createUser(): void {
+    this.dialog.open(CreateUserComponent, {
+      width: '35%'
+    }).afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        console.log(value);
+        if (value === 'update') {
+          this.getAllUsers();
+        }
+      });
   }
 
   editUser(user: User) {

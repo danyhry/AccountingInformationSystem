@@ -3,11 +3,13 @@ package com.danyhry.diplomaapplication.service;
 import com.danyhry.diplomaapplication.dao.IncomeDao;
 import com.danyhry.diplomaapplication.model.Income;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class IncomeService {
 
@@ -40,9 +42,8 @@ public class IncomeService {
 
         existingIncome.setDescription(income.getDescription());
         existingIncome.setAmount(income.getAmount());
-        existingIncome.setCategory(income.getCategory());
         existingIncome.setDate(income.getDate());
 
-        return incomeDao.update(existingIncome);
+        return incomeDao.updateIncome(existingIncome);
     }
 }

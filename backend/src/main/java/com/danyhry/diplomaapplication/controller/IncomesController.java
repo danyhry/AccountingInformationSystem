@@ -2,11 +2,13 @@ package com.danyhry.diplomaapplication.controller;
 
 import com.danyhry.diplomaapplication.model.Income;
 import com.danyhry.diplomaapplication.service.IncomeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/incomes")
 public class IncomesController {

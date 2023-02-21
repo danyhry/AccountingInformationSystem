@@ -1,26 +1,34 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {Expense} from "../models/expense";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpenseService {
-  private expenses = [
-    { description: 'Rent', amount: 1500 },
-    { description: 'Food', amount: 500 },
-    { description: 'Transportation', amount: 100 }
-  ];
+  private expenseUrl = 'expenses';
 
-  constructor() { }
-
-  getExpenses() {
-    return this.expenses;
+  constructor(private http: HttpClient) {
   }
 
-  getTotalExpense() {
-    return this.expenses.reduce((acc, expense) => acc + expense.amount, 0);
+  getExpenses(): Observable<Expense[]> {
+    return this.http.get<Expense[]>(this.expenseUrl);
   }
 
-  addExpense(expense: { description: string, amount: number }) {
-    this.expenses.push(expense);
+  addExpense(expense: Expense): Observable<Expense> {
+    console.log(expense);
+    return this.http.post<Expense>(this.expenseUrl, expense);
+  }
+
+  updateExpense(expense: Expense, id: number): Observable<void> {
+    console.log(expense);
+    const url = `${this.expenseUrl}/${id}`;
+    return this.http.put<void>(url, expense);
+  }
+
+  deleteExpense(id: number): Observable<void> {
+    const url = `${this.expenseUrl}/${id}`;
+    return this.http.delete<void>(url);
   }
 }

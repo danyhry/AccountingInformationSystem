@@ -33,12 +33,10 @@ export class SidebarComponent extends Base implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.authService.isAuthenticated());
     this.userService.userChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe(user => {
         this.user = user;
-        console.log(user);
         if (user?.id == 0) {
           //TODO: edit
           this.getUser();

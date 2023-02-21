@@ -14,8 +14,9 @@ import {IncomesComponent} from "../../pages/incomes/incomes.component";
 import {ExpansesComponent} from "../../pages/expanses/expanses.component";
 import {FaqComponent} from "../../pages/faq/faq.component";
 import {ContactComponent} from "../../pages/contact/contact.component";
-import {MatCardModule} from "@angular/material/card";
-import {MatDatepickerModule} from "@angular/material/datepicker";
+import {UpdateIncomeComponent} from "../../pages/incomes/update-income/update-income.component";
+import {CreateIncomeComponent} from "../../pages/incomes/create-income/create-income.component";
+import {CreateUserComponent} from "../../pages/user/create-user/create-user.component";
 
 @NgModule({
   imports: [
@@ -25,8 +26,6 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    MatCardModule,
-    MatDatepickerModule,
   ],
   declarations: [
     DashboardComponent,
@@ -37,7 +36,10 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     IncomesComponent,
     ExpansesComponent,
     FaqComponent,
-    ContactComponent
+    ContactComponent,
+    UpdateIncomeComponent,
+    CreateIncomeComponent,
+    CreateUserComponent
   ],
   providers: [NgbActiveModal]
 })

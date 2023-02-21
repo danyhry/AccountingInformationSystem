@@ -10,28 +10,21 @@ CREATE TABLE users
 
 CREATE TABLE incomes
 (
-    id          SERIAL PRIMARY KEY,
-    amount      NUMERIC      NOT NULL,
-    description VARCHAR(255) NOT NULL,
-    category    VARCHAR(255) NOT NULL,
-    date        DATE         NOT NULL
-);
-
-CREATE TABLE categories
-(
-    id   SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    type VARCHAR(10) NOT NULL -- 'expense' or 'income'
+    id          BIGSERIAL PRIMARY KEY,
+    user_id     BIGINT      NOT NULL REFERENCES users (id),
+    description VARCHAR(50) NOT NULL,
+    amount      BIGINT      NOT NULL,
+    date        DATE        NOT NULL
 );
 
 CREATE TABLE expenses
 (
-    id          SERIAL PRIMARY KEY,
-    user_id     INTEGER        NOT NULL REFERENCES users (user_id),
-    description TEXT           NOT NULL,
-    amount      NUMERIC(10, 2) NOT NULL,
-    date        DATE           NOT NULL,
-    category_id INTEGER        NOT NULL REFERENCES categories (id)
+    id          BIGSERIAL PRIMARY KEY,
+    user_id     BIGINT      NOT NULL REFERENCES users (id),
+    description VARCHAR(50) NOT NULL,
+    amount      BIGINT      NOT NULL,
+    date        DATE        NOT NULL
 );
+
 
 

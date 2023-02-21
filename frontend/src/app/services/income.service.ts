@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Income} from "../models/income";
 import {Observable} from "rxjs";
@@ -10,7 +10,8 @@ export class IncomeService {
 
   private incomeUrl = 'incomes';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getIncomes(): Observable<Income[]> {
     return this.http.get<Income[]>(this.incomeUrl);
@@ -22,7 +23,7 @@ export class IncomeService {
   }
 
   updateIncome(income: Income, id: number): Observable<void> {
-    console.log(income);
+    console.log("updateIncome: {}", income);
     const url = `${this.incomeUrl}/${id}`;
     return this.http.put<void>(url, income);
   }
@@ -30,15 +31,5 @@ export class IncomeService {
   deleteIncome(id: number): Observable<void> {
     const url = `${this.incomeUrl}/${id}`;
     return this.http.delete<void>(url);
-  }
-
-  getData(): Observable<number[]> {
-    // Replace the URL with your server endpoint that returns the income data.
-    return this.http.get<number[]>('https://your-server-endpoint.com/income-data');
-  }
-
-  getLabels(): Observable<string[]> {
-    // Replace the URL with your server endpoint that returns the income labels.
-    return this.http.get<string[]>('https://your-server-endpoint.com/income-labels');
   }
 }

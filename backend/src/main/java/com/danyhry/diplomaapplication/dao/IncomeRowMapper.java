@@ -1,29 +1,34 @@
 package com.danyhry.diplomaapplication.dao;
 
 import com.danyhry.diplomaapplication.model.Income;
+import com.danyhry.diplomaapplication.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
+@Slf4j
 public class IncomeRowMapper implements RowMapper<Income> {
+
+    private final UserDao userDao;
+
+    public IncomeRowMapper(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public Income mapRow(ResultSet resultSet, int i) throws SQLException {
-        Long id = resultSet.getLong("id");
-        Long amount = resultSet.getLong("amount");
-        String description = resultSet.getString("description");
-        String category = resultSet.getString("category");
-        LocalDate date = resultSet.getObject("date", LocalDate.class);
-
         Income income = new Income();
-        income.setId(id);
-        income.setAmount(amount);
-        income.setDescription(description);
-        income.setCategory(category);
-        income.setDate(date);
+        log.info("resultSet: {}", resultSet);
+        User user = userDao.getUserById(resultSet.getLong("user_id"))
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        income.setId(resultSet.getLong("id"));
+        income.setUserId(user.getId());
+        income.setDescription(resultSet.getString("description"));
+        income.setAmount(resultSet.getLong("amount"));
+        income.setDate(resultSet.getDate("date").toLocalDate());
         return income;
     }
 }

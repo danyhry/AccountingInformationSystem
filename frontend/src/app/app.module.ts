@@ -12,27 +12,25 @@ import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.componen
 import {TokenInterceptor} from "./interceptor/token.interceptor";
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {SharedModule} from "./shared/shared.module";
-import { UpdateIncomeComponent } from './pages/incomes/update-income/update-income.component';
 
 @NgModule({
-    declarations: [AppComponent, AdminLayoutComponent, UpdateIncomeComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        NgbModule,
-        ReactiveFormsModule,
-        ToastrModule.forRoot(),
-        ComponentsModule,
-        FontAwesomeModule,
-        SharedModule,
-    ],
-    providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
-    exports: [
-        UpdateIncomeComponent
-    ],
-    bootstrap: [AppComponent]
+  declarations: [AppComponent, AdminLayoutComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    NgbModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
+    ComponentsModule,
+    FontAwesomeModule,
+    SharedModule,
+  ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
+  exports: [
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Income {
+public class Expense {
     private Long id;
     private Long userId;
     private String description;

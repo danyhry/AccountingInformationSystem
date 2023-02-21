@@ -1,28 +1,49 @@
-<h2>Recent Incomes</h2>
-<div *ngIf="incomes && incomes.length > 0">
-  <ngx-charts-bar-horizontal
-    [view]="[700, 400]"
-    [scheme]="colorScheme"
-    [results]="barChartData"
-    [gradient]="gradient"
-    [xAxis]="true"
-    [yAxis]="true"
-    [legend]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [xAxisLabel]="'Recent Incomes'"
-    [yAxisLabel]="'Amount'"
-  ></ngx-charts-bar-horizontal>
+<ng-container *ngIf="isAuthenticated; else showModeTemplate">
+  <h2>Recent Incomes</h2>
+  <div *ngIf="incomes && incomes.length > 0">
+    <ngx-charts-bar-horizontal
+      [view]="[1200, 400]"
+      [scheme]="colorScheme"
+      [results]="barChartData"
+      [gradient]="gradient"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Recent Incomes'"
+      [yAxisLabel]="'Amount'"
+    ></ngx-charts-bar-horizontal>
 
-  <ngx-charts-pie-chart
-    [view]="[700, 400]"
-    [scheme]="colorScheme"
-    [results]="barChartData"
-    [gradient]="gradient"
-    [legend]="true"
-  ></ngx-charts-pie-chart>
+    <ngx-charts-pie-chart
+      [view]="[700, 400]"
+      [scheme]="colorScheme"
+      [results]="barChartData"
+      [gradient]="gradient"
+      [legend]="true"
+      [labels]="true"
+    ></ngx-charts-pie-chart>
 
+    <div class="chart-container">
+      <ngx-charts-bar-horizontal
+        [results]="barChartData"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="false"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Month'"
+        [yAxisLabel]="'Amount'"
+      ></ngx-charts-bar-horizontal>
+    </div>
 
-</div>
+  </div>
 
-<p>Total Income: {{totalIncome}}</p>
+  <p>Total Income: {{totalIncome}}</p>
+
+</ng-container>
+
+<ng-template #showModeTemplate>
+  <!--  TODO: implement-->
+  Hello
+</ng-template>

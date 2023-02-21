@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> getUserById(Long id) {
-        String sql = "SELECT * FROM users WHERE user_id = ?";
+        String sql = "SELECT * FROM users WHERE id = ?";
         return jdbcTemplate.query(sql, new UserRowMapper(), id)
                 .stream()
                 .findFirst();
@@ -58,14 +58,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int deleteUserById(Long id) {
-        String sql = "DELETE FROM users WHERE user_id = ?";
+        String sql = "DELETE FROM users WHERE id = ?";
         return jdbcTemplate.update(sql, id);
     }
 
     @Override
     public User editUser(User user, Long id) {
         String sql = "UPDATE users SET name = ?, surname = ?, email = ?, role = ? " +
-                "WHERE user_id = ?";
+                "WHERE id = ?";
         log.info("user: {}", user);
         int rows = jdbcTemplate.update(sql,
                 user.getFirstName(),
@@ -81,7 +81,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int updateUserPassword(Long id, String newPassword) {
-        String sql = "UPDATE users SET password=? WHERE user_id=?";
+        String sql = "UPDATE users SET password=? WHERE id=?";
         log.info("updateUsersPassword begin");
         return jdbcTemplate.update(sql, newPassword, id);
     }

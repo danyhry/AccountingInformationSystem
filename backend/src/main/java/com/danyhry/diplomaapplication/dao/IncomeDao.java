@@ -12,7 +12,7 @@ public interface IncomeDao {
 
     Income createIncome(Income income);
 
-    Income update(Income income);
+    Income updateIncome(Income income);
 
     int deleteById(Long id);
 }

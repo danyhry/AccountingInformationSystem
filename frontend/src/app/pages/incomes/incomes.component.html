@@ -13,9 +13,9 @@
       </mat-form-field>
       <mat-table [dataSource]="dataSource" matSort>
 
-        <ng-container matColumnDef="description">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-          <mat-cell *matCellDef="let income">{{ income.description }}</mat-cell>
+        <ng-container matColumnDef="category">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+          <mat-cell *matCellDef="let income">{{ getCategoryName(income.categoryId) }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="amount">
@@ -28,9 +28,14 @@
           <mat-cell *matCellDef="let income">{{ income.date | customDate}}</mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+          <mat-cell *matCellDef="let income">{{ income.description }}</mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> Action</th>
-          <td mat-cell *matCellDef="let income">
+          <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+          <mat-cell *matCellDef="let income">
             <button mat-icon-button
                     color="primary"
                     (click)="updateIncome(income)">
@@ -41,7 +46,7 @@
                     (click)="deleteIncome(income)">
               <mat-icon>delete</mat-icon>
             </button>
-          </td>
+          </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -62,6 +67,6 @@
 </ng-container>
 
 <ng-template #showModeTemplate>
-<!--  TODO: implement-->
+  <!--  TODO: implement-->
   Incomes Show Mode
 </ng-template>

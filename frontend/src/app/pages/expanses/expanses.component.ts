@@ -6,11 +6,13 @@ import {MatTableDataSource} from "@angular/material/table";
 import {FormBuilder} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../../services/user.service";
-import {UpdateIncomeComponent} from "../incomes/update-income/update-income.component";
 import {takeUntil} from "rxjs";
-import {CreateIncomeComponent} from "../incomes/create-income/create-income.component";
 import {Expense} from "../../models/expense";
 import {ExpenseService} from "../../services/expense.service";
+import {BudgetService} from "../../services/budget.service";
+import {Category} from "../../models/category";
+import {CreateExpenseComponent} from "./create-expense/create-expense.component";
+import {UpdateExpenseComponent} from "./update-expense/update-expense.component";
 
 @Component({
   selector: 'app-expanses',
@@ -18,6 +20,7 @@ import {ExpenseService} from "../../services/expense.service";
   styleUrls: ['./expanses.component.scss']
 })
 export class ExpansesComponent extends Base implements OnInit {
+
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
@@ -32,12 +35,15 @@ export class ExpansesComponent extends Base implements OnInit {
 
   dataSource!: MatTableDataSource<Expense>;
 
-  displayedColumns: string[] = ['description', 'amount', 'date', 'action'];
+  displayedColumns: string[] = ['category', 'amount', 'date', 'description', 'action'];
+
+  categories: Category[] = [];
 
   constructor(private expenseService: ExpenseService,
               private fb: FormBuilder,
               private dialog: MatDialog,
-              private userService: UserService
+              private userService: UserService,
+              private budgetService: BudgetService
   ) {
     super();
   }
@@ -45,6 +51,11 @@ export class ExpansesComponent extends Base implements OnInit {
   ngOnInit(): void {
     this.isAuthenticated = this.userService.isAuthenticated();
     this.getUpdatedExpenses();
+    this.budgetService.getCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(categories => {
+        this.categories = categories;
+      });
   }
 
   applyFilter(event: Event): void {
@@ -57,23 +68,27 @@ export class ExpansesComponent extends Base implements OnInit {
 
   deleteExpense(expense: Expense): void {
     console.log(expense);
-    this.expenseService.deleteExpense(expense.id).subscribe(() => {
-      this.getUpdatedExpenses();
-    });
+    this.expenseService.deleteExpense(expense.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.getUpdatedExpenses();
+      });
   }
 
   private getUpdatedExpenses() {
-    this.expenseService.getExpenses().subscribe(expenses => {
-      this.expenses = expenses;
-      this.totalExpense = this.expenses.reduce((total, expense) => total + expense.amount, 0);
-      this.dataSource = new MatTableDataSource(this.expenses);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.expenseService.getExpenses()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(expenses => {
+        this.expenses = expenses;
+        this.totalExpense = this.expenses.reduce((total, expense) => total + expense.amount, 0);
+        this.dataSource = new MatTableDataSource(this.expenses);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   updateExpense(expense: Expense): void {
-    this.dialog.open(UpdateIncomeComponent, {
+    this.dialog.open(UpdateExpenseComponent, {
       width: '35%',
       data: expense
     }).afterClosed()
@@ -86,7 +101,7 @@ export class ExpansesComponent extends Base implements OnInit {
   }
 
   createExpense(): void {
-    this.dialog.open(CreateIncomeComponent, {
+    this.dialog.open(CreateExpenseComponent, {
       width: '35%'
     }).afterClosed()
       .pipe(takeUntil(this.destroy$))
@@ -97,5 +112,11 @@ export class ExpansesComponent extends Base implements OnInit {
         }
       });
   }
+
+  getCategoryName(categoryId: number) {
+    const category = this.categories.find(c => c.id === categoryId);
+    return category ? category.name : '';
+  }
+
 
 }

@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class Expense {
     private Long id;
     private Long userId;
+    private Long categoryId;
     private String description;
     private Long amount;
     private LocalDate date;

@@ -40,16 +40,16 @@ public class IncomeDaoImpl implements IncomeDao {
     @Override
     public Income createIncome(Income income) {
         log.info("income: {}", income);
-        String query = "INSERT INTO incomes (user_id, description, amount, date) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(query, income.getUserId(), income.getDescription(), income.getAmount(), income.getDate());
+        String query = "INSERT INTO incomes (user_id, category_id, description, amount, date) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(query, income.getUserId(), income.getCategoryId(), income.getDescription(), income.getAmount(), income.getDate());
         return income;
     }
 
     @Override
     public Income updateIncome(Income income) {
         log.info("incomeUpdate: {}", income);
-        String sql = "UPDATE incomes SET description = ?, amount = ?, date = ? WHERE id = ?";
-        jdbcTemplate.update(sql, income.getDescription(), income.getAmount(), income.getDate(), income.getId());
+        String sql = "UPDATE incomes SET category_id = ?, description = ?, amount = ?, date = ? WHERE id = ?";
+        jdbcTemplate.update(sql, income.getCategoryId(), income.getDescription(), income.getAmount(), income.getDate(), income.getId());
         return income;
     }
 

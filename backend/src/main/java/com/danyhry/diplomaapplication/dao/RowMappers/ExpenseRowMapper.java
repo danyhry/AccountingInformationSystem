@@ -24,6 +24,7 @@ public class ExpenseRowMapper implements RowMapper<Expense> {
 
         expense.setId(resultSet.getLong("id"));
         expense.setUserId(user.getId());
+        expense.setCategoryId(resultSet.getLong("category_id"));
         expense.setDescription(resultSet.getString("description"));
         expense.setAmount(resultSet.getLong("amount"));
         expense.setDate(resultSet.getDate("date").toLocalDate());

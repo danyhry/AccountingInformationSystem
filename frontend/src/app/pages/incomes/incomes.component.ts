@@ -11,6 +11,8 @@ import {Base} from "../../services/destroy.service";
 import {UpdateIncomeComponent} from "./update-income/update-income.component";
 import {CreateIncomeComponent} from "./create-income/create-income.component";
 import {UserService} from "../../services/user.service";
+import {Category} from "../../models/category";
+import {BudgetService} from "../../services/budget.service";
 
 
 export const MY_DATE_FORMAT = {
@@ -46,12 +48,17 @@ export class IncomesComponent extends Base implements OnInit{
 
   dataSource!: MatTableDataSource<Income>;
 
-  displayedColumns: string[] = ['description', 'amount', 'date', 'action'];
+  displayedColumns: string[] = ['category', 'amount', 'date', 'description', 'action'];
+
+  categories: Category[] = [];
+
+  userId!: number;
 
   constructor(private incomeService: IncomeService,
               private fb: FormBuilder,
               private dialog: MatDialog,
-              private userService: UserService
+              private userService: UserService,
+              private budgetService: BudgetService
   ) {
     super();
   }
@@ -59,6 +66,9 @@ export class IncomesComponent extends Base implements OnInit{
   ngOnInit(): void {
     this.isAuthenticated = this.userService.isAuthenticated();
     this.getUpdatedIncomes();
+    this.budgetService.getCategories().subscribe(categories => {
+      this.categories = categories;
+    });
   }
 
   applyFilter(event: Event): void {
@@ -67,6 +77,7 @@ export class IncomesComponent extends Base implements OnInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+
   }
 
   deleteIncome(income: Income): void {
@@ -77,14 +88,25 @@ export class IncomesComponent extends Base implements OnInit{
   }
 
   private getUpdatedIncomes() {
-    this.incomeService.getIncomes().subscribe(incomes => {
-      this.incomes = incomes;
-      console.log(incomes);
-      this.totalIncome = this.incomes.reduce((total, income) => total + income.amount, 0);
-      this.dataSource = new MatTableDataSource(this.incomes);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.userId = this.userService.getUserFromStorage().id;
+    console.log(this.userId);
+    this.incomeService.getIncomesByUserId(this.userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(incomes => {
+        this.incomes = incomes;
+        this.totalIncome = this.incomes.reduce((total, income) => total + income.amount, 0);
+        this.dataSource = new MatTableDataSource(this.incomes);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+
+    // this.incomeService.getIncomes().subscribe(incomes => {
+    //   this.incomes = incomes;
+    //   this.totalIncome = this.incomes.reduce((total, income) => total + income.amount, 0);
+    //   this.dataSource = new MatTableDataSource(this.incomes);
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;
+    // });
   }
 
   updateIncome(income: Income): void {
@@ -111,6 +133,11 @@ export class IncomesComponent extends Base implements OnInit{
           this.getUpdatedIncomes();
         }
       });
+  }
+
+  getCategoryName(categoryId: number) {
+    const category = this.categories.find(c => c.id === categoryId);
+    return category ? category.name : '';
   }
 
 }

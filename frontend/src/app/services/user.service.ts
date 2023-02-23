@@ -81,4 +81,12 @@ export class UserService {
     // @ts-ignore
     this.userChanged.next(null); // check,  was user
   }
+
+  getUserFromStorage(): User {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+    }
+    return this.user;
+  }
 }

@@ -22,8 +22,8 @@ public class ExpenseService {
         return expenseDao.getAllExpenses();
     }
 
-    public Expense createExpense(Expense income) {
-        return expenseDao.createExpense(income);
+    public Expense createExpense(Expense expense) {
+        return expenseDao.createExpense(expense);
     }
 
     public Optional<Expense> getExpenseById(Long id) {
@@ -35,13 +35,14 @@ public class ExpenseService {
         return result != 0;
     }
 
-    public Expense updateExpenseById(Long id, Expense income) {
+    public Expense updateExpenseById(Long id, Expense expense) {
         Expense existingExpense = expenseDao.getExpenseById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Expense with id " + id + " not found"));
 
-        existingExpense.setDescription(income.getDescription());
-        existingExpense.setAmount(income.getAmount());
-        existingExpense.setDate(income.getDate());
+        existingExpense.setCategoryId(expense.getCategoryId());
+        existingExpense.setDescription(expense.getDescription());
+        existingExpense.setAmount(expense.getAmount());
+        existingExpense.setDate(expense.getDate());
 
         return expenseDao.updateExpense(existingExpense);
     }

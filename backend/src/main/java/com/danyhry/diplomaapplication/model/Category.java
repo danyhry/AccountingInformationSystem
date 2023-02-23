@@ -5,17 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Income {
+public class Category {
     private Long id;
-    private Long userId;
-    private Long categoryId;
-    private String description;
-    private Long amount;
-    private LocalDate date;
+    private String name;
 }

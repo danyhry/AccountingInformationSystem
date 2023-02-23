@@ -40,6 +40,7 @@ public class IncomeService {
         Income existingIncome = incomeDao.getIncomeById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Income with id " + id + " not found"));
 
+        existingIncome.setCategoryId(income.getCategoryId());
         existingIncome.setDescription(income.getDescription());
         existingIncome.setAmount(income.getAmount());
         existingIncome.setDate(income.getDate());

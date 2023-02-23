@@ -17,6 +17,8 @@ import {ContactComponent} from "../../pages/contact/contact.component";
 import {UpdateIncomeComponent} from "../../pages/incomes/update-income/update-income.component";
 import {CreateIncomeComponent} from "../../pages/incomes/create-income/create-income.component";
 import {CreateUserComponent} from "../../pages/user/create-user/create-user.component";
+import {CreateExpenseComponent} from "../../pages/expanses/create-expense/create-expense.component";
+import {UpdateExpenseComponent} from "../../pages/expanses/update-expense/update-expense.component";
 
 @NgModule({
   imports: [
@@ -39,7 +41,9 @@ import {CreateUserComponent} from "../../pages/user/create-user/create-user.comp
     ContactComponent,
     UpdateIncomeComponent,
     CreateIncomeComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    CreateExpenseComponent,
+    UpdateExpenseComponent
   ],
   providers: [NgbActiveModal]
 })

@@ -1,31 +1,31 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Income} from "../../../models/income";
-import {IncomeService} from "../../../services/income.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {takeUntil} from "rxjs";
 import {Base} from "../../../services/destroy.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Category} from "../../../models/category";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {NotificationService} from "../../../services/notification.service";
 import {UserService} from "../../../services/user.service";
-import {Category} from "../../../models/category";
 import {BudgetService} from "../../../services/budget.service";
+import {takeUntil} from "rxjs";
+import {Expense} from "../../../models/expense";
+import {ExpenseService} from "../../../services/expense.service";
 
 @Component({
-  selector: 'app-update-income',
-  templateUrl: './update-income.component.html',
-  styleUrls: ['./update-income.component.scss']
+  selector: 'app-update-expense',
+  templateUrl: './update-expense.component.html',
+  styleUrls: ['./update-expense.component.scss']
 })
-export class UpdateIncomeComponent extends Base implements OnInit {
+export class UpdateExpenseComponent extends Base implements OnInit {
 
-  incomeForm!: FormGroup;
+  expenseForm!: FormGroup;
 
   categories: Category[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public incomeData: Income,
-              private incomeService: IncomeService,
+  constructor(@Inject(MAT_DIALOG_DATA) public expenseData: Expense,
+              private expenseService: ExpenseService,
               private fb: FormBuilder,
               private notificationService: NotificationService,
-              private dialogRef: MatDialogRef<UpdateIncomeComponent>,
+              private dialogRef: MatDialogRef<UpdateExpenseComponent>,
               private userService: UserService,
               private budgetService: BudgetService
   ) {
@@ -39,7 +39,7 @@ export class UpdateIncomeComponent extends Base implements OnInit {
         this.categories = categories;
       });
 
-    this.incomeForm = this.fb.group({
+    this.expenseForm = this.fb.group({
       id: [''],
       userId: ['', []],
       categoryId: ['', Validators.required],
@@ -48,20 +48,20 @@ export class UpdateIncomeComponent extends Base implements OnInit {
       date: ['', [Validators.required]]
     });
 
-    if (this.incomeData) {
-      console.log(this.incomeData);
-      this.incomeForm.controls['categoryId'].setValue(this.incomeData.categoryId);
-      this.incomeForm.controls['amount'].setValue(this.incomeData.amount);
-      this.incomeForm.controls['description'].setValue(this.incomeData.description);
-      this.incomeForm.controls['date'].setValue(this.incomeData.date);
+    if (this.expenseData) {
+      console.log(this.expenseData);
+      this.expenseForm.controls['categoryId'].setValue(this.expenseData.categoryId);
+      this.expenseForm.controls['amount'].setValue(this.expenseData.amount);
+      this.expenseForm.controls['description'].setValue(this.expenseData.description);
+      this.expenseForm.controls['date'].setValue(this.expenseData.date);
     }
 
   }
 
-  updateIncome(): void {
-    console.log(this.incomeForm.value);
-    if (this.incomeForm.valid) {
-      this.incomeService.updateIncome(this.incomeForm.value, this.incomeData.id)
+  updateExpense(): void {
+    console.log(this.expenseForm.value);
+    if (this.expenseForm.valid) {
+      this.expenseService.updateExpense(this.expenseForm.value, this.expenseData.id)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
@@ -77,4 +77,5 @@ export class UpdateIncomeComponent extends Base implements OnInit {
       this.notificationService.showErrorMessage(`Something is wrong.`);
     }
   }
+
 }

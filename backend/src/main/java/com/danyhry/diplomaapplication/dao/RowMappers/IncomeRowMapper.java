@@ -26,6 +26,7 @@ public class IncomeRowMapper implements RowMapper<Income> {
 
         income.setId(resultSet.getLong("id"));
         income.setUserId(user.getId());
+        income.setCategoryId(resultSet.getLong("category_id"));
         income.setDescription(resultSet.getString("description"));
         income.setAmount(resultSet.getLong("amount"));
         income.setDate(resultSet.getDate("date").toLocalDate());

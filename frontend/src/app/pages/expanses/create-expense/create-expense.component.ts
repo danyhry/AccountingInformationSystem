@@ -1,31 +1,31 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Income} from "../../../models/income";
-import {IncomeService} from "../../../services/income.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {NotificationService} from "../../../services/notification.service";
-import {takeUntil} from "rxjs";
 import {Base} from "../../../services/destroy.service";
-import {UserService} from "../../../services/user.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Category} from "../../../models/category";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Income} from "../../../models/income";
+import {NotificationService} from "../../../services/notification.service";
+import {UserService} from "../../../services/user.service";
 import {BudgetService} from "../../../services/budget.service";
+import {takeUntil} from "rxjs";
+import {ExpenseService} from "../../../services/expense.service";
 
 @Component({
-  selector: 'app-create-income',
-  templateUrl: './create-income.component.html',
-  styleUrls: ['./create-income.component.scss']
+  selector: 'app-create-expense',
+  templateUrl: './create-expense.component.html',
+  styleUrls: ['./create-expense.component.scss']
 })
-export class CreateIncomeComponent extends Base implements OnInit {
+export class CreateExpenseComponent extends Base implements OnInit {
 
-  createIncomeForm!: FormGroup;
+  createExpenseForm!: FormGroup;
 
   categories: Category[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public createIncomeData: Income,
-              private incomeService: IncomeService,
+              private expenseService: ExpenseService,
               private fb: FormBuilder,
               private notificationService: NotificationService,
-              private dialogRef: MatDialogRef<CreateIncomeComponent>,
+              private dialogRef: MatDialogRef<CreateExpenseComponent>,
               private userService: UserService,
               private budgetService: BudgetService
   ) {
@@ -39,7 +39,7 @@ export class CreateIncomeComponent extends Base implements OnInit {
         this.categories = categories;
       });
 
-    this.createIncomeForm = this.fb.group({
+    this.createExpenseForm = this.fb.group({
       id: [''],
       userId: ['', []],
       categoryId: ['', Validators.required],
@@ -49,22 +49,22 @@ export class CreateIncomeComponent extends Base implements OnInit {
     });
   }
 
-  createIncome(): void {
-    console.log(this.createIncomeForm.value);
+  createExpense(): void {
+    console.log(this.createExpenseForm.value);
 
-    if (this.createIncomeForm.valid && this.userService.isAuthenticated()) {
+    if (this.createExpenseForm.valid && this.userService.isAuthenticated()) {
 
       this.userService.getUser()
         .pipe(takeUntil(this.destroy$))
         .subscribe(user => {
-          const income = this.createIncomeForm.value;
-          income.userId = user.id;
+          const expense = this.createExpenseForm.value;
+          expense.userId = user.id;
 
-          this.incomeService.addIncome(income)
+          this.expenseService.addExpense(expense)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: () => {
-                this.notificationService.showSuccessMessage(`Income was successfully created.`);
+                this.notificationService.showSuccessMessage(`Expense was successfully created.`);
                 this.dialogRef.close('update');
               },
               error: () => {

@@ -17,13 +17,16 @@ export class IncomeService {
     return this.http.get<Income[]>(this.incomeUrl);
   }
 
+  getIncomesByUserId(userId: number): Observable<Income[]> {
+    const url = `${this.incomeUrl}/${userId}`;
+    return this.http.get<Income[]>(url);
+  }
+
   addIncome(income: Income): Observable<Income> {
-    console.log(income);
     return this.http.post<Income>(this.incomeUrl, income);
   }
 
   updateIncome(income: Income, id: number): Observable<void> {
-    console.log("updateIncome: {}", income);
     const url = `${this.incomeUrl}/${id}`;
     return this.http.put<void>(url, income);
   }

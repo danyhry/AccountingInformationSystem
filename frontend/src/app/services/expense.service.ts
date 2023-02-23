@@ -17,12 +17,10 @@ export class ExpenseService {
   }
 
   addExpense(expense: Expense): Observable<Expense> {
-    console.log(expense);
     return this.http.post<Expense>(this.expenseUrl, expense);
   }
 
   updateExpense(expense: Expense, id: number): Observable<void> {
-    console.log(expense);
     const url = `${this.expenseUrl}/${id}`;
     return this.http.put<void>(url, expense);
   }

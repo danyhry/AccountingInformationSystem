@@ -1,6 +1,7 @@
 package com.danyhry.diplomaapplication.controller;
 
 import com.danyhry.diplomaapplication.exception.UserException;
+import com.danyhry.diplomaapplication.model.Role;
 import com.danyhry.diplomaapplication.model.User;
 import com.danyhry.diplomaapplication.service.JwtService;
 import com.danyhry.diplomaapplication.service.MailSenderService;
@@ -76,5 +77,10 @@ public class UserController {
     @PostMapping("/message")
     public void sendMessageToAdmin(@RequestBody Map<String, String> contactFormValues) {
         Boolean isEmailSent = mailSenderService.sendMessageToAdmin(contactFormValues);
+    }
+
+    @GetMapping("/roles")
+    public List<Role> getRoles() {
+        return userService.getRoles();
     }
 }

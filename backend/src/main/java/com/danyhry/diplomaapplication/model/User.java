@@ -1,7 +1,5 @@
 package com.danyhry.diplomaapplication.model;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,18 +23,13 @@ public class User implements UserDetails {
     private String lastName;
     private String email;
     private String password;
-
-    @Enumerated(EnumType.STRING)
     private Role role;
-
-    public User(Long userId) {
-        this.id = userId;
-        this.role = Role.USER;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        return authorities;
     }
 
     @Override

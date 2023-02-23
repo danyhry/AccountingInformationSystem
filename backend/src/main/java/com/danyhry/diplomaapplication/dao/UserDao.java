@@ -1,5 +1,6 @@
 package com.danyhry.diplomaapplication.dao;
 
+import com.danyhry.diplomaapplication.model.Role;
 import com.danyhry.diplomaapplication.model.User;
 
 import java.util.List;
@@ -16,11 +17,13 @@ public interface UserDao {
 
     int deleteUserById(Long id);
 
-    User editUser(User user, Long id);
+    User updateUser(User user, Long id);
 
     int updateUserPassword(Long id, String newPassword);
 
     String getUserPasswordByEmail(String email);
 
     String getAdminEmail();
+
+    List<Role> getRoles();
 }

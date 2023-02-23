@@ -46,4 +46,8 @@ public class IncomeService {
 
         return incomeDao.updateIncome(existingIncome);
     }
+
+    public List<Income> getIncomesByUserId(Long userId) {
+        return this.incomeDao.getIncomesByUserId(userId);
+    }
 }

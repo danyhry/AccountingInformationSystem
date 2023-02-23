@@ -55,7 +55,7 @@
           <span>Expanses</span>
         </mat-list-item>
 
-        <mat-list-item *ngIf="user?.role==='ADMIN'"
+        <mat-list-item *ngIf="user?.role?.name === 'ADMIN'"
                        class="menu-button"
                        routerLink="/users">
           <mat-icon>person</mat-icon>

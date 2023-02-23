@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {User} from "../models/user";
 import {Message} from "../models/message";
+import {Role} from "../models/role";
 
 
 @Injectable({
@@ -17,7 +18,7 @@ export class UserService {
     firstName: '',
     lastName: '',
     email: '',
-    role: '',
+    role: {id: 1, name: 'USER'},
     password: ''
   };
 
@@ -55,6 +56,10 @@ export class UserService {
     return this.http.get<User>(this.path + '/user/me');
   }
 
+  getRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(this.path + '/roles');
+  }
+
   updatePassword(data: { newPassword: any; renewPassword: any; currentPassword: any }, id: number): Observable<Object> {
     return this.http.put(this.path + `/updatePassword/${id}`, data);
   }
@@ -76,5 +81,4 @@ export class UserService {
     // @ts-ignore
     this.userChanged.next(null); // check,  was user
   }
-
 }

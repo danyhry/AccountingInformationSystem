@@ -1,24 +1,15 @@
 package com.danyhry.diplomaapplication.model;
 
-public enum Role {
-    UNDEFINED,
-    USER,
-    ADMIN;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public static Role convertFromLongToRole(Long number) {
-        if (number == 0) {
-            return UNDEFINED;
-        } else if (number == 1) {
-            return USER;
-        }
-        return ADMIN;
-    }
-
-    public static int convertFromRoleToInt(Role userRole) {
-        return switch (userRole) {
-            case ADMIN -> 2;
-            case USER -> 1;
-            case UNDEFINED -> 0;
-        };
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Role {
+    private Long id;
+    private String name;
 }

@@ -3,6 +3,7 @@ package com.danyhry.diplomaapplication.service;
 import com.danyhry.diplomaapplication.dao.UserDao;
 import com.danyhry.diplomaapplication.exception.NotFoundException;
 import com.danyhry.diplomaapplication.exception.UserException;
+import com.danyhry.diplomaapplication.model.Role;
 import com.danyhry.diplomaapplication.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
                 .filter(Objects::nonNull)
                 .findFirst()
                 .map(firstUser -> {
-                    User user = userDao.editUser(updatedUser, firstUser.getId());
+                    User user = userDao.updateUser(updatedUser, firstUser.getId());
                     if (user == null) {
                         log.error("Could not update User");
                         throw new IllegalStateException("Could not update User");
@@ -72,18 +73,6 @@ public class UserServiceImpl implements UserService {
                     return user;
                 })
                 .orElseThrow(() -> new NotFoundException(String.format("User with id %s not found", id)));
-
-//        users.ifPresentOrElse(firstUser -> {
-//            User user = userDao.editUser(updatedUser, id);
-//            if (user == null) {
-//                log.error("Could not update User");
-//                throw new IllegalStateException("Could not update User");
-//            }
-//            log.info("User was updated");
-//        }, () -> {
-//            log.error(String.format("User with id %s not found", id));
-//            throw new NotFoundException(String.format("User with id %s not found", id));
-//        });
     }
 
     @Override
@@ -114,5 +103,10 @@ public class UserServiceImpl implements UserService {
         }
 
         userDao.updateUserPassword(id, encoder.encode(newPassword));
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        return this.userDao.getRoles();
     }
 }

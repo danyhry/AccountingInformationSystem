@@ -1,5 +1,6 @@
 package com.danyhry.diplomaapplication.dao;
 
+import com.danyhry.diplomaapplication.dao.RowMappers.ExpenseRowMapper;
 import com.danyhry.diplomaapplication.model.Expense;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;

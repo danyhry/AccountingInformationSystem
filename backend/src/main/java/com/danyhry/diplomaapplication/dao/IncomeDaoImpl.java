@@ -1,5 +1,6 @@
 package com.danyhry.diplomaapplication.dao;
 
+import com.danyhry.diplomaapplication.dao.RowMappers.IncomeRowMapper;
 import com.danyhry.diplomaapplication.model.Income;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,10 +29,11 @@ public class IncomeDaoImpl implements IncomeDao {
 
     @Override
     public Optional<Income> getIncomeById(Long id) {
-        String query = "SELECT i.id, i.amount, i.description, i.date, u.id as user_id, u.role as user_role " +
-                "FROM incomes i " +
-                "LEFT JOIN users u ON i.user_id = u.id " +
-                "WHERE i.id = ?";
+        String query = "SELECT incomes.*, roles.name as role_name " +
+                "FROM incomes " +
+                "LEFT JOIN users ON incomes.user_id = users.id " +
+                "LEFT JOIN roles ON users.role_id = roles.id " +
+                "WHERE incomes.id = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(query, new Object[]{id}, new IncomeRowMapper(userDao)));
     }
 
@@ -55,6 +57,17 @@ public class IncomeDaoImpl implements IncomeDao {
     public int deleteById(Long id) {
         String query = "DELETE FROM incomes WHERE id = ?";
         return jdbcTemplate.update(query, id);
+    }
+
+    @Override
+    public List<Income> getIncomesByUserId(Long userId) {
+        String sql = "SELECT i.*, r.name as role_name " +
+                "FROM incomes i " +
+                "JOIN users u ON i.user_id = u.id " +
+                "JOIN roles r ON u.role_id = r.id " +
+                "WHERE i.user_id = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{userId}, new IncomeRowMapper(userDao));
     }
 
 }

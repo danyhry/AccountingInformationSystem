@@ -15,4 +15,6 @@ public interface IncomeDao {
     Income updateIncome(Income income);
 
     int deleteById(Long id);
+
+    List<Income> getIncomesByUserId(Long userId);
 }

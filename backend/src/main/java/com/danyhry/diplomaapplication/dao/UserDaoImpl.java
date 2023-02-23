@@ -1,15 +1,16 @@
 package com.danyhry.diplomaapplication.dao;
 
+import com.danyhry.diplomaapplication.dao.RowMappers.UserRowMapper;
 import com.danyhry.diplomaapplication.exception.NotFoundException;
+import com.danyhry.diplomaapplication.model.Role;
 import com.danyhry.diplomaapplication.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-
-import static com.danyhry.diplomaapplication.model.Role.convertFromRoleToInt;
 
 @Slf4j
 @Component
@@ -23,12 +24,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return jdbcTemplate.query("SELECT * FROM users", new UserRowMapper());
+        String sql = """
+                SELECT u.*, r.id as role_id, r.name as role_name
+                FROM users u
+                JOIN roles r ON u.role_id = r.id
+                """;
+        return jdbcTemplate.query(sql, new UserRowMapper());
     }
 
     @Override
     public Optional<User> getUserById(Long id) {
-        String sql = "SELECT * FROM users WHERE id = ?";
+        String sql = "SELECT u.*, r.id as role_id, r.name as role_name " +
+                "FROM users u " +
+                "JOIN roles r ON u.role_id = r.id " +
+                "WHERE u.id = ?";
         return jdbcTemplate.query(sql, new UserRowMapper(), id)
                 .stream()
                 .findFirst();
@@ -36,24 +45,39 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int createUser(User user) {
-        String sql = "INSERT INTO users(name, surname, email, password, role) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users(name, surname, email, password, role_id) VALUES (?, ?, ?, ?, ?)";
         log.info(String.valueOf(user));
-        return jdbcTemplate.update(
+        int rowsAffected = jdbcTemplate.update(
                 sql,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
                 user.getPassword(),
-                convertFromRoleToInt(user.getRole())
+                user.getRole().getId()
         );
+
+        if (rowsAffected > 0) {
+            Long userId = jdbcTemplate.queryForObject("SELECT lastval()", Long.class);
+            sql = "INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)";
+            rowsAffected = jdbcTemplate.update(sql, userId, user.getRole().getId());
+        }
+        return rowsAffected;
     }
 
     @Override
     public Optional<User> getUserByEmail(String email) {
-        String sql = "SELECT * FROM users WHERE email = ?";
-        return jdbcTemplate.query(sql, new UserRowMapper(), email)
-                .stream()
-                .findFirst();
+        String sql = "SELECT u.id, u.name, u.surname, u.email, u.password, r.id as role_id, r.name as role_name "
+                + "FROM users u "
+                + "JOIN user_roles ur ON u.id = ur.user_id "
+                + "JOIN roles r ON ur.role_id = r.id "
+                + "WHERE u.email = ?";
+        RowMapper<User> rowMapper = new UserRowMapper();
+        List<User> users = jdbcTemplate.query(sql, rowMapper, email);
+        if (users.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(users.get(0));
+        }
     }
 
     @Override
@@ -63,15 +87,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User editUser(User user, Long id) {
-        String sql = "UPDATE users SET name = ?, surname = ?, email = ?, role = ? " +
+    public User updateUser(User user, Long id) {
+        String sql = "UPDATE users SET name = ?, surname = ?, email = ?, role_id = ? " +
                 "WHERE id = ?";
         log.info("user: {}", user);
         int rows = jdbcTemplate.update(sql,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                convertFromRoleToInt(user.getRole()),
+                user.getRole().getId(),
                 id);
         if (rows == 0) {
             return null;
@@ -96,7 +120,17 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public String getAdminEmail() {
-        String sql = "SELECT email FROM users WHERE role = 2 LIMIT 1";
+        String sql = "SELECT email FROM users WHERE role_id = 2 LIMIT 1";
         return jdbcTemplate.queryForObject(sql, String.class);
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        String sql = "SELECT * FROM roles";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Long id = rs.getLong("id");
+            String name = rs.getString("name");
+            return new Role(id, name);
+        });
     }
 }

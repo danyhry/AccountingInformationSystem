@@ -1,5 +1,6 @@
-package com.danyhry.diplomaapplication.dao;
+package com.danyhry.diplomaapplication.dao.RowMappers;
 
+import com.danyhry.diplomaapplication.dao.UserDao;
 import com.danyhry.diplomaapplication.model.Income;
 import com.danyhry.diplomaapplication.model.User;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,6 @@ public class IncomeRowMapper implements RowMapper<Income> {
     @Override
     public Income mapRow(ResultSet resultSet, int i) throws SQLException {
         Income income = new Income();
-        log.info("resultSet: {}", resultSet);
         User user = userDao.getUserById(resultSet.getLong("user_id"))
                 .orElseThrow(() -> new RuntimeException("User not found"));
 

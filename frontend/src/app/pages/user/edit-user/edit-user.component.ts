@@ -1,11 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {takeUntil} from "rxjs";
 import {User} from "../../../models/user";
 import {UserService} from "../../../services/user.service";
 import {Base} from "../../../services/destroy.service";
 import {NotificationService} from "../../../services/notification.service";
+import {Role} from "../../../models/role";
 
 @Component({
   selector: 'app-edit-user',
@@ -15,6 +16,8 @@ import {NotificationService} from "../../../services/notification.service";
 export class EditUserComponent extends Base implements OnInit {
 
   userForm !: FormGroup;
+
+  roles: Role[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public userEditData: User,
               private formBuilder: FormBuilder,
@@ -31,14 +34,21 @@ export class EditUserComponent extends Base implements OnInit {
       firstName: [''],
       lastName: [''],
       email: [''],
-      role: ['']
+      role: new FormControl()
     });
 
     if (this.userEditData) {
-      this.userForm.controls['firstName'].setValue(this.userEditData.firstName);
-      this.userForm.controls['lastName'].setValue(this.userEditData.lastName);
-      this.userForm.controls['email'].setValue(this.userEditData.email);
-      this.userForm.controls['role'].setValue(this.userEditData.role);
+      console.log(this.roles);
+      this.userService.getRoles().subscribe(roles => {
+        this.roles = roles;
+        const currentUserRole = this.roles.find(role => role.id === this.userEditData.role.id);
+        console.log(currentUserRole);
+        this.userForm.controls['firstName'].setValue(this.userEditData.firstName);
+        this.userForm.controls['lastName'].setValue(this.userEditData.lastName);
+        this.userForm.controls['email'].setValue(this.userEditData.email);
+        this.userForm.controls['role'].setValue(currentUserRole);
+      });
+
     }
   }
 

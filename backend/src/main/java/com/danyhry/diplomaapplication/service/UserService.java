@@ -1,6 +1,7 @@
 package com.danyhry.diplomaapplication.service;
 
 import com.danyhry.diplomaapplication.exception.UserException;
+import com.danyhry.diplomaapplication.model.Role;
 import com.danyhry.diplomaapplication.model.User;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface UserService {
                             String oldPassword,
                             String newPassword,
                             String confirmPassword) throws UserException;
+
+    List<Role> getRoles();
 }

@@ -25,6 +25,12 @@ public class IncomesController {
         return ResponseEntity.ok(incomes);
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Income>> getIncomesByUserId(@PathVariable Long userId) {
+        List<Income> incomes = incomeService.getIncomesByUserId(userId);
+        return ResponseEntity.ok(incomes);
+    }
+
     @PostMapping
     public ResponseEntity<Income> createIncome(@RequestBody Income income) {
         Income createdIncome = incomeService.createIncome(income);

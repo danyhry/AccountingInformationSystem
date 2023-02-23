@@ -1,5 +1,6 @@
-package com.danyhry.diplomaapplication.dao;
+package com.danyhry.diplomaapplication.dao.RowMappers;
 
+import com.danyhry.diplomaapplication.dao.UserDao;
 import com.danyhry.diplomaapplication.model.Expense;
 import com.danyhry.diplomaapplication.model.User;
 import org.springframework.jdbc.core.RowMapper;

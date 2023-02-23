@@ -38,7 +38,7 @@
 
       <ng-container matColumnDef="role">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
-        <mat-cell *matCellDef="let user">{{user.role}}</mat-cell>
+        <mat-cell *matCellDef="let user">{{user.role.name}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="action">

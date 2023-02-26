@@ -32,7 +32,7 @@ export const MY_DATE_FORMAT = {
   templateUrl: './incomes.component.html',
   styleUrls: ['./incomes.component.scss']
 })
-export class IncomesComponent extends Base implements OnInit{
+export class IncomesComponent extends Base implements OnInit {
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -64,11 +64,14 @@ export class IncomesComponent extends Base implements OnInit{
   }
 
   ngOnInit(): void {
+    this.userService.getUser().subscribe();
     this.isAuthenticated = this.userService.isAuthenticated();
     this.getUpdatedIncomes();
-    this.budgetService.getCategories().subscribe(categories => {
-      this.categories = categories;
-    });
+    this.budgetService.getCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(categories => {
+        this.categories = categories;
+      });
   }
 
   applyFilter(event: Event): void {
@@ -89,7 +92,7 @@ export class IncomesComponent extends Base implements OnInit{
 
   private getUpdatedIncomes() {
     this.userId = this.userService.getUserFromStorage().id;
-    console.log(this.userId);
+
     this.incomeService.getIncomesByUserId(this.userId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(incomes => {
@@ -100,13 +103,6 @@ export class IncomesComponent extends Base implements OnInit{
         this.dataSource.sort = this.sort;
       });
 
-    // this.incomeService.getIncomes().subscribe(incomes => {
-    //   this.incomes = incomes;
-    //   this.totalIncome = this.incomes.reduce((total, income) => total + income.amount, 0);
-    //   this.dataSource = new MatTableDataSource(this.incomes);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    // });
   }
 
   updateIncome(income: Income): void {
@@ -128,7 +124,6 @@ export class IncomesComponent extends Base implements OnInit{
     }).afterClosed()
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
-        console.log(value);
         if (value === 'update') {
           this.getUpdatedIncomes();
         }

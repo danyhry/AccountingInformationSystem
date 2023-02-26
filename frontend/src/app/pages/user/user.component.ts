@@ -38,6 +38,7 @@ export class UserComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.getUser().subscribe();
     this.getAllUsers();
   }
 

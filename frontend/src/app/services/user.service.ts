@@ -11,7 +11,7 @@ import {Role} from "../models/role";
 })
 export class UserService {
 
-  path = 'users';
+  private usersUrl = 'users';
 
   private user: User = {
     id: 0,
@@ -40,33 +40,33 @@ export class UserService {
   }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.path);
+    return this.http.get<User[]>(this.usersUrl);
   }
 
   editUser(id: number, item: Partial<User>): Observable<User> {
     console.log(item);
-    return this.http.put<User>(this.path + '/' + id, item);
+    return this.http.put<User>(this.usersUrl + '/' + id, item);
   }
 
   deleteUser(id: number): Observable<User> {
-    return this.http.delete<User>(this.path + '/' + id);
+    return this.http.delete<User>(this.usersUrl + '/' + id);
   }
 
   getUser(): Observable<User> {
-    return this.http.get<User>(this.path + '/user/me');
+    return this.http.get<User>(this.usersUrl + '/user/me');
   }
 
   getRoles(): Observable<Role[]> {
-    return this.http.get<Role[]>(this.path + '/roles');
+    return this.http.get<Role[]>(this.usersUrl + '/roles');
   }
 
   updatePassword(data: { newPassword: any; renewPassword: any; currentPassword: any }, id: number): Observable<Object> {
-    return this.http.put(this.path + `/updatePassword/${id}`, data);
+    return this.http.put(this.usersUrl + `/updatePassword/${id}`, data);
   }
 
   sendMessageToAdmin(contactFormValues: string): Observable<Message> {
     console.log(contactFormValues);
-    return this.http.post<Message>(this.path + '/message', contactFormValues);
+    return this.http.post<Message>(this.usersUrl + '/message', contactFormValues);
   }
 
   isAuthenticated(): boolean {
@@ -79,7 +79,7 @@ export class UserService {
 
   clearUser() {
     // @ts-ignore
-    this.userChanged.next(null); // check,  was user
+    this.userChanged.next(null);
   }
 
   getUserFromStorage(): User {

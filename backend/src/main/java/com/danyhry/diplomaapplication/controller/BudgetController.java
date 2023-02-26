@@ -4,6 +4,7 @@ import com.danyhry.diplomaapplication.model.Category;
 import com.danyhry.diplomaapplication.service.BudgetService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +24,11 @@ public class BudgetController {
     public ResponseEntity<List<Category>> getAllCategories() {
         List<Category> categories = budgetService.getAllCategories();
         return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable Long categoryId) {
+        Category category = budgetService.getCategoryById(categoryId);
+        return ResponseEntity.ok(category);
     }
 }

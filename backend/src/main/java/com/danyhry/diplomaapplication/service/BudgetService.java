@@ -21,4 +21,8 @@ public class BudgetService {
     public List<Category> getAllCategories() {
         return budgetDao.getAllCategories();
     }
+
+    public Category getCategoryById(Long categoryId) {
+        return budgetDao.getCategoryById(categoryId);
+    }
 }

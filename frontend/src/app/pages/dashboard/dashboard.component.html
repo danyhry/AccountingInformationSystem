@@ -1,45 +1,68 @@
 <ng-container *ngIf="isAuthenticated; else showModeTemplate">
-  <h2>Recent Incomes</h2>
-  <div *ngIf="incomes && incomes.length > 0">
-    <ngx-charts-bar-horizontal
-      [view]="[1200, 400]"
-      [scheme]="colorScheme"
-      [results]="barChartData"
-      [gradient]="gradient"
-      [xAxis]="true"
-      [yAxis]="true"
-      [legend]="true"
-      [showXAxisLabel]="true"
-      [showYAxisLabel]="true"
-      [xAxisLabel]="'Recent Incomes'"
-      [yAxisLabel]="'Amount'"
-    ></ngx-charts-bar-horizontal>
+  <h2 class="total-budget">Total Budget for: {{totalBudget}}</h2>
 
-    <ngx-charts-pie-chart
-      [view]="[700, 400]"
-      [scheme]="colorScheme"
-      [results]="barChartData"
-      [gradient]="gradient"
-      [legend]="true"
-      [labels]="true"
-    ></ngx-charts-pie-chart>
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Incomes">
+        <mat-card class="chart-card">
+          <mat-card-title>Total Income: {{totalIncome}}</mat-card-title>
+          <ngx-charts-bar-vertical class="chart"
+                                   [view]="[1150, 400]"
+                                   [results]="incomesData"
+                                   [gradient]="gradient"
+                                   [xAxis]="true"
+                                   [yAxis]="true"
+                                   [showXAxisLabel]="true"
+                                   [showYAxisLabel]="true"
+                                   [xAxisLabel]="'Day of Month'"
+                                   [yAxisLabel]="'Amount'"
+                                   [showDataLabel]="true"
+                                   [dataLabelFormatting]="dataLabelFormatting"
+                                   [tooltipDisabled]="false">
+            <ng-template #tooltipTemplate let-model="model">
+              <div class="tooltip-content">
+                <p>Amount: {{ model.value | currency:'UAH':'symbol-narrow' }}</p>
+              </div>
+            </ng-template>
+          </ngx-charts-bar-vertical>
+        </mat-card>
 
-    <div class="chart-container">
-      <ngx-charts-bar-horizontal
-        [results]="barChartData"
-        [xAxis]="true"
-        [yAxis]="true"
-        [legend]="false"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxisLabel]="'Month'"
-        [yAxisLabel]="'Amount'"
-      ></ngx-charts-bar-horizontal>
-    </div>
+        <ngx-charts-pie-grid [view]="[1150, 400]"
+                             [results]="pieChartIncomesData"
+        ></ngx-charts-pie-grid>
 
-  </div>
 
-  <p>Total Income: {{totalIncome}}</p>
+    </mat-tab>
+    <mat-tab label="Expenses">
+      <mat-card class="chart-card">
+        <mat-card-title>Total Expense: {{totalExpense}}</mat-card-title>
+        <ngx-charts-bar-vertical class="chart"
+                                 [view]="[1150, 400]"
+                                 [results]="expensesData"
+                                 [gradient]="gradient"
+                                 [scheme]="colorScheme"
+                                 [xAxis]="true"
+                                 [yAxis]="true"
+                                 [showXAxisLabel]="true"
+                                 [showYAxisLabel]="true"
+                                 [xAxisLabel]="'Day of Month'"
+                                 [yAxisLabel]="'Amount'"
+                                 [showDataLabel]="true"
+                                 [dataLabelFormatting]="dataLabelFormatting"
+                                 [tooltipDisabled]="false">
+          <ng-template #tooltipTemplate let-model="model">
+            <div class="tooltip-content">
+              <p>Amount: {{ model.value | currency:'UAH':'symbol-narrow' }}</p>
+            </div>
+          </ng-template>
+        </ngx-charts-bar-vertical>
+
+        <ngx-charts-pie-grid [view]="[1150, 400]"
+                             [results]="pieChartExpensesData"
+        ></ngx-charts-pie-grid>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Budget">Budget</mat-tab>
+  </mat-tab-group>
 
 </ng-container>
 

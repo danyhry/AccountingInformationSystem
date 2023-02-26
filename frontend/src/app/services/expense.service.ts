@@ -16,6 +16,11 @@ export class ExpenseService {
     return this.http.get<Expense[]>(this.expenseUrl);
   }
 
+  getExpensesByUserId(userId: number): Observable<Expense[]> {
+    const url = `${this.expenseUrl}/${userId}`;
+    return this.http.get<Expense[]>(url);
+  }
+
   addExpense(expense: Expense): Observable<Expense> {
     return this.http.post<Expense>(this.expenseUrl, expense);
   }

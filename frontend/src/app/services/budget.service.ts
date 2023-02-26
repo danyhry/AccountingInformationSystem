@@ -16,4 +16,9 @@ export class BudgetService {
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.budgetUrl + "/categories");
   }
+
+  getCategoryById(categoryId: number): Observable<Category> {
+    const url = `${this.budgetUrl}/${categoryId}`;
+    return this.http.get<Category>(url);
+  }
 }

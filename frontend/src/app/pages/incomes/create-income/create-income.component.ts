@@ -36,7 +36,7 @@ export class CreateIncomeComponent extends Base implements OnInit {
     this.budgetService.getCategories()
       .pipe(takeUntil(this.destroy$))
       .subscribe(categories => {
-        this.categories = categories;
+        this.categories = categories.sort((a, b) => a.name.localeCompare(b.name));
       });
 
     this.createIncomeForm = this.fb.group({

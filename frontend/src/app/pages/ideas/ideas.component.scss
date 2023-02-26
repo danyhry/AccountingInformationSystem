@@ -1,7 +1,68 @@
-::ng-deep mat-tab-body {
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mat-form-field {
+  width: calc(25% - 1rem);
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.demo-table {
+  width: 100%;
+}
+
+.mat-form-field {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.mat-column-year {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
   text-align: center;
 }
 
-.example-form-field {
-  width: 200px;
+.mat-column-incomesInMonth {
+  padding-left: 16px;
+  text-align: center;
+  padding-right: 32px;
+}
+
+.mat-column-expenses {
+  text-align: center;
+}
+
+.mat-column-monthlyNetIncome {
+  text-align: center;
+}
+
+.mat-column-totalIncomeForThisYear {
+  text-align: center;
+}
+
+.mat-column-totalIncomeForLastYear {
+  text-align: center;
+}
+
+.mat-column-percentForLastYearIncome {
+  text-align: center;
+}
+
+.mat-column-percentForThisYearIncome {
+  text-align: center;
+}
+
+.mat-column-totalCapital {
+  text-align: center;
+  font-weight: bold;
 }

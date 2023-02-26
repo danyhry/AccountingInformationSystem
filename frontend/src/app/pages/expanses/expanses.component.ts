@@ -39,6 +39,8 @@ export class ExpansesComponent extends Base implements OnInit {
 
   categories: Category[] = [];
 
+  userId!: number;
+
   constructor(private expenseService: ExpenseService,
               private fb: FormBuilder,
               private dialog: MatDialog,
@@ -49,6 +51,7 @@ export class ExpansesComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.getUser().subscribe();
     this.isAuthenticated = this.userService.isAuthenticated();
     this.getUpdatedExpenses();
     this.budgetService.getCategories()
@@ -76,7 +79,9 @@ export class ExpansesComponent extends Base implements OnInit {
   }
 
   private getUpdatedExpenses() {
-    this.expenseService.getExpenses()
+    this.userId = this.userService.getUserFromStorage().id;
+
+    this.expenseService.getExpensesByUserId(this.userId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(expenses => {
         this.expenses = expenses;

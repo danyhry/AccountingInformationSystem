@@ -49,4 +49,10 @@ public class BudgetDaoImpl implements BudgetDao {
         String sql = "SELECT * FROM categories;";
         return jdbcTemplate.query(sql, new CategoryRowMapper());
     }
+
+    @Override
+    public Category getCategoryById(Long categoryId) {
+        String query = "SELECT * FROM categories WHERE id = ?;";
+        return jdbcTemplate.queryForObject(query, new Object[]{categoryId},new CategoryRowMapper());
+    }
 }

@@ -18,4 +18,6 @@ public interface BudgetDao {
     Budget getBudgetByUserId(Long userId);
 
     List<Category> getAllCategories();
+
+    Category getCategoryById(Long categoryId);
 }

@@ -6,6 +6,7 @@ import {AuthResponse} from "../models/auth/auth";
 import {LoginRequest} from "../models/auth/login";
 import {catchError} from "rxjs/operators";
 import {UserService} from "./user.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
   path?: '';
 
   constructor(private http: HttpClient,
-              private userService: UserService
+              private userService: UserService,
+              private router: Router
   ) {
   }
 
@@ -43,6 +45,10 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.userService.clearUser();
+    this.router.navigateByUrl('/login');
     return this.http.post<any>('auth/logout', null);
   }
 
@@ -50,6 +56,8 @@ export class AuthService {
     if (remember) {
       localStorage.setItem('access_token', authResponse.token);
       localStorage.setItem('currentUser', JSON.stringify(authResponse.user));
+      sessionStorage.setItem('access_token', authResponse.token);
+      sessionStorage.setItem('currentUser', JSON.stringify(authResponse.user));
     } else {
       localStorage.setItem('access_token', authResponse.token);
       localStorage.setItem('currentUser', JSON.stringify(authResponse.user));

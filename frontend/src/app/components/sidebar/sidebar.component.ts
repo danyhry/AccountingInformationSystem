@@ -38,13 +38,9 @@ export class SidebarComponent extends Base implements OnInit {
       .subscribe(user => {
         this.user = user;
         if (user?.id == 0) {
-          //TODO: edit
           this.getUser();
         }
       });
-    if (this.authService.isAuthenticated()) {
-
-    }
   }
 
   getUser() {
@@ -54,8 +50,8 @@ export class SidebarComponent extends Base implements OnInit {
   _logOut() {
     localStorage.clear();
     sessionStorage.clear();
-
     this.userService.clearUser();
+
     this.router.navigateByUrl('/login');
   }
 }

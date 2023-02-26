@@ -24,6 +24,7 @@ public class IncomeService {
     }
 
     public Income createIncome(Income income) {
+        income.setDate(income.getDate().plusDays(1));
         return incomeDao.createIncome(income);
     }
 
@@ -43,7 +44,7 @@ public class IncomeService {
         existingIncome.setCategoryId(income.getCategoryId());
         existingIncome.setDescription(income.getDescription());
         existingIncome.setAmount(income.getAmount());
-        existingIncome.setDate(income.getDate());
+        existingIncome.setDate(income.getDate().plusDays(1));
 
         return incomeDao.updateIncome(existingIncome);
     }

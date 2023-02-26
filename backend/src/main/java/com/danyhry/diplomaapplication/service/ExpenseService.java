@@ -23,6 +23,7 @@ public class ExpenseService {
     }
 
     public Expense createExpense(Expense expense) {
+        expense.setDate(expense.getDate().plusDays(1));
         return expenseDao.createExpense(expense);
     }
 
@@ -42,7 +43,7 @@ public class ExpenseService {
         existingExpense.setCategoryId(expense.getCategoryId());
         existingExpense.setDescription(expense.getDescription());
         existingExpense.setAmount(expense.getAmount());
-        existingExpense.setDate(expense.getDate());
+        existingExpense.setDate(expense.getDate().plusDays(1));
 
         return expenseDao.updateExpense(existingExpense);
     }

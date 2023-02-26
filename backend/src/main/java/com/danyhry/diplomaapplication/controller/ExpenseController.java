@@ -22,8 +22,8 @@ public class ExpenseController {
         return ResponseEntity.ok(expenses);
     }
 
-    @GetMapping("/expense")
-    public ResponseEntity<List<Expense>> getExpensesByUserId(@RequestParam Long userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Expense>> getExpensesByUserId(@PathVariable Long userId) {
         List<Expense> expenses = expenseService.getExpensesByUserId(userId);
         return ResponseEntity.ok(expenses);
     }

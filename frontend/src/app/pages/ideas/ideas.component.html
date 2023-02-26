@@ -1,60 +1,137 @@
-<h1 class="text-center">Capital Creation Calculator</h1>
-<form [formGroup]="investmentsForm">
-  <div class="container">
-    <p>
-      <mat-form-field class="w-100">
-        <mat-label>Starting capital</mat-label>
-        <input matInput formControlName="startingCapital" type="number" placeholder="0">
-        <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-    </p>
+<mat-card class="card">
+  <h1 class="text-center">Capital Creation Calculator</h1>
+  <mat-card-content>
+    <form [formGroup]="investmentsForm" class="container">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <mat-form-field>
+            <mat-label>Starting capital</mat-label>
+            <input matInput formControlName="startingCapital" type="number" placeholder="0">
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
 
-    <p>
-      <mat-form-field class="w-100">
-        <mat-label>Incomes</mat-label>
-        <input matInput formControlName="incomes" type="number" placeholder="0">
-      </mat-form-field>
-    </p>
+        <div class="form-group col-md-2">
+          <mat-form-field>
+            <mat-label>Incomes for month</mat-label>
+            <input matInput formControlName="incomes" type="number" placeholder="0">
+          </mat-form-field>
+        </div>
 
-    <p>
-      <mat-form-field class="w-100">
-        <mat-label>Expanses</mat-label>
-        <input matInput formControlName="expanses" type="number" placeholder="0">
-      </mat-form-field>
-    </p>
+        <div class="form-group col-md-3">
+          <mat-form-field>
+            <mat-label>Expenses for month</mat-label>
+            <input matInput formControlName="expenses" type="number" placeholder="0">
+          </mat-form-field>
+        </div>
 
-    <p>
-      <mat-form-field class="w-100">
-        <mat-label>Expected income growth / year</mat-label>
-        <input matInput formControlName="expectedIncome" type="number" placeholder="0">
-      </mat-form-field>
-    </p>
+        <div class="form-group col-md-3">
+          <mat-form-field>
+            <mat-label>How old are you?</mat-label>
+            <input matInput formControlName="age" type="number" placeholder="0">
+          </mat-form-field>
+        </div>
 
-    <p>
-      <mat-form-field class="w-100">
-        <mat-label>Rate % of your investment</mat-label>
-        <input matInput formControlName="rate" type="number" placeholder="0">
-      </mat-form-field>
-    </p>
+        <div class="form-group col-md-3">
+          <mat-form-field>
+            <mat-label>Expected income growth / year</mat-label>
+            <input matInput formControlName="expectedIncomeGrowthRate" type="number" placeholder="0">
+          </mat-form-field>
+        </div>
 
-    <p>
-      <mat-form-field class="w-100">
-        <mat-label>Inflation</mat-label>
-        <input matInput formControlName="inflation" type="number" placeholder="0">
-      </mat-form-field>
-    </p>
+        <div class="form-group col-md-3">
+          <mat-form-field>
+            <mat-label>Rate % of your investment</mat-label>
+            <input matInput formControlName="investmentRate" type="number" placeholder="0">
+          </mat-form-field>
+        </div>
 
-    <p>
-      <mat-form-field class="w-100">
-        <mat-label>Your age</mat-label>
-        <input matInput formControlName="age" type="number" placeholder="0">
-      </mat-form-field>
-    </p>
-  </div>
-</form>
-<div mat-dialog-actions [align]="'end'">
-  <button mat-raised-button color="warn" mat-dialog-close class="m-1">Close</button>
-  <button mat-raised-button color="primary" (click)="createInvestmentModel()">Update</button>
-</div>
+        <div class="form-group col-md-3">
+          <mat-form-field>
+            <mat-label>Inflation</mat-label>
+            <input matInput formControlName="inflationRate" type="number" placeholder="0">
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+
+    <div mat-dialog-actions class="d-flex justify-content-end mt-3">
+      <button mat-raised-button color="warn" mat-dialog-close class="mx-1">Close</button>
+      <button mat-raised-button color="primary" (click)="createInvestmentModel()">Calculate</button>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-container *ngIf="this.isCreateInvestmentModel">
+  <mat-card class="card mt-3 mb-3">
+    <mat-card-title class="title">Growth of capital</mat-card-title>
+    <mat-card-content>
+      <ngx-charts-line-chart [view]="[1100, 400]"
+                             [scheme]="colorScheme"
+                             [results]="chartData"
+                             [gradient]="false"
+                             [xAxis]="true"
+                             [yAxis]="true"
+                             [legend]="false"
+                             [showXAxisLabel]="true"
+                             [showYAxisLabel]="true"
+                             [xAxisLabel]="'Year'"
+                             [yAxisLabel]="'Total Capital'"
+      ></ngx-charts-line-chart>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef> Age</th>
+          <td mat-cell *matCellDef="let element"> {{ this.age + element.year }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="incomesInMonth">
+          <th mat-header-cell *matHeaderCellDef> Incomes</th>
+          <td mat-cell *matCellDef="let element"> {{ element.incomesInMonth }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expenses">
+          <th mat-header-cell *matHeaderCellDef> Expenses</th>
+          <td mat-cell *matCellDef="let element"> {{ element.expenses }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="monthlyNetIncome">
+          <th mat-header-cell *matHeaderCellDef> Monthly Net Income</th>
+          <td mat-cell *matCellDef="let element"> {{ element.monthlyNetIncome }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalIncomeForThisYear">
+          <th mat-header-cell *matHeaderCellDef> Total Income for This Year</th>
+          <td mat-cell *matCellDef="let element"> {{ element.totalIncomeForThisYear }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalIncomeForLastYear">
+          <th mat-header-cell *matHeaderCellDef> Total Income for Last Year</th>
+          <td mat-cell *matCellDef="let element"> {{ element.totalIncomeForLastYear }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="percentForLastYearIncome">
+          <th mat-header-cell *matHeaderCellDef> Percentage for Last Year's Income</th>
+          <td mat-cell *matCellDef="let element"> {{ element.percentForLastYearIncome }} </td>
+        </ng-container>
+        <ng-container matColumnDef="percentForThisYearIncome">
+          <th mat-header-cell *matHeaderCellDef> Percentage for This Year's Income</th>
+          <td mat-cell *matCellDef="let element"> {{ element.percentForThisYearIncome }} </td>
+        </ng-container>
+        <ng-container matColumnDef="totalCapital">
+          <th mat-header-cell *matHeaderCellDef> Total Capital</th>
+          <td mat-cell *matCellDef="let element"> {{ element.totalCapital }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</ng-container>

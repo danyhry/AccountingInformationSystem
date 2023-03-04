@@ -9,10 +9,12 @@ import {UserService} from "../../services/user.service";
 import {takeUntil} from "rxjs";
 import {Expense} from "../../models/expense";
 import {ExpenseService} from "../../services/expense.service";
-import {BudgetService} from "../../services/budget.service";
 import {Category} from "../../models/category";
 import {CreateExpenseComponent} from "./create-expense/create-expense.component";
 import {UpdateExpenseComponent} from "./update-expense/update-expense.component";
+import {CategoryService} from "../../services/category.service";
+import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: 'app-expanses',
@@ -45,7 +47,8 @@ export class ExpansesComponent extends Base implements OnInit {
               private fb: FormBuilder,
               private dialog: MatDialog,
               private userService: UserService,
-              private budgetService: BudgetService
+              private categoryService: CategoryService,
+              private notificationService: NotificationService
   ) {
     super();
   }
@@ -54,7 +57,7 @@ export class ExpansesComponent extends Base implements OnInit {
     this.userService.getUser().subscribe();
     this.isAuthenticated = this.userService.isAuthenticated();
     this.getUpdatedExpenses();
-    this.budgetService.getCategories()
+    this.categoryService.getCategories()
       .pipe(takeUntil(this.destroy$))
       .subscribe(categories => {
         this.categories = categories;
@@ -70,12 +73,24 @@ export class ExpansesComponent extends Base implements OnInit {
   }
 
   deleteExpense(expense: Expense): void {
+    const dialog = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Confirm',
+        message: 'Are you sure you want to delete expense?'
+      }
+    });
+    dialog.afterClosed().subscribe((isDelete: boolean) => {
+      if (isDelete) {
+        this.expenseService.deleteExpense(expense.id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => {
+            this.notificationService.showSuccessMessage(`Expense was successfully deleted.`);
+            this.getUpdatedExpenses();
+          });
+      }
+    });
     console.log(expense);
-    this.expenseService.deleteExpense(expense.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.getUpdatedExpenses();
-      });
+
   }
 
   private getUpdatedExpenses() {

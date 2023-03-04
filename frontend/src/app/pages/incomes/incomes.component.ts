@@ -12,8 +12,11 @@ import {UpdateIncomeComponent} from "./update-income/update-income.component";
 import {CreateIncomeComponent} from "./create-income/create-income.component";
 import {UserService} from "../../services/user.service";
 import {Category} from "../../models/category";
-import {BudgetService} from "../../services/budget.service";
-
+import {CategoryService} from "../../services/category.service";
+import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
+import {NotificationService} from "../../services/notification.service";
+import { jsPDF } from 'jspdf';
+import autoTable from "jspdf-autotable";
 
 export const MY_DATE_FORMAT = {
   parse: {
@@ -58,7 +61,8 @@ export class IncomesComponent extends Base implements OnInit {
               private fb: FormBuilder,
               private dialog: MatDialog,
               private userService: UserService,
-              private budgetService: BudgetService
+              private categoryService: CategoryService,
+              private notificationService: NotificationService
   ) {
     super();
   }
@@ -67,7 +71,7 @@ export class IncomesComponent extends Base implements OnInit {
     this.userService.getUser().subscribe();
     this.isAuthenticated = this.userService.isAuthenticated();
     this.getUpdatedIncomes();
-    this.budgetService.getCategories()
+    this.categoryService.getCategories()
       .pipe(takeUntil(this.destroy$))
       .subscribe(categories => {
         this.categories = categories;
@@ -84,9 +88,19 @@ export class IncomesComponent extends Base implements OnInit {
   }
 
   deleteIncome(income: Income): void {
-    console.log(income);
-    this.incomeService.deleteIncome(income.id).subscribe(() => {
-      this.getUpdatedIncomes();
+    const dialog = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Confirm',
+        message: 'Are you sure you want to delete income?'
+      }
+    });
+    dialog.afterClosed().subscribe((isDelete: boolean) => {
+      if (isDelete) {
+        this.incomeService.deleteIncome(income.id).subscribe(() => {
+          this.notificationService.showSuccessMessage(`User was successfully deleted.`);
+          this.getUpdatedIncomes();
+        });
+      }
     });
   }
 
@@ -134,5 +148,31 @@ export class IncomesComponent extends Base implements OnInit {
     const category = this.categories.find(c => c.id === categoryId);
     return category ? category.name : '';
   }
+
+
+  exportPDF() {
+    // Initialize jsPDF
+    const doc = new jsPDF("p", "mm", "a4");
+
+    // Define columns and rows for the table
+    const columns = ['Category', 'Amount', 'Date', 'Description'];
+    const rows: any[][] = [];
+    this.dataSource.filteredData.forEach((income) => {
+      const category = this.getCategoryName(income.categoryId);
+      const amount = income.amount;
+      const date = income.date;
+      const description = income.description;
+      rows.push([category, amount, date, description]);
+    });
+
+    autoTable(doc, {
+      head: [columns],
+      body: rows
+    });
+
+    // Save the PDF file
+    doc.save('incomes.pdf');
+  }
+
 
 }

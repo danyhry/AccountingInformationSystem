@@ -78,5 +78,17 @@ public class ExpenseDaoImpl implements ExpenseDao {
         return jdbcTemplate.query(sql, new Object[]{userId}, new ExpenseRowMapper(userDao));
     }
 
+    public List<Expense> getExpensesByUserIdMonthAndYear(Long userId) {
+        String sql = """
+                SELECT e.*, r.name as role_name
+                FROM expenses e
+                JOIN users u ON e.user_id = u.id
+                JOIN roles r ON u.role_id = r.id
+                WHERE e.user_id = ?
+                """;
+
+        return jdbcTemplate.query(sql, new Object[]{userId}, new ExpenseRowMapper(userDao));
+    }
+
 
 }

@@ -2,16 +2,17 @@
   <mat-card class="card">
     <mat-card-title-group>
       <mat-card-title class="title">Incomes</mat-card-title>
-      <button mat-raised-button color="primary" (click)="createIncome()">
-        Add Income
-      </button>
+      <div class="button-group">
+        <button mat-raised-button color="primary" (click)="createIncome()">Add Income</button>
+        <button mat-raised-button color="accent" (click)="exportPDF()">Export to PDF</button>
+      </div>
     </mat-card-title-group>
     <mat-card-content>
       <mat-form-field appearance="standard">
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
       </mat-form-field>
-      <mat-table [dataSource]="dataSource" matSort>
+      <mat-table [dataSource]="dataSource" matSort id="income-table">
 
         <ng-container matColumnDef="category">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
@@ -57,10 +58,10 @@
           <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
         </tr>
       </mat-table>
-      <p>Total Income: {{totalIncome}}</p>
-
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of incomes"></mat-paginator>
-
+      <mat-card-footer>
+        <p>Total Income: {{totalIncome}}</p>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of incomes"></mat-paginator>
+      </mat-card-footer>
     </mat-card-content>
   </mat-card>
 

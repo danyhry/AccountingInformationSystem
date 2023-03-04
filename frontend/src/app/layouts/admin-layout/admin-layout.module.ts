@@ -19,6 +19,7 @@ import {CreateIncomeComponent} from "../../pages/incomes/create-income/create-in
 import {CreateUserComponent} from "../../pages/user/create-user/create-user.component";
 import {CreateExpenseComponent} from "../../pages/expanses/create-expense/create-expense.component";
 import {UpdateExpenseComponent} from "../../pages/expanses/update-expense/update-expense.component";
+import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import {UpdateExpenseComponent} from "../../pages/expanses/update-expense/update
     CreateIncomeComponent,
     CreateUserComponent,
     CreateExpenseComponent,
-    UpdateExpenseComponent
+    UpdateExpenseComponent,
+    ConfirmationDialogComponent
   ],
   providers: [NgbActiveModal]
 })

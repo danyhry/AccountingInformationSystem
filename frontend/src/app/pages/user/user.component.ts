@@ -11,6 +11,7 @@ import {takeUntil} from "rxjs";
 import {EditUserComponent} from "./edit-user/edit-user.component";
 import {NotificationService} from "../../services/notification.service";
 import {CreateUserComponent} from "./create-user/create-user.component";
+import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: "app-user",
@@ -32,7 +33,7 @@ export class UserComponent extends Base implements OnInit {
   constructor(private userService: UserService,
               private notificationService: NotificationService,
               private formBuilder: FormBuilder,
-              private dialog: MatDialog
+              private dialog: MatDialog,
   ) {
     super();
   }
@@ -90,12 +91,23 @@ export class UserComponent extends Base implements OnInit {
   }
 
   deleteUser(user: User) {
-    this.userService.deleteUser(user.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-          this.notificationService.showSuccessMessage(`User was successfully deleted.`);
-          this.getAllUsers();
-        }
-      )
+    const dialog = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Confirm',
+        message: 'Are you sure you want to delete user?'
+      }
+    });
+
+    dialog.afterClosed().subscribe((isDelete: boolean) => {
+      if (isDelete) {
+        this.userService.deleteUser(user.id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => {
+              this.notificationService.showSuccessMessage(`User was successfully deleted.`);
+              this.getAllUsers();
+            }
+          )
+      }
+    });
   }
 }

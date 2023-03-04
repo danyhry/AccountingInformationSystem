@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +67,19 @@ public class IncomeDaoImpl implements IncomeDao {
                 "JOIN users u ON i.user_id = u.id " +
                 "JOIN roles r ON u.role_id = r.id " +
                 "WHERE i.user_id = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{userId}, new IncomeRowMapper(userDao));
+    }
+
+    @Override
+    public List<Income> getIncomesByUserIdAndDate(Long userId, LocalDate date) {
+        String sql = "SELECT i.*, r.name as role_name " +
+                "FROM incomes i " +
+                "JOIN users u ON i.user_id = u.id " +
+                "JOIN roles r ON u.role_id = r.id " +
+                "WHERE i.user_id = ? " +
+                "  AND EXTRACT(MONTH FROM i.date) = ? " +
+                "  AND EXTRACT(YEAR FROM i.date) = ?";
 
         return jdbcTemplate.query(sql, new Object[]{userId}, new IncomeRowMapper(userDao));
     }

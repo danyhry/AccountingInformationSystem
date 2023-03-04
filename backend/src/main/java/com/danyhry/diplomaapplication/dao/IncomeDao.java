@@ -2,6 +2,7 @@ package com.danyhry.diplomaapplication.dao;
 
 import com.danyhry.diplomaapplication.model.Income;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,4 +18,6 @@ public interface IncomeDao {
     int deleteById(Long id);
 
     List<Income> getIncomesByUserId(Long userId);
+
+    List<Income> getIncomesByUserIdAndDate(Long userId, LocalDate date);
 }

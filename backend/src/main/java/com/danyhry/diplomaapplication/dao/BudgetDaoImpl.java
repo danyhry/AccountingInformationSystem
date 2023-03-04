@@ -1,8 +1,6 @@
 package com.danyhry.diplomaapplication.dao;
 
-import com.danyhry.diplomaapplication.dao.RowMappers.CategoryRowMapper;
 import com.danyhry.diplomaapplication.model.Budget;
-import com.danyhry.diplomaapplication.model.Category;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -42,17 +40,5 @@ public class BudgetDaoImpl implements BudgetDao {
     @Override
     public Budget getBudgetByUserId(Long userId) {
         return null;
-    }
-
-    @Override
-    public List<Category> getAllCategories() {
-        String sql = "SELECT * FROM categories;";
-        return jdbcTemplate.query(sql, new CategoryRowMapper());
-    }
-
-    @Override
-    public Category getCategoryById(Long categoryId) {
-        String query = "SELECT * FROM categories WHERE id = ?;";
-        return jdbcTemplate.queryForObject(query, new Object[]{categoryId},new CategoryRowMapper());
     }
 }

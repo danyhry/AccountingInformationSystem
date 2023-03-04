@@ -6,9 +6,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Income} from "../../../models/income";
 import {NotificationService} from "../../../services/notification.service";
 import {UserService} from "../../../services/user.service";
-import {BudgetService} from "../../../services/budget.service";
 import {takeUntil} from "rxjs";
 import {ExpenseService} from "../../../services/expense.service";
+import {CategoryService} from "../../../services/category.service";
 
 @Component({
   selector: 'app-create-expense',
@@ -27,13 +27,13 @@ export class CreateExpenseComponent extends Base implements OnInit {
               private notificationService: NotificationService,
               private dialogRef: MatDialogRef<CreateExpenseComponent>,
               private userService: UserService,
-              private budgetService: BudgetService
+              private categoryService: CategoryService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.budgetService.getCategories()
+    this.categoryService.getCategories()
       .pipe(takeUntil(this.destroy$))
       .subscribe(categories => {
         this.categories = categories.sort((a, b) => a.name.localeCompare(b.name));

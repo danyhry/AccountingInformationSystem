@@ -1,10 +1,170 @@
-<ng-container *ngIf="isAuthenticated; else showModeTemplate">
-  <h2 class="total-budget">Total Budget for: {{totalBudget}}</h2>
+<ng-container class="content" *ngIf="isAuthenticated; else showModeTemplate">
+  <!--  <h2 class="total-budget">Total Budget for {{currentMonth}}: {{totalBudget}}</h2>-->
 
   <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Budget" class="budget-tab">
+      <div class="row justify-content-center">
+        <div class="col-md-5 m-2">
+          <div class="card bg-success text-white">
+            <div class="card-body text-center">
+              <h5 class="card-title">Total Income</h5>
+              <p class="card-text">{{totalIncome}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 m-2">
+          <div class="card bg-danger text-white">
+            <div class="card-body text-center">
+              <h5 class="card-title">Total Expense</h5>
+              <p class="card-text">{{totalExpense}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 mt-2">
+        <div class="row">
+          <!-- Incomes This Month Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card revenue-card">
+
+              <div class="card-body">
+                <h5 class="card-title">This Month <span>| Budget</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>$3,264</h6>
+                    <!--                    TODO: maybe add compare with last month?-->
+                    <!--                    <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Incomes This Month Card -->
+
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card revenue-card">
+              <div class="card-body">
+                <h5 class="card-title">This Year <span>| Budget</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>$3,264</h6>
+                    <!--                    TODO: maybe add compare with last year?-->
+                    <!--                    <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">decrease</span>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Incomes Total Card -->
+          <div class="col-xxl-4 col-md-4">
+            <div class="card info-card revenue-card">
+
+              <div class="card-body">
+                <h5 class="card-title">Total <span>| Budget</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{totalBudget}}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Incomes Total Card -->
+
+        </div>
+      </div>
+
+
+      <div class="col-12 mt-2">
+        <div class="card top-selling overflow-auto">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+
+          <div class="card-body pb-0">
+            <h5 class="card-title">Top Incomes</h5>
+
+            <table class="table table-borderless">
+              <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
+                <td><a href="#" class="text-primary fw-bold">Text1</a></td>
+                <td>$64</td>
+                <td class="fw-bold">124</td>
+                <td>$5,828</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
+                <td><a href="#" class="text-primary fw-bold">Text2</a></td>
+                <td>$46</td>
+                <td class="fw-bold">98</td>
+                <td>$4,508</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
+                <td><a href="#" class="text-primary fw-bold">Text3</a></td>
+                <td>$59</td>
+                <td class="fw-bold">74</td>
+                <td>$4,366</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
+                <td><a href="#" class="text-primary fw-bold">Text4</a></td>
+                <td>$32</td>
+                <td class="fw-bold">63</td>
+                <td>$2,016</td>
+              </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </div><!-- End Top Selling -->
+    </mat-tab>
+
     <mat-tab label="Incomes">
-        <mat-card class="chart-card">
-          <mat-card-title>Total Income: {{totalIncome}}</mat-card-title>
+      <mat-card class="chart-card">
+        <mat-card-title>
+          <div class="card bg-success text-white">
+            <div class="card-body text-center">
+              <h5 class="card-title">Incomes For This Month</h5>
+              <p class="card-text">{{totalIncome}}</p>
+            </div>
+          </div>
+        </mat-card-title>
+        <mat-card-content class="mt-4">
           <ngx-charts-bar-vertical class="chart"
                                    [view]="[1150, 400]"
                                    [results]="incomesData"
@@ -24,44 +184,55 @@
               </div>
             </ng-template>
           </ngx-charts-bar-vertical>
-        </mat-card>
+        </mat-card-content>
+      </mat-card>
 
-        <ngx-charts-pie-grid [view]="[1150, 400]"
-                             [results]="pieChartIncomesData"
-        ></ngx-charts-pie-grid>
+      <ngx-charts-pie-grid [view]="[1150, 400]"
+                           [results]="pieChartIncomesData"
+      ></ngx-charts-pie-grid>
 
 
     </mat-tab>
+
     <mat-tab label="Expenses">
       <mat-card class="chart-card">
-        <mat-card-title>Total Expense: {{totalExpense}}</mat-card-title>
-        <ngx-charts-bar-vertical class="chart"
-                                 [view]="[1150, 400]"
-                                 [results]="expensesData"
-                                 [gradient]="gradient"
-                                 [scheme]="colorScheme"
-                                 [xAxis]="true"
-                                 [yAxis]="true"
-                                 [showXAxisLabel]="true"
-                                 [showYAxisLabel]="true"
-                                 [xAxisLabel]="'Day of Month'"
-                                 [yAxisLabel]="'Amount'"
-                                 [showDataLabel]="true"
-                                 [dataLabelFormatting]="dataLabelFormatting"
-                                 [tooltipDisabled]="false">
-          <ng-template #tooltipTemplate let-model="model">
-            <div class="tooltip-content">
-              <p>Amount: {{ model.value | currency:'UAH':'symbol-narrow' }}</p>
+        <mat-card-title>
+          <div class="card bg-danger text-white">
+            <div class="card-body text-center">
+              <h5 class="card-title">Expenses For This Month</h5>
+              <p class="card-text">{{totalExpense}}</p>
             </div>
-          </ng-template>
-        </ngx-charts-bar-vertical>
+          </div>
+        </mat-card-title>
+        <mat-card-content class="mt-4">
 
-        <ngx-charts-pie-grid [view]="[1150, 400]"
-                             [results]="pieChartExpensesData"
-        ></ngx-charts-pie-grid>
+          <ngx-charts-bar-vertical class="chart"
+                                   [view]="[1150, 400]"
+                                   [results]="expensesData"
+                                   [gradient]="gradient"
+                                   [scheme]="colorScheme"
+                                   [xAxis]="true"
+                                   [yAxis]="true"
+                                   [showXAxisLabel]="true"
+                                   [showYAxisLabel]="true"
+                                   [xAxisLabel]="'Day of Month'"
+                                   [yAxisLabel]="'Amount'"
+                                   [showDataLabel]="true"
+                                   [dataLabelFormatting]="dataLabelFormatting"
+                                   [tooltipDisabled]="false">
+            <ng-template #tooltipTemplate let-model="model">
+              <div class="tooltip-content">
+                <p>Amount: {{ model.value | currency:'UAH':'symbol-narrow' }}</p>
+              </div>
+            </ng-template>
+          </ngx-charts-bar-vertical>
+
+          <ngx-charts-pie-grid [view]="[1150, 400]"
+                               [results]="pieChartExpensesData"
+          ></ngx-charts-pie-grid>
+        </mat-card-content>
       </mat-card>
     </mat-tab>
-    <mat-tab label="Budget">Budget</mat-tab>
   </mat-tab-group>
 
 </ng-container>

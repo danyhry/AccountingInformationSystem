@@ -1,0 +1,10 @@
+<h1 class="mat-dialog-title">{{ data.title }}</h1>
+
+<div class="mat-dialog-content">
+  {{ data.message }}
+</div>
+
+<div class="mat-dialog-actions" [align]="'end'">
+  <button mat-raised-button [mat-dialog-close]="false" class="mat-warn">No</button>
+  <button mat-raised-button [mat-dialog-close]="true" class="mat-primary">Yes</button>
+</div>

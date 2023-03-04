@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {NotificationService} from "../../services/notification.service";
 import {Base} from "../../services/destroy.service";
@@ -15,19 +15,19 @@ export class ContactComponent extends Base implements OnInit {
 
   user!: User;
 
-  showErrors!: boolean;
+  isShowError!: boolean;
 
   contactForm: FormGroup = this.fb.group({
-    firstName: [''],
-    email: [''],
-    message: ['']
+    firstName: ['', [Validators.required]],
+    email: ['', [Validators.email, Validators.required]],
+    message: ['', [Validators.required]]
   });
 
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private notificationService: NotificationService,
-              private fb: FormBuilder,
+              private fb: FormBuilder
   ) {
     super();
   }
@@ -50,16 +50,19 @@ export class ContactComponent extends Base implements OnInit {
         .subscribe({
           next: () => {
             // this.notificationService.showSuccessMessage('Message was sent');
+
+            console.log("contact submit successfully");
           },
           error: () => {
             this.notificationService.showErrorMessage('Error');
-            this.showErrors = true;
+            this.isShowError = true;
           }
         });
+      this.isShowError = false;
       this.notificationService.showSuccessMessage('Message was sent');
     } else {
       this.notificationService.showErrorMessage('Form is not valid, please fill correct values');
-      this.showErrors = true;
+      this.isShowError = true;
     }
   }
 }

@@ -8,7 +8,7 @@ import {Base} from "../../../services/destroy.service";
 import {NotificationService} from "../../../services/notification.service";
 import {UserService} from "../../../services/user.service";
 import {Category} from "../../../models/category";
-import {BudgetService} from "../../../services/budget.service";
+import {CategoryService} from "../../../services/category.service";
 
 @Component({
   selector: 'app-update-income',
@@ -27,13 +27,13 @@ export class UpdateIncomeComponent extends Base implements OnInit {
               private notificationService: NotificationService,
               private dialogRef: MatDialogRef<UpdateIncomeComponent>,
               private userService: UserService,
-              private budgetService: BudgetService
+              private categoryService: CategoryService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.budgetService.getCategories()
+    this.categoryService.getCategories()
       .pipe(takeUntil(this.destroy$))
       .subscribe(categories => {
         this.categories = categories;

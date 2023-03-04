@@ -4,15 +4,20 @@ import com.danyhry.diplomaapplication.dao.UserDao;
 import com.danyhry.diplomaapplication.exception.NotFoundException;
 import com.danyhry.diplomaapplication.model.User;
 import com.danyhry.diplomaapplication.utils.RegexPatterns;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -23,7 +28,7 @@ public class MailSenderServiceImpl implements MailSenderService {
     private final UserDao userDao;
     private final JavaMailSender mailSender;
 
-    @Value("{spring.mail.username}")
+    @Value("${spring.mail.username}")
     private String username;
 
     public MailSenderServiceImpl(UserDao userDao, JavaMailSender mailSender) {
@@ -34,7 +39,7 @@ public class MailSenderServiceImpl implements MailSenderService {
     @Override
     public void sendEmail(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-
+        log.info("username: {}", username);
         mailMessage.setFrom(username);
         mailMessage.setTo(emailTo);
         mailMessage.setSubject(subject);
@@ -94,7 +99,7 @@ public class MailSenderServiceImpl implements MailSenderService {
     }
 
     @Override
-    public boolean sendMessageToAdmin(Map<String, String> contactFormValues) {
+    public boolean sendMessageToAdmin(Map<String, String> contactFormValues) throws MessagingException, UnsupportedEncodingException {
         log.info("contactFormValues: {}", contactFormValues);
 
         String email = contactFormValues.get("email");
@@ -103,19 +108,20 @@ public class MailSenderServiceImpl implements MailSenderService {
         if (!patternMatches(email, RegexPatterns.mailPattern) || StringUtils.isEmpty(email) || StringUtils.isEmpty(message)) {
             return false;
         }
-        String adminSupportEmail = userDao.getAdminEmail();
-        log.info("adminSupportEmail: {}", adminSupportEmail);
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
 
-        mailMessage.setFrom(email);
-        mailMessage.setTo(adminSupportEmail);
-        mailMessage.setSubject("Support");
-        mailMessage.setText(message);
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+        helper.setFrom(email, email);
+        helper.setTo(username);
+        helper.setSubject("Support");
+        helper.setText(message);
 
-        mailSender.send(mailMessage);
+        mimeMessage.setSender(new InternetAddress(email));
 
-        return false;
+        mailSender.send(mimeMessage);
+
+        return true;
     }
 
     public static boolean patternMatches(String emailAddress, String regexPattern) {

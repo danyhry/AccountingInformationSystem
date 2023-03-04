@@ -1,7 +1,6 @@
 package com.danyhry.diplomaapplication.dao;
 
 import com.danyhry.diplomaapplication.model.Budget;
-import com.danyhry.diplomaapplication.model.Category;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +16,4 @@ public interface BudgetDao {
 
     Budget getBudgetByUserId(Long userId);
 
-    List<Category> getAllCategories();
-
-    Category getCategoryById(Long categoryId);
 }

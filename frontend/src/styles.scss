@@ -154,7 +154,7 @@ body {
   --primary-lighter-color: #cde0e1;
   --primary-darker-color: #3c7b7e;
   --text-primary-color: #{$dark-primary-text};
-  --text-primary-lighter-color: #{$dark-primary-text};
+  --text-primary-lighter-color: #{$light-primary-text};
   --text-primary-darker-color: #{$light-primary-text};
 }
 $mat-primary: (
@@ -175,17 +175,17 @@ body {
   --accent-color: #2d6b9d;
   --accent-lighter-color: #c0d3e2;
   --accent-darker-color: #1c4e81;
-  --text-accent-color: #{$light-primary-text};
+  --text-accent-color: #{$dark-primary-text};
   --text-accent-lighter-color: #{$dark-primary-text};
   --text-accent-darker-color: #{$light-primary-text};
 }
 $mat-accent: (
-  main: #2d6b9d,
+  main: #efd746,
   lighter: #c0d3e2,
   darker: #1c4e81,
   200: #2d6b9d, // For slide toggle,
   contrast : (
-    main: $light-primary-text,
+    main: $dark-primary-text,
     lighter: $dark-primary-text,
     darker: $light-primary-text,
   )

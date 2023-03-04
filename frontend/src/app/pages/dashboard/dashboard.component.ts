@@ -6,8 +6,8 @@ import {UserService} from "../../services/user.service";
 import {takeUntil} from "rxjs";
 import {Base} from "../../services/destroy.service";
 import {ExpenseService} from "../../services/expense.service";
-import {BudgetService} from "../../services/budget.service";
 import {Category} from "../../models/category";
+import {CategoryService} from "../../services/category.service";
 
 @Component({
   selector: "app-dashboard",
@@ -31,6 +31,8 @@ export class DashboardComponent extends Base implements OnInit {
 
   categories: Category[] = [];
 
+  currentMonth!: string;
+
   gradient = false;
   colorScheme: Color = {
     name: 'Black',
@@ -42,7 +44,7 @@ export class DashboardComponent extends Base implements OnInit {
   constructor(private incomeService: IncomeService,
               public userService: UserService,
               private expenseService: ExpenseService,
-              private budgetService: BudgetService
+              private categoryService: CategoryService
   ) {
     super();
   }
@@ -50,8 +52,9 @@ export class DashboardComponent extends Base implements OnInit {
   ngOnInit(): void {
     this.isAuthenticated = this.userService.isAuthenticated();
 
+    this.currentMonth = new Date().toLocaleString('default', {month: 'long'});
 
-    this.budgetService.getCategories()
+    this.categoryService.getCategories()
       .pipe(takeUntil(this.destroy$))
       .subscribe((categories) => {
         this.categories = categories;
@@ -61,11 +64,12 @@ export class DashboardComponent extends Base implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe();
 
-    this.getIncomesByMonth();
-    this.getExpensesByMonth();
+    this.getIncomesByCurrentMonth();
+    this.getExpensesByCurrentMonth();
+
   }
 
-  private getIncomesByMonth() {
+  private getIncomesByCurrentMonth() {
     this.incomeService.getIncomesByUserId(this.userId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((incomes) => {
@@ -78,16 +82,13 @@ export class DashboardComponent extends Base implements OnInit {
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
         const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
         this.incomesData = Array(daysInMonth).fill(0).map((_, index) => {
           const day = index + 1;
           const filteredIncomes = incomes.filter(income => {
             const incomeDate = new Date(income.date);
             return incomeDate.getMonth() === currentMonth && incomeDate.getDate() === day;
           });
-
           const totalAmount = filteredIncomes.reduce((sum, income) => sum + income.amount, 0);
-
           return ({name: `${day}`, value: totalAmount});
         });
 
@@ -110,8 +111,59 @@ export class DashboardComponent extends Base implements OnInit {
       });
   }
 
+  private getIncomesByMonth(year: number, month: number) {
+    this.incomeService.getIncomesByUserId(this.userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((incomes) => {
+        // Filter incomes by the specified month
+        const filteredIncomes = incomes.filter(income => {
+          const incomeDate = new Date(income.date);
+          return incomeDate.getFullYear() === year && incomeDate.getMonth() === month;
+        });
 
-  private getExpensesByMonth() {
+        this.totalIncome = filteredIncomes.reduce(
+          (sum, income) => sum + income.amount, 0
+        );
+        this.calculateTotalBudget();
+
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        this.incomesData = Array(daysInMonth).fill(0).map((_, index) => {
+          const day = index + 1;
+          const dayIncomes = filteredIncomes.filter(income => {
+            const incomeDate = new Date(income.date);
+            return incomeDate.getDate() === day;
+          });
+
+          const totalAmount = dayIncomes.reduce((sum, income) => sum + income.amount, 0);
+
+          return ({name: `${day}`, value: totalAmount});
+        });
+
+        console.log(this.incomesData);
+
+        const categoryAmounts: { [key: number]: number } = {};
+        filteredIncomes.forEach(income => {
+          const categoryId = income.categoryId;
+          if (!categoryAmounts[categoryId]) {
+            categoryAmounts[categoryId] = 0;
+          }
+          categoryAmounts[categoryId] += income.amount;
+        });
+
+        this.pieChartIncomesData = this.categories.map(category => {
+          const categoryId = category.id;
+          const categoryName = category.name;
+          const totalAmount = categoryAmounts[categoryId] || 0;
+          return {name: categoryName, value: totalAmount};
+        });
+
+      });
+  }
+
+
+
+  private getExpensesByCurrentMonth() {
     this.expenseService.getExpensesByUserId(this.userId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((expenses) => {

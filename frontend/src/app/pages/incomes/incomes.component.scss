@@ -25,6 +25,7 @@ button[type="submit"] {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 10px;
+  color: #008000;
 }
 
 .mat-list-item {
@@ -65,4 +66,15 @@ p {
 
 .error-404 .btn:hover {
   background: #3e4f6f;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  button {
+    margin-right: 5px;
+  }
 }

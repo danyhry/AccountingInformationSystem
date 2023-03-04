@@ -2,6 +2,7 @@ package com.danyhry.diplomaapplication.controller;
 
 import com.danyhry.diplomaapplication.model.Income;
 import com.danyhry.diplomaapplication.service.IncomeService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,14 +11,11 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/incomes")
 public class IncomesController {
 
     private final IncomeService incomeService;
-
-    public IncomesController(IncomeService incomeService) {
-        this.incomeService = incomeService;
-    }
 
     @GetMapping
     public ResponseEntity<List<Income>> getAllIncomes() {
@@ -48,4 +46,12 @@ public class IncomesController {
         Boolean isIncomeDeleted = incomeService.deleteIncomeById(id);
         return ResponseEntity.ok(isIncomeDeleted);
     }
+
+//    @GetMapping("/{userId}")
+//    public ResponseEntity<List<Income>> getIncomesByUserIdAndDate(@PathVariable Long userId, @RequestBody Income income) {
+//        List<Income> incomes = incomeService.getIncomesByUserIdAndDate(userId, income.getDate());
+//        return ResponseEntity.ok(incomes);
+//    }
+
+
 }

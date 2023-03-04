@@ -1,12 +1,13 @@
 package com.danyhry.diplomaapplication.exception;
 
-public class UserException extends Exception {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class UserException extends RuntimeException {
 
     public UserException(String errorMessage) {
         super(errorMessage);
     }
 
-    public UserException(String errorMessage, Throwable error) {
-        super(errorMessage, error);
-    }
 }

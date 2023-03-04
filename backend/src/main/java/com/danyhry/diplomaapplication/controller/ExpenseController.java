@@ -2,19 +2,17 @@ package com.danyhry.diplomaapplication.controller;
 
 import com.danyhry.diplomaapplication.model.Expense;
 import com.danyhry.diplomaapplication.service.ExpenseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/expenses")
 public class ExpenseController {
     private final ExpenseService expenseService;
-
-    public ExpenseController(ExpenseService expenseService) {
-        this.expenseService = expenseService;
-    }
 
     @GetMapping
     public ResponseEntity<List<Expense>> getAllExpenses() {

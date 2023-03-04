@@ -7,30 +7,26 @@ import com.danyhry.diplomaapplication.service.JwtService;
 import com.danyhry.diplomaapplication.service.MailSenderService;
 import com.danyhry.diplomaapplication.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.mail.MessagingException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
     private final JwtService jwtService;
     private final MailSenderService mailSenderService;
-
-    public UserController(UserService userService,
-                          JwtService jwtService,
-                          MailSenderService mailSenderService) {
-        this.userService = userService;
-        this.jwtService = jwtService;
-        this.mailSenderService = mailSenderService;
-    }
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -75,7 +71,7 @@ public class UserController {
     }
 
     @PostMapping("/message")
-    public void sendMessageToAdmin(@RequestBody Map<String, String> contactFormValues) {
+    public void sendMessageToAdmin(@RequestBody Map<String, String> contactFormValues) throws MessagingException, UnsupportedEncodingException {
         Boolean isEmailSent = mailSenderService.sendMessageToAdmin(contactFormValues);
     }
 

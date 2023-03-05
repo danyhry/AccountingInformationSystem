@@ -27,23 +27,19 @@
           <!-- Incomes This Month Card -->
           <div class="col-xxl-4 col-md-4">
             <div class="card info-card revenue-card">
-
               <div class="card-body">
                 <h5 class="card-title">This Month <span>| Budget</span></h5>
-
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>$3,264</h6>
+                    <h6>{{currentMonthBudget}}</h6>
                     <!--                    TODO: maybe add compare with last month?-->
                     <!--                    <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
-
                   </div>
                 </div>
               </div>
-
             </div>
           </div><!-- End Incomes This Month Card -->
 
@@ -51,13 +47,12 @@
             <div class="card info-card revenue-card">
               <div class="card-body">
                 <h5 class="card-title">This Year <span>| Budget</span></h5>
-
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>$3,264</h6>
+                    <h6>{{currentYearBudget}}</h6>
                     <!--                    TODO: maybe add compare with last year?-->
                     <!--                    <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">decrease</span>-->
                   </div>
@@ -69,10 +64,8 @@
           <!-- Incomes Total Card -->
           <div class="col-xxl-4 col-md-4">
             <div class="card info-card revenue-card">
-
               <div class="card-body">
                 <h5 class="card-title">Total <span>| Budget</span></h5>
-
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-currency-dollar"></i>
@@ -84,7 +77,6 @@
               </div>
             </div>
           </div><!-- End Incomes Total Card -->
-
         </div>
       </div>
 
@@ -97,18 +89,16 @@
               <li class="dropdown-header text-start">
                 <h6>Filter</h6>
               </li>
-
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
+              <li><a class="dropdown-item" (click)="selectedIncomeFilter = 'thisMonth'">This Month</a></li>
+              <li><a class="dropdown-item" (click)="selectedIncomeFilter = 'thisYear'">This Year</a></li>
+              <li><a class="dropdown-item" (click)="selectedIncomeFilter = 'total'">Total</a></li>
             </ul>
           </div>
 
           <div class="card-body pb-0">
             <h5 class="card-title">Top Incomes</h5>
-
-            <table class="table table-borderless">
-              <thead>
+            <table class="table table-bordered table-info table-striped table-hover table-responsive">
+              <thead class="table-secondary">
               <tr>
                 <th scope="col">Category</th>
                 <th scope="col">Amount</th>
@@ -117,41 +107,56 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
-                <td><a href="#" class="text-primary fw-bold">Text1</a></td>
-                <td>$64</td>
-                <td class="fw-bold">124</td>
-                <td>$5,828</td>
-              </tr>
-              <tr>
-                <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
-                <td><a href="#" class="text-primary fw-bold">Text2</a></td>
-                <td>$46</td>
-                <td class="fw-bold">98</td>
-                <td>$4,508</td>
-              </tr>
-              <tr>
-                <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
-                <td><a href="#" class="text-primary fw-bold">Text3</a></td>
-                <td>$59</td>
-                <td class="fw-bold">74</td>
-                <td>$4,366</td>
-              </tr>
-              <tr>
-                <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
-                <td><a href="#" class="text-primary fw-bold">Text4</a></td>
-                <td>$32</td>
-                <td class="fw-bold">63</td>
-                <td>$2,016</td>
+              <tr *ngFor="let income of getFilteredIncomes()">
+                <th scope="row">{{getCategoryName(income.categoryId)}}</th>
+                <td class="text-success fw-bold">{{income.amount}}</td>
+                <td>{{income.date | date}}</td>
+                <td class="fw-bold">{{income.description}}</td>
               </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
 
+      <div class="col-12 mt-2">
+        <div class="card top-selling overflow-auto">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" (click)="selectedExpenseFilter = 'thisMonth'">This Month</a></li>
+              <li><a class="dropdown-item" (click)="selectedExpenseFilter = 'thisYear'">This Year</a></li>
+              <li><a class="dropdown-item" (click)="selectedExpenseFilter = 'total'">Total</a></li>
+            </ul>
           </div>
 
+          <div class="card-body pb-0">
+            <h5 class="card-title">Top Expenses</h5>
+            <table class="table table-bordered table-warning table-striped table-hover table-responsive">
+              <thead class="table-secondary">
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let expense of getFilteredExpenses()">
+                <th scope="row">{{getCategoryName(expense.categoryId)}}</th>
+                <td class="text-danger fw-bold">{{expense.amount}}</td>
+                <td>{{expense.date | date}}</td>
+                <td class="fw-bold">{{expense.description}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div><!-- End Top Selling -->
+      </div>
+
     </mat-tab>
 
     <mat-tab label="Incomes">
@@ -160,7 +165,7 @@
           <div class="card bg-success text-white">
             <div class="card-body text-center">
               <h5 class="card-title">Incomes For This Month</h5>
-              <p class="card-text">{{totalIncome}}</p>
+              <p class="card-text">{{totalIncomeCurrentMonth}}</p>
             </div>
           </div>
         </mat-card-title>
@@ -200,7 +205,7 @@
           <div class="card bg-danger text-white">
             <div class="card-body text-center">
               <h5 class="card-title">Expenses For This Month</h5>
-              <p class="card-text">{{totalExpense}}</p>
+              <p class="card-text">{{totalExpenseCurrentMonth}}</p>
             </div>
           </div>
         </mat-card-title>

@@ -153,16 +153,21 @@ export class IncomesComponent extends Base implements OnInit {
   exportPDF() {
     // Initialize jsPDF
     const doc = new jsPDF("p", "mm", "a4");
-
     // Define columns and rows for the table
     const columns = ['Category', 'Amount', 'Date', 'Description'];
-    const rows: any[][] = [];
-    this.dataSource.filteredData.forEach((income) => {
+    let rows: any[][] = [];
+
+    const sortedIncomes = this.dataSource.filteredData.sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+
+    sortedIncomes.forEach((income) => {
       const category = this.getCategoryName(income.categoryId);
       const amount = income.amount;
-      const date = income.date;
+      const date = new Date(income.date);
+      const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
       const description = income.description;
-      rows.push([category, amount, date, description]);
+      rows.push([category, amount, formattedDate, description]);
     });
 
     autoTable(doc, {
@@ -170,8 +175,7 @@ export class IncomesComponent extends Base implements OnInit {
       body: rows
     });
 
-    // Save the PDF file
-    doc.save('incomes.pdf');
+    doc.save('Incomes.pdf');
   }
 
 

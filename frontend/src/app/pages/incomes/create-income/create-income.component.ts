@@ -38,14 +38,14 @@ export class CreateIncomeComponent extends Base implements OnInit {
       .subscribe(categories => {
         this.categories = categories.sort((a, b) => a.name.localeCompare(b.name));
       });
-
+    const currentDate = new Date();
     this.createIncomeForm = this.fb.group({
       id: [''],
       userId: ['', []],
       categoryId: ['', Validators.required],
       amount: ['', [Validators.required, Validators.pattern('^[0-9]+([,.][0-9]{1,2})?$')]],
       description: ['', [Validators.maxLength(50)]],
-      date: ['', [Validators.required]]
+      date: [currentDate.toISOString().substring(0, 10), [Validators.required]]
     });
   }
 

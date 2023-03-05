@@ -15,6 +15,8 @@ import {UpdateExpenseComponent} from "./update-expense/update-expense.component"
 import {CategoryService} from "../../services/category.service";
 import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
 import {NotificationService} from "../../services/notification.service";
+import {jsPDF} from "jspdf";
+import autoTable from "jspdf-autotable";
 
 @Component({
   selector: 'app-expanses',
@@ -139,4 +141,32 @@ export class ExpansesComponent extends Base implements OnInit {
   }
 
 
+  exportPDF() {
+    // Initialize jsPDF
+    const doc = new jsPDF("p", "mm", "a4");
+
+    // Define columns and rows for the table
+    const columns = ['Category', 'Amount', 'Date', 'Description'];
+    const rows: any[][] = [];
+
+    const sortedExpenses = this.dataSource.filteredData.sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+
+    sortedExpenses.forEach((expense) => {
+      const category = this.getCategoryName(expense.categoryId);
+      const amount = expense.amount;
+      const date = new Date(expense.date);
+      const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const description = expense.description;
+      rows.push([category, amount, formattedDate, description]);
+    });
+
+    autoTable(doc, {
+      head: [columns],
+      body: rows
+    });
+
+    doc.save('Expenses.pdf');
+  }
 }

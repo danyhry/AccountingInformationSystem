@@ -79,4 +79,11 @@ public class UserController {
     public List<Role> getRoles() {
         return userService.getRoles();
     }
+
+
+    @PostMapping("/recover")
+    public ResponseEntity<Object> recoverPassword(@RequestBody User user) {
+        mailSenderService.sendEmailForRecoverPasswordPassword(user);
+        return ResponseEntity.ok().build();
+    }
 }

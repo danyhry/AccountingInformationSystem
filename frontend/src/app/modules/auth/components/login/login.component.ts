@@ -7,6 +7,9 @@ import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
 import {Base} from "../../../../services/destroy.service";
 import {takeUntil} from "rxjs";
 import {User} from "../../../../models/user";
+import {RecoveryFormComponent} from "../recovery/recovery.component";
+import {MatDialog} from "@angular/material/dialog";
+import {NotificationService} from "../../../../services/notification.service";
 
 @Component({
   selector: 'app-login',
@@ -34,6 +37,8 @@ export class LoginComponent extends Base implements OnInit {
               private userService: UserService,
               private modal: NgbModal,
               private config: NgbModalConfig,
+              private dialog: MatDialog,
+              private notificationService: NotificationService
   ) {
     super();
     config.backdrop = false;
@@ -60,11 +65,17 @@ export class LoginComponent extends Base implements OnInit {
           next: () => {
             this.router.navigateByUrl('/dashboard');
           },
-          error: () => {
+          error: (response) => {
             this.showErrors = true;
+            this.notificationService.showErrorMessage(response);
           }
         });
     }
   }
 
+  openRecovery() {
+    this.dialog.open(RecoveryFormComponent, {
+      width: '35%',
+    });
+  }
 }

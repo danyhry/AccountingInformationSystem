@@ -2,9 +2,9 @@ package com.danyhry.diplomaapplication.service;
 
 import com.danyhry.diplomaapplication.model.User;
 import jakarta.mail.MessagingException;
+import org.springframework.mail.MailException;
 
 import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 public interface MailSenderService {
@@ -13,7 +13,7 @@ public interface MailSenderService {
 
     void sendEmail(String emailTo, String subject, String message);
 
-    boolean generateNewPassword(User user, String subject) throws NoSuchAlgorithmException;
+    boolean sendEmailForRecoverPasswordPassword(User user) throws MailException;
 
     String generateCode();
 

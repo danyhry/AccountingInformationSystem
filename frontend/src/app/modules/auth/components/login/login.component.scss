@@ -1,18 +1,3 @@
-//@media screen and (min-width: 576px) {
-//  .modal-dialog {
-//    max-width: 432px;
-//    margin: 1.75rem auto;
-//  }
-//}
-//
-//.custom_body {
-//  padding: 0 !important;
-//}
-//
-//.pointer {
-//  cursor: pointer;
-//}
-//
 .divider:after,
 .divider:before {
   content: "";
@@ -38,13 +23,14 @@
   padding-right: 2.5rem;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-}
-
 .error-404 {
   padding: 30px;
 }
+
+a.link-danger {
+  cursor: pointer;
+}
+
 
 .error-404 h1 {
   font-size: 180px;

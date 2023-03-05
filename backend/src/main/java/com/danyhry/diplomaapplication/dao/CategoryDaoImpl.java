@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -19,35 +20,35 @@ public class CategoryDaoImpl implements CategoryDao{
     }
 
     @Override
-    public List<Category> getAllCategories() {
+    public Optional<List<Category>> getAllCategories() {
         String sql = "SELECT * FROM categories;";
-        return jdbcTemplate.query(sql, new CategoryRowMapper());
+        return Optional.of(jdbcTemplate.query(sql, new CategoryRowMapper()));
     }
 
     @Override
-    public Category getCategoryById(Long categoryId) {
+    public Optional<Category> getCategoryById(Long categoryId) {
         String query = "SELECT * FROM categories WHERE id = ?;";
-        return jdbcTemplate.queryForObject(query, new Object[]{categoryId},new CategoryRowMapper());
+        return Optional.ofNullable(jdbcTemplate.queryForObject(query, new Object[]{categoryId}, new CategoryRowMapper()));
     }
 
     @Override
-    public Category createCategory(Category category) {
+    public Optional<Category> createCategory(Category category) {
         String query = """
                 INSERT INTO categories (name)
                 VALUES (?)
                 """;
         jdbcTemplate.update(query, category.getName());
-        return category;
+        return Optional.of(category);
     }
 
     @Override
-    public Category updateCategory(Category category, Long id) {
+    public Optional<Category> updateCategory(Category category, Long id) {
         String sql = """
                 UPDATE categories
                 SET name = ? WHERE id = ?
                 """;
         jdbcTemplate.update(sql, category.getName(), id);
-        return category;
+        return Optional.of(category);
     }
 
     @Override

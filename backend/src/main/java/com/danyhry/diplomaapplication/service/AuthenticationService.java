@@ -1,7 +1,9 @@
 package com.danyhry.diplomaapplication.service;
 
 import com.danyhry.diplomaapplication.dao.UserDao;
+import com.danyhry.diplomaapplication.exception.CommonException;
 import com.danyhry.diplomaapplication.exception.UserAlreadyExistsException;
+import com.danyhry.diplomaapplication.exception.UserException;
 import com.danyhry.diplomaapplication.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,7 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest registerRequest) {
         String email = registerRequest.getEmail();
         if (userDao.getUserByEmail(email).isPresent()) {
-            throw new UserAlreadyExistsException(String.format("User with email %s already exists", email));
+            throw new UserAlreadyExistsException(String.format("User with email - %s already exists", email));
         }
 
         User user = User.builder()
@@ -37,7 +39,7 @@ public class AuthenticationService {
         int result = userDao.createUser(user);
 
         if (result == 0) {
-            throw new RuntimeException("Failed to save user to database");
+            throw new CommonException("Failed to save user to database");
         }
 
         String jwtToken = jwtService.generateToken(user);
@@ -52,7 +54,7 @@ public class AuthenticationService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
         User user = userDao.getUserByEmail(authenticationRequest.getEmail())
-                .orElseThrow();
+                .orElseThrow(() -> new UserException("User is not found"));
 
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

@@ -89,4 +89,8 @@ export class UserService {
     }
     return this.user;
   }
+
+  forgotPassword(email: string){
+    return this.http.post<string>(this.usersUrl + '/recover', email);
+  }
 }

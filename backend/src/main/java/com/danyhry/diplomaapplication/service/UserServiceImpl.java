@@ -26,13 +26,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> users = userDao.getAllUsers();
-        if (users.isEmpty()) {
-            throw new NotFoundException("Users are not found");
-        }
-
-        log.info("users: {}", users);
-        return users.stream().toList();
+        return userDao.getAllUsers()
+                .orElseThrow(() -> new NotFoundException("Users are not found"));
     }
 
     @Override
@@ -64,11 +59,8 @@ public class UserServiceImpl implements UserService {
                 .filter(Objects::nonNull)
                 .findFirst()
                 .map(firstUser -> {
-                    User user = userDao.updateUser(updatedUser, firstUser.getId());
-                    if (user == null) {
-                        log.error("Could not update User");
-                        throw new IllegalStateException("Could not update User");
-                    }
+                    User user = userDao.updateUser(updatedUser, firstUser.getId())
+                            .orElseThrow(() -> new IllegalStateException("Could not update User"));
                     user.setId(id);
                     return user;
                 })
@@ -77,7 +69,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return this.userDao.getUserByEmail(email).orElseThrow();
+        return this.userDao.getUserByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User with email " + email + "not found"));
     }
 
     @Override
@@ -94,7 +87,8 @@ public class UserServiceImpl implements UserService {
             String email = userDao.getUserById(id)
                     .orElseThrow(() -> new UserException("User not found"))
                     .getEmail();
-            String dbPass = userDao.getUserPasswordByEmail(email);
+            String dbPass = userDao.getUserPasswordByEmail(email)
+                    .orElseThrow(() -> new NotFoundException("User`s password is not found"));
             if (!encoder.matches(oldPassword, dbPass) || StringUtils.isBlank(newPassword)) {
                 throw new UserException("Wrong Password");
             }
@@ -107,6 +101,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Role> getRoles() {
-        return this.userDao.getRoles();
+        return this.userDao.getRoles()
+                .orElseThrow(() -> new NotFoundException("Roles are not found"));
     }
 }

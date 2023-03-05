@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IncomeDao {
-    List<Income> getAllIncomes();
+    Optional<List<Income>> getAllIncomes();
 
     Optional<Income> getIncomeById(Long id);
 
-    Income createIncome(Income income);
+    Optional<Income> createIncome(Income income);
 
-    Income updateIncome(Income income);
+    Optional<Income> updateIncome(Income income);
 
     int deleteById(Long id);
 
-    List<Income> getIncomesByUserId(Long userId);
+    Optional<List<Income>> getIncomesByUserId(Long userId);
 
-    List<Income> getIncomesByUserIdAndDate(Long userId, LocalDate date);
+    Optional<List<Income>> getIncomesByUserIdAndDate(Long userId, LocalDate date);
 }

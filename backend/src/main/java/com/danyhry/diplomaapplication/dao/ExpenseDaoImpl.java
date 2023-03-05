@@ -22,9 +22,9 @@ public class ExpenseDaoImpl implements ExpenseDao {
     }
 
     @Override
-    public List<Expense> getAllExpenses() {
+    public Optional<List<Expense>> getAllExpenses() {
         String query = "SELECT * FROM expenses";
-        return jdbcTemplate.query(query, new ExpenseRowMapper(userDao));
+        return Optional.of(jdbcTemplate.query(query, new ExpenseRowMapper(userDao)));
     }
 
     @Override
@@ -40,23 +40,23 @@ public class ExpenseDaoImpl implements ExpenseDao {
     }
 
     @Override
-    public Expense createExpense(Expense expense) {
+    public Optional<Expense> createExpense(Expense expense) {
         String query = """
                 INSERT INTO expenses (user_id, category_id, description, amount, date)
                 VALUES (?, ?, ?, ?, ?)
                 """;
         jdbcTemplate.update(query, expense.getUserId(), expense.getCategoryId(), expense.getDescription(), expense.getAmount(), expense.getDate());
-        return expense;
+        return Optional.of(expense);
     }
 
     @Override
-    public Expense updateExpense(Expense expense) {
+    public Optional<Expense> updateExpense(Expense expense) {
         String sql = """
                 UPDATE expenses
                 SET category_id = ?, description = ?, amount = ?, date = ? WHERE id = ?
                 """;
         jdbcTemplate.update(sql, expense.getCategoryId(), expense.getDescription(), expense.getAmount(), expense.getDate(), expense.getId());
-        return expense;
+        return Optional.of(expense);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
     }
 
     @Override
-    public List<Expense> getExpensesByUserId(Long userId) {
+    public Optional<List<Expense>> getExpensesByUserId(Long userId) {
         String sql = """
                 SELECT e.*, r.name as role_name
                 FROM expenses e
@@ -75,20 +75,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
                 WHERE e.user_id = ?
                 """;
 
-        return jdbcTemplate.query(sql, new Object[]{userId}, new ExpenseRowMapper(userDao));
+        return Optional.of(jdbcTemplate.query(sql, new Object[]{userId}, new ExpenseRowMapper(userDao)));
     }
-
-    public List<Expense> getExpensesByUserIdMonthAndYear(Long userId) {
-        String sql = """
-                SELECT e.*, r.name as role_name
-                FROM expenses e
-                JOIN users u ON e.user_id = u.id
-                JOIN roles r ON u.role_id = r.id
-                WHERE e.user_id = ?
-                """;
-
-        return jdbcTemplate.query(sql, new Object[]{userId}, new ExpenseRowMapper(userDao));
-    }
-
 
 }

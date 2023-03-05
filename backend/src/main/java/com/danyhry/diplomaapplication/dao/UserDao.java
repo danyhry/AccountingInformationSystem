@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
-    List<User> getAllUsers();
+    Optional<List<User>> getAllUsers();
 
     Optional<User> getUserById(Long id);
 
@@ -17,13 +17,13 @@ public interface UserDao {
 
     int deleteUserById(Long id);
 
-    User updateUser(User user, Long id);
+    Optional<User> updateUser(User user, Long id);
 
     int updateUserPassword(Long id, String newPassword);
 
-    String getUserPasswordByEmail(String email);
+    Optional<String> getUserPasswordByEmail(String email);
 
-    String getAdminEmail();
+    Optional<String> getAdminEmail();
 
-    List<Role> getRoles();
+    Optional<List<Role>> getRoles();
 }

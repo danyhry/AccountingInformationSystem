@@ -23,9 +23,9 @@ public class IncomeDaoImpl implements IncomeDao {
     }
 
     @Override
-    public List<Income> getAllIncomes() {
+    public Optional<List<Income>> getAllIncomes() {
         String query = "SELECT * FROM incomes";
-        return jdbcTemplate.query(query, new IncomeRowMapper(userDao));
+        return Optional.of(jdbcTemplate.query(query, new IncomeRowMapper(userDao)));
     }
 
     @Override
@@ -39,19 +39,19 @@ public class IncomeDaoImpl implements IncomeDao {
     }
 
     @Override
-    public Income createIncome(Income income) {
+    public Optional<Income> createIncome(Income income) {
         log.info("income: {}", income);
         String query = "INSERT INTO incomes (user_id, category_id, description, amount, date) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(query, income.getUserId(), income.getCategoryId(), income.getDescription(), income.getAmount(), income.getDate());
-        return income;
+        return Optional.of(income);
     }
 
     @Override
-    public Income updateIncome(Income income) {
+    public Optional<Income> updateIncome(Income income) {
         log.info("incomeUpdate: {}", income);
         String sql = "UPDATE incomes SET category_id = ?, description = ?, amount = ?, date = ? WHERE id = ?";
         jdbcTemplate.update(sql, income.getCategoryId(), income.getDescription(), income.getAmount(), income.getDate(), income.getId());
-        return income;
+        return Optional.of(income);
     }
 
     @Override
@@ -61,18 +61,18 @@ public class IncomeDaoImpl implements IncomeDao {
     }
 
     @Override
-    public List<Income> getIncomesByUserId(Long userId) {
+    public Optional<List<Income>>  getIncomesByUserId(Long userId) {
         String sql = "SELECT i.*, r.name as role_name " +
                 "FROM incomes i " +
                 "JOIN users u ON i.user_id = u.id " +
                 "JOIN roles r ON u.role_id = r.id " +
                 "WHERE i.user_id = ?";
 
-        return jdbcTemplate.query(sql, new Object[]{userId}, new IncomeRowMapper(userDao));
+        return Optional.of(jdbcTemplate.query(sql, new Object[]{userId}, new IncomeRowMapper(userDao)));
     }
 
     @Override
-    public List<Income> getIncomesByUserIdAndDate(Long userId, LocalDate date) {
+    public Optional<List<Income>>  getIncomesByUserIdAndDate(Long userId, LocalDate date) {
         String sql = "SELECT i.*, r.name as role_name " +
                 "FROM incomes i " +
                 "JOIN users u ON i.user_id = u.id " +
@@ -81,7 +81,7 @@ public class IncomeDaoImpl implements IncomeDao {
                 "  AND EXTRACT(MONTH FROM i.date) = ? " +
                 "  AND EXTRACT(YEAR FROM i.date) = ?";
 
-        return jdbcTemplate.query(sql, new Object[]{userId}, new IncomeRowMapper(userDao));
+        return Optional.of(jdbcTemplate.query(sql, new Object[]{userId}, new IncomeRowMapper(userDao)));
     }
 
 }

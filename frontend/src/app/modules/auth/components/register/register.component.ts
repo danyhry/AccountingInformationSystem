@@ -58,10 +58,17 @@ export class RegisterComponent extends Base implements OnInit {
       };
       this.authService.register(data)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(() =>
-          this.notificationService.showSuccessMessage(`User was successfully registered.`)
+        .subscribe(
+          {
+            next: () => {
+              this.notificationService.showSuccessMessage(`User was successfully registered.`);
+              this.router.navigateByUrl('/login');
+            },
+            error: (response) => {
+              this.notificationService.showErrorMessage(response.error.message);
+            }
+          }
         );
-      this.router.navigateByUrl('/login');
     } else {
       this._showErrors = true;
       console.log('not valid');

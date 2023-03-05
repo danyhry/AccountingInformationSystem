@@ -1,6 +1,7 @@
 package com.danyhry.diplomaapplication.service;
 
 import com.danyhry.diplomaapplication.dao.IncomeDao;
+import com.danyhry.diplomaapplication.exception.NotFoundException;
 import com.danyhry.diplomaapplication.model.Income;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -21,16 +21,19 @@ public class IncomeService {
     }
 
     public List<Income> getAllIncomes() {
-        return incomeDao.getAllIncomes();
+        return incomeDao.getAllIncomes()
+                .orElseThrow(() -> new NotFoundException("Incomes are not found"));
     }
 
     public Income createIncome(Income income) {
         income.setDate(income.getDate().plusDays(1));
-        return incomeDao.createIncome(income);
+        return incomeDao.createIncome(income)
+                .orElseThrow(() -> new NotFoundException("Incomes is not created"));
     }
 
-    public Optional<Income> getIncomeById(Long id) {
-        return incomeDao.getIncomeById(id);
+    public Income getIncomeById(Long id) {
+        return incomeDao.getIncomeById(id)
+                .orElseThrow(() -> new NotFoundException("Income is not found"));
     }
 
     public boolean deleteIncomeById(Long id) {
@@ -47,14 +50,17 @@ public class IncomeService {
         existingIncome.setAmount(income.getAmount());
         existingIncome.setDate(income.getDate().plusDays(1));
 
-        return incomeDao.updateIncome(existingIncome);
+        return incomeDao.updateIncome(existingIncome)
+                .orElseThrow(() -> new NotFoundException("Income is not updated"));
     }
 
     public List<Income> getIncomesByUserId(Long userId) {
-        return this.incomeDao.getIncomesByUserId(userId);
+        return this.incomeDao.getIncomesByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("Incomes are not found"));
     }
 
     public List<Income> getIncomesByUserIdAndDate(Long userId, LocalDate date) {
-        return incomeDao.getIncomesByUserIdAndDate(userId, date);
+        return incomeDao.getIncomesByUserIdAndDate(userId, date)
+                .orElseThrow(() -> new NotFoundException("Incomes are not found"));
     }
 }

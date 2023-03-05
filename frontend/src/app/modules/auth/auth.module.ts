@@ -5,17 +5,21 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
+import {RecoveryFormComponent} from "./components/recovery/recovery.component";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    RecoveryFormComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     AuthRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [NgbActiveModal]
 })

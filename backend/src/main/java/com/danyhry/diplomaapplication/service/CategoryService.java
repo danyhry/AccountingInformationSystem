@@ -1,6 +1,7 @@
 package com.danyhry.diplomaapplication.service;
 
 import com.danyhry.diplomaapplication.dao.CategoryDao;
+import com.danyhry.diplomaapplication.exception.NotFoundException;
 import com.danyhry.diplomaapplication.model.Category;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,19 +19,23 @@ public class CategoryService {
     }
 
     public List<Category> getAllCategories() {
-        return categoryDao.getAllCategories();
+        return categoryDao.getAllCategories()
+                .orElseThrow(() -> new NotFoundException("Categories are not found"));
     }
 
     public Category getCategoryById(Long categoryId) {
-        return categoryDao.getCategoryById(categoryId);
+        return categoryDao.getCategoryById(categoryId)
+                .orElseThrow(() -> new NotFoundException("Category is not found"));
     }
 
     public Category createCategory(Category category) {
-        return categoryDao.createCategory(category);
+        return categoryDao.createCategory(category)
+                .orElseThrow(() -> new NotFoundException("Category is not created"));
     }
 
     public Category updateCategory(Category category, Long id) {
-        return categoryDao.updateCategory(category, id);
+        return categoryDao.updateCategory(category, id)
+                .orElseThrow(() -> new NotFoundException("Category is not updated"));
     }
 
     public boolean deleteCategory(Long id) {

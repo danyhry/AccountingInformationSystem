@@ -47,13 +47,13 @@
                          [class.border-danger]="showErrors"
                          [type]="showPassword ? 'text' : 'password'"
                          required>
-<!--                  <div class="input-group-append">-->
-<!--                    <span class="input-group-text text-center" (click)="_onEyeClick()">-->
-<!--                      <i id="eye1"-->
-<!--                         [class]="_showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"-->
-<!--                      ></i>-->
-<!--                    </span>-->
-<!--                  </div>-->
+                  <!--                  <div class="input-group-append">-->
+                  <!--                    <span class="input-group-text text-center" (click)="_onEyeClick()">-->
+                  <!--                      <i id="eye1"-->
+                  <!--                         [class]="_showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"-->
+                  <!--                      ></i>-->
+                  <!--                    </span>-->
+                  <!--                  </div>-->
                   <div class="invalid-feedback">Please enter your password!</div>
                 </div>
 
@@ -78,9 +78,13 @@
                       Register
                     </a>
                   </p>
+                  <p class="small mb-0">
+                    <a class="link-danger" (click)="openRecovery()">Forgot your password?</a>
+                  </p>
                 </div>
-              </form>
 
+
+              </form>
             </div>
           </div>
 

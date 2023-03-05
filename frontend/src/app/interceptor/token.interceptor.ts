@@ -24,11 +24,11 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(
         catchError(err => {
-            if (err.status === 401 || err.status === 403) {
-              console.log("tokes is expired");
-              localStorage.clear();
-              sessionStorage.clear();
-            }
+            // if (err.status === 401 || err.status === 403) {
+            //   console.log("tokes is expired");
+            //   localStorage.clear();
+            //   sessionStorage.clear();
+            // }
             if (err.status === 500 && err.error.message.startsWith('JWT expired')) {
               this.notificationService.showErrorMessage("JWT token has expired");
               this.authService.logout();

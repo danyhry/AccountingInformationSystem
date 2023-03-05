@@ -3,15 +3,16 @@ package com.danyhry.diplomaapplication.dao;
 import com.danyhry.diplomaapplication.model.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryDao {
-    List<Category> getAllCategories();
+    Optional<List<Category>> getAllCategories();
 
-    Category getCategoryById(Long categoryId);
+    Optional<Category> getCategoryById(Long categoryId);
 
-    Category createCategory(Category category);
+    Optional<Category> createCategory(Category category);
 
-    Category updateCategory(Category category, Long id);
+    Optional<Category> updateCategory(Category category, Long id);
 
     int deleteById(Long id);
 }

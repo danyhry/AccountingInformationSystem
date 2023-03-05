@@ -49,8 +49,7 @@ public class MailSenderServiceImpl implements MailSenderService {
     }
 
     @Override
-    public boolean generateNewPassword(User user,
-                                       String subject) throws MailException {
+    public boolean sendEmailForRecoverPasswordPassword(User user) throws MailException {
 
         User userFromDb = userDao.getUserByEmail(user.getEmail())
                 .orElseThrow(() -> new NotFoundException("User not found"));
@@ -79,7 +78,7 @@ public class MailSenderServiceImpl implements MailSenderService {
 
         mailMessage.setFrom(username);
         mailMessage.setTo(userFromDb.getEmail());
-        mailMessage.setSubject(subject);
+        mailMessage.setSubject("Password Recovery");
         mailMessage.setText(PASSWORD_TEXT);
 
         mailSender.send(mailMessage);
@@ -100,7 +99,7 @@ public class MailSenderServiceImpl implements MailSenderService {
 
     @Override
     public boolean sendMessageToAdmin(Map<String, String> contactFormValues) throws MessagingException, UnsupportedEncodingException {
-        log.info("contactFormValues: {}", contactFormValues);
+        log.debug("contactFormValues: {}", contactFormValues);
 
         String email = contactFormValues.get("email");
         String message = contactFormValues.get("message");

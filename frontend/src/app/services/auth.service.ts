@@ -38,7 +38,7 @@ export class AuthService {
           return authResponse;
         }),
         catchError((error: HttpErrorResponse) => {
-          const errorMessage = error.status === 401 ? 'Invalid username or password' : 'An error occurred while logging in';
+          const errorMessage = error.status === 401 ? 'Неправильна пошта або пароль' : 'Виникла помилка під час логіну';
           return throwError(errorMessage);
         })
       );

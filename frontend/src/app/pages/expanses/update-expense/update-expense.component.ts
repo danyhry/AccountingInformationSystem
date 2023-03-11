@@ -65,16 +65,16 @@ export class UpdateExpenseComponent extends Base implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.notificationService.showSuccessMessage(`Income was successfully updated.`);
+            this.notificationService.showSuccessMessage(`Витрату успішно оновлено.`);
             this.dialogRef.close('update');
           },
           error: () => {
             console.log("error");
-            this.notificationService.showErrorMessage(`Something is wrong.`);
+            this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
           }
         })
     } else {
-      this.notificationService.showErrorMessage(`Something is wrong.`);
+      this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
     }
   }
 

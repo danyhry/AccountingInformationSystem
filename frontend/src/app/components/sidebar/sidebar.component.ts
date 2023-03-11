@@ -33,6 +33,7 @@ export class SidebarComponent extends Base implements OnInit {
   }
 
   ngOnInit() {
+
     this.userService.userChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe(user => {

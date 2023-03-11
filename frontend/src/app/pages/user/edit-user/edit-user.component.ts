@@ -59,12 +59,12 @@ export class EditUserComponent extends Base implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.notificationService.showSuccessMessage(`User was successfully updated.`);
+            this.notificationService.showSuccessMessage(`Користувача успішно оновлено.`);
             this.dialogRef.close('update');
           },
           error: () => {
             console.log("error");
-            this.notificationService.showErrorMessage(`Something is wrong.`);
+            this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
           }
         })
     }

@@ -1,13 +1,13 @@
 <mat-card class="card">
   <mat-card-title-group>
-    <mat-card-title class="title">Users</mat-card-title>
+    <mat-card-title class="title">Користувачі</mat-card-title>
     <button mat-raised-button color="primary" (click)="createUser()">
-      Add User
+      Додати користувача
     </button>
   </mat-card-title-group>
   <mat-card-content>
     <mat-form-field appearance="standard">
-      <mat-label>Filter</mat-label>
+      <mat-label>Фільтр</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
     </mat-form-field>
     <mat-table [dataSource]="usersDataSource" matSort>
@@ -20,29 +20,29 @@
 
       <!-- Progress Column -->
       <ng-container matColumnDef="firstName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Ім'я</mat-header-cell>
         <mat-cell *matCellDef="let user">{{user.firstName}}</mat-cell>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="lastName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Surname</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Фамілія</mat-header-cell>
         <mat-cell *matCellDef="let user">{{user.lastName}}</mat-cell>
       </ng-container>
 
       <!-- Fruit Column -->
       <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Пошта</mat-header-cell>
         <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="role">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Роль</mat-header-cell>
         <mat-cell *matCellDef="let user">{{user.role.name}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Дія</mat-header-cell>
         <mat-cell *matCellDef="let user">
           <button mat-icon-button
                   color="primary"
@@ -65,11 +65,11 @@
 
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        <td class="mat-cell" colspan="4">Нічого не знайдено за фільтром - "{{input.value}}"</td>
       </tr>
     </mat-table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Обрати сторінку користувачів"></mat-paginator>
 
   </mat-card-content>
 </mat-card>

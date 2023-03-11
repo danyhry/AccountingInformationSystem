@@ -1,11 +1,11 @@
 <div class="m-1">
-  <h1 class="text-center">Contact Us</h1>
-  <div class="fs-6 fw-light mb-2">Post your message below.</div>
+  <h1 class="text-center">Зв'яжіться з нами</h1>
+  <div class="fs-6 fw-light mb-2">Залиште своє повідомлення нижче.</div>
   <form id="contact_form" name="contact_form" method="post"
         [formGroup]="contactForm"
         (ngSubmit)="_onSubmit()">
     <div class="mb-5">
-      <label for="message">Message</label>
+      <label for="message">Повідомлення</label>
       <textarea class="form-control"
                 id="message"
                 formControlName="message"
@@ -16,7 +16,7 @@
     </div>
     <div class="mb-5 row">
       <div class="col">
-        <label>Your Name:</label>
+        <label>Ваше ім'я:</label>
         <input type="text"
                required
                maxlength="50"
@@ -26,7 +26,7 @@
                [class.border-danger]="isShowError">
       </div>
       <div class="col">
-        <label for="email">Your Email:</label>
+        <label for="email">Ваша пошта:</label>
         <input type="email"
                required
                maxlength="50"
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="d-grid">
-      <button type="submit" class="btn btn-primary">Post</button>
+      <button type="submit" class="btn btn-primary">Відправити</button>
     </div>
   </form>
 </div>

@@ -1,15 +1,15 @@
 <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
-  <h2>Password recovery</h2>
-  <p>Please enter the email you`ve used to enter the site</p>
+  <h2>Відновлення паролю</h2>
+  <p>Будь ласка, введіть електронну пошту, яку ви використовували для входу на сайт</p>
 
   <mat-form-field appearance="fill" class="example-full-width">
     <mat-label>Email</mat-label>
     <input matInput type="email" formControlName="email" placeholder="email@gmail.com">
-    <mat-error *ngIf="recoveryForm.controls['email'].invalid">Please enter a valid email</mat-error>
+    <mat-error *ngIf="recoveryForm.controls['email'].invalid">Будь ласка, введіть дійсну електронну адресу</mat-error>
   </mat-form-field>
 
   <div mat-dialog-actions [align]="'end'">
-    <button mat-raised-button color="primary" [disabled]="recoveryForm.invalid">Next</button>
+    <button mat-raised-button color="primary" [disabled]="recoveryForm.invalid">Далі</button>
   </div>
 
 </form>

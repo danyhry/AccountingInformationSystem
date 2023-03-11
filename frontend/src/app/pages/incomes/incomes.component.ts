@@ -90,14 +90,14 @@ export class IncomesComponent extends Base implements OnInit {
   deleteIncome(income: Income): void {
     const dialog = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        title: 'Confirm',
-        message: 'Are you sure you want to delete income?'
+        title: 'Підтвердження',
+        message: 'Ви дійсно хочете видалити цей дохід?'
       }
     });
     dialog.afterClosed().subscribe((isDelete: boolean) => {
       if (isDelete) {
         this.incomeService.deleteIncome(income.id).subscribe(() => {
-          this.notificationService.showSuccessMessage(`User was successfully deleted.`);
+          this.notificationService.showSuccessMessage(`Дохід успішно видалено.`);
           this.getUpdatedIncomes();
         });
       }
@@ -154,7 +154,7 @@ export class IncomesComponent extends Base implements OnInit {
     // Initialize jsPDF
     const doc = new jsPDF("p", "mm", "a4");
     // Define columns and rows for the table
-    const columns = ['Category', 'Amount', 'Date', 'Description'];
+    const columns = ['Категорія', 'Кількість', 'Дата', 'Опис'];
     let rows: any[][] = [];
 
     const sortedIncomes = this.dataSource.filteredData.sort((a, b) => {
@@ -175,7 +175,7 @@ export class IncomesComponent extends Base implements OnInit {
       body: rows
     });
 
-    doc.save('Incomes.pdf');
+    doc.save('Доходи.pdf');
   }
 
 

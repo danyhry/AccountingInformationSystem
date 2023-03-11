@@ -77,8 +77,8 @@ export class ExpansesComponent extends Base implements OnInit {
   deleteExpense(expense: Expense): void {
     const dialog = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        title: 'Confirm',
-        message: 'Are you sure you want to delete expense?'
+        title: 'Підтвердження',
+        message: 'Ви дійсно хочете видалити цю витрату?'
       }
     });
     dialog.afterClosed().subscribe((isDelete: boolean) => {
@@ -86,7 +86,7 @@ export class ExpansesComponent extends Base implements OnInit {
         this.expenseService.deleteExpense(expense.id)
           .pipe(takeUntil(this.destroy$))
           .subscribe(() => {
-            this.notificationService.showSuccessMessage(`Expense was successfully deleted.`);
+            this.notificationService.showSuccessMessage(`Витрата успішно видалена.`);
             this.getUpdatedExpenses();
           });
       }
@@ -146,7 +146,7 @@ export class ExpansesComponent extends Base implements OnInit {
     const doc = new jsPDF("p", "mm", "a4");
 
     // Define columns and rows for the table
-    const columns = ['Category', 'Amount', 'Date', 'Description'];
+    const columns = ['Категорія', 'Кількість', 'Дата', 'Опис'];
     const rows: any[][] = [];
 
     const sortedExpenses = this.dataSource.filteredData.sort((a, b) => {
@@ -167,6 +167,6 @@ export class ExpansesComponent extends Base implements OnInit {
       body: rows
     });
 
-    doc.save('Expenses.pdf');
+    doc.save('Витрати.pdf');
   }
 }

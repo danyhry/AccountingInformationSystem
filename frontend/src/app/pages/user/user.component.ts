@@ -93,8 +93,8 @@ export class UserComponent extends Base implements OnInit {
   deleteUser(user: User) {
     const dialog = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        title: 'Confirm',
-        message: 'Are you sure you want to delete user?'
+        title: 'Підтвердження',
+        message: 'Ви впевнені що хочете видалити цього користувача?'
       }
     });
 
@@ -103,7 +103,7 @@ export class UserComponent extends Base implements OnInit {
         this.userService.deleteUser(user.id)
           .pipe(takeUntil(this.destroy$))
           .subscribe(() => {
-              this.notificationService.showSuccessMessage(`User was successfully deleted.`);
+              this.notificationService.showSuccessMessage(`Користувач був успішно видален.`);
               this.getAllUsers();
             }
           )

@@ -51,12 +51,12 @@ export class CreateUserComponent extends Base implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.notificationService.showSuccessMessage(`User was successfully created.`);
+            this.notificationService.showSuccessMessage(`Користувача успішно створено.`);
             this.dialogRef.close('update');
           },
           error: () => {
             console.log("error");
-            this.notificationService.showErrorMessage(`Something is wrong.`);
+            this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
           }
         })
     }

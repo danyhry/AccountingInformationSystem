@@ -1,36 +1,36 @@
-<h1 mat-dialog-title>Create User</h1>
+<h1 mat-dialog-title>Створити користувача</h1>
 <div mat-dialog-content>
   <form [formGroup]="userForm">
 
       <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="First Name" formControlName="firstName">
+        <mat-label>Ім'я</mat-label>
+        <input matInput placeholder="Ім'я" formControlName="firstName">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Surname</mat-label>
-        <input matInput placeholder="Last Name" formControlName="lastName">
+        <mat-label>Фамілія</mat-label>
+        <input matInput placeholder="Фамілія" formControlName="lastName">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" formControlName="email">
+        <mat-label>Пошта</mat-label>
+        <input matInput placeholder="Пошта" formControlName="email">
       </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" placeholder="Password" formControlName="password">
+      <mat-label>Пароль</mat-label>
+      <input matInput type="password" placeholder="Пароль" formControlName="password">
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Confirm password</mat-label>
-      <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword">
+      <mat-label>Підтвердіть пароль</mat-label>
+      <input matInput type="password" placeholder="Підтвердіть пароль" formControlName="confirmPassword">
     </mat-form-field>
 
   </form>
 
   <div mat-dialog-actions [align]="'end'">
-    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
-    <button mat-raised-button color="primary" (click)="createUser()">Create</button>
+    <button mat-raised-button color="warn" mat-dialog-close>Зачинити</button>
+    <button mat-raised-button color="primary" (click)="createUser()">Створити</button>
   </div>
 
 </div>

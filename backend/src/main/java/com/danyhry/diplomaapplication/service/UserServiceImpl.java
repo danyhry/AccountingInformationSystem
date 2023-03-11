@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Service
 @Slf4j
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;

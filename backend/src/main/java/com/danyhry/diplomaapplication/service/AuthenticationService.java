@@ -51,10 +51,10 @@ public class AuthenticationService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
 
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
-
         User user = userDao.getUserByEmail(authenticationRequest.getEmail())
                 .orElseThrow(() -> new UserException("User is not found"));
+
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

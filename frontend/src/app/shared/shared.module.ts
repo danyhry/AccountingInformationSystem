@@ -36,6 +36,7 @@ import {MY_DATE_FORMAT} from "../pages/incomes/incomes.component";
 import {CustomDatePipe} from "../utils/CustomDatePipe";
 import {NgxChartsModule, TooltipModule} from "@swimlane/ngx-charts";
 import {MatCardModule} from "@angular/material/card";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import {MatCardModule} from "@angular/material/card";
     MatDatepickerModule,
     MatMomentDateModule,
     TooltipModule,
+    FormsModule,
   ],
   exports: [
     MatToolbarModule,
@@ -96,7 +98,8 @@ import {MatCardModule} from "@angular/material/card";
     NgxChartsModule,
     MatCardModule,
     MatDatepickerModule,
-    TooltipModule
+    TooltipModule,
+    FormsModule
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

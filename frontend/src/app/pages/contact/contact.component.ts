@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {NotificationService} from "../../services/notification.service";
@@ -54,14 +54,14 @@ export class ContactComponent extends Base implements OnInit {
             console.log("contact submit successfully");
           },
           error: () => {
-            this.notificationService.showErrorMessage('Error');
+            this.notificationService.showErrorMessage('Помилка');
             this.isShowError = true;
           }
         });
       this.isShowError = false;
-      this.notificationService.showSuccessMessage('Message was sent');
+      this.notificationService.showSuccessMessage('Повідомлення відправлено');
     } else {
-      this.notificationService.showErrorMessage('Form is not valid, please fill correct values');
+      this.notificationService.showErrorMessage('Форма невалідна, заповніть, будь-ласка, значення правильно');
       this.isShowError = true;
     }
   }

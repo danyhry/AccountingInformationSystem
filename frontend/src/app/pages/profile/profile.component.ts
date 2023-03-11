@@ -77,7 +77,7 @@ export class ProfileComponent extends Base implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
             next: () => {
-              this.notificationService.showSuccessMessage(`Password was successfully changed.`);
+              this.notificationService.showSuccessMessage(`Пароль успішно змінено.`);
             },
             error: err => {
               this.notificationService.showErrorMessage(err.error.message);
@@ -86,7 +86,7 @@ export class ProfileComponent extends Base implements OnInit {
         );
 
     } else {
-      this.notificationService.showErrorMessage("Form is not valid");
+      this.notificationService.showErrorMessage("Форма невалідна");
     }
   }
 
@@ -107,10 +107,10 @@ export class ProfileComponent extends Base implements OnInit {
           console.log(user);
           this.user = user;
           this.userService.setUser(user);
-          this.notificationService.showSuccessMessage(`Information was successfully updated`);
+          this.notificationService.showSuccessMessage(`Інформацію успішно оновлено.`);
         });
     } else {
-      this.notificationService.showErrorMessage("The form is not valid!");
+      this.notificationService.showErrorMessage("Форма невалідна!");
     }
   }
 

@@ -167,13 +167,13 @@ export class IdeasComponent extends Base implements OnInit {
           value: capital,
         };
       });
-      this.chartData = [{name: 'Capital', series: data}];
+      this.chartData = [{name: 'Капітал', series: data}];
 
 
       // Refresh the form and variables
       this.refreshInvestmentsModel();
     } else {
-      this.notificationService.showErrorMessage("Form is not valid, please fill it");
+      this.notificationService.showErrorMessage("Форма невалідна, будь-ласка, заповніть її");
     }
   }
 

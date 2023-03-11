@@ -9,12 +9,12 @@
     </button>
 
     <!--    <span>Control of income and expenses</span>-->
-    <span>Danyhry App</span>
+    <span>Danyhry`s Застосунок</span>
 
     <div class="spacer"></div>
 
     <div class="items">
-      <span>Control of income and expenses</span>
+      <span>Керування доходами та витратами</span>
       <!--      <a mat-button routerLink="dashboard">Dashboard</a>-->
       <!--      <a mat-button routerLink="users">Users</a>-->
       <!--      <a mat-button routerLink="tables">Tables</a>-->
@@ -23,8 +23,8 @@
     <div class="spacer"></div>
 
     <div *ngIf="!authService.isAuthenticated(); else showProfile">
-      <a mat-raised-button color="accent" class="me-1" routerLink="login">Login</a>
-      <a mat-raised-button color="warn" routerLink="register">Register</a>
+      <a mat-raised-button color="accent" class="me-1" routerLink="login">Вхід</a>
+      <a mat-raised-button color="warn" routerLink="register">Реєстрація</a>
     </div>
 
   </mat-toolbar>
@@ -40,44 +40,44 @@
         <mat-list-item class="menu-button"
                        routerLink="/dashboard">
           <mat-icon>home</mat-icon>
-          <span>Dashboard</span>
+          <span>Панель управління</span>
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/incomes">
           <mat-icon>attach_money</mat-icon>
-          <span>Incomes</span>
+          <span>Доходи</span>
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/expanses">
           <mat-icon>money_off</mat-icon>
-          <span>Expanses</span>
+          <span>Витрати</span>
         </mat-list-item>
 
         <mat-list-item *ngIf="user?.role?.name === 'ADMIN'"
                        class="menu-button"
                        routerLink="/users">
           <mat-icon>person</mat-icon>
-          <span>Users</span>
+          <span>Користувачі</span>
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/ideas">
           <mat-icon>info</mat-icon>
-          <span>Ideas</span>
+          <span>Ідеї для інвестицій</span>
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/faq">
           <mat-icon>help_outline</mat-icon>
-          <span>F.A.Q</span>
+          <span>Найчастіші питання</span>
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/contact">
           <mat-icon>contact_mail</mat-icon>
-          <span>Contact</span>
+          <span>З'єднатися з нами</span>
         </mat-list-item>
 
       </mat-nav-list>
@@ -104,14 +104,14 @@
     <button mat-menu-item routerLink="/profile">
       <mat-icon>person_outline</mat-icon>
       <span class="custom-menu">
-        Profile
+        Профіль
       </span>
     </button>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="_logOut()">
       <mat-icon>exit_to_app</mat-icon>
       <span class="custom-menu">
-        Logout
+        Вихід
       </span>
     </button>
   </mat-menu>

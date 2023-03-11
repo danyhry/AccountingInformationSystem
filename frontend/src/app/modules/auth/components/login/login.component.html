@@ -10,8 +10,8 @@
             <div class="card-body">
 
               <div class="pt-4 pb-2">
-                <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                <p class="text-center small">Enter your email & password to login</p>
+                <h5 class="card-title text-center pb-0 fs-4">Вхід в аккаунт</h5>
+                <p class="text-center small">Введіть свою пошту та пароль для входу</p>
               </div>
 
               <form class="row g-3 needs-validation"
@@ -20,30 +20,30 @@
                     novalidate>
 
                 <div class="col-12">
-                  <label for="emailField1" class="form-label" [class.text-danger]="showErrors">Email</label>
+                  <label for="emailField1" class="form-label" [class.text-danger]="showErrors">Пошта</label>
                   <div *ngIf="showErrors"
                        class="text-danger">
-                    Incorrectly entered data
+                    Неправильно введена пошта
                   </div>
                   <div class="input-group has-validation">
                     <input type="email"
                            formControlName="email"
                            class="form-control"
                            id="emailField1"
-                           placeholder="Enter a valid email address"
+                           placeholder="Введіть валідну пошту"
                            [class.border-danger]="showErrors"
                            required>
-                    <div class="invalid-feedback">Please enter your email.</div>
+                    <div class="invalid-feedback">Введіть свою пошту.</div>
                   </div>
                 </div>
 
                 <div class="col-12">
-                  <label for="passwordField1" class="form-label" [class.text-danger]="showErrors">Password</label>
+                  <label for="passwordField1" class="form-label" [class.text-danger]="showErrors">Пароль</label>
                   <input type="password"
                          formControlName="password"
                          class="form-control"
                          id="passwordField1"
-                         placeholder="Enter a password"
+                         placeholder="Введіть пароль"
                          [class.border-danger]="showErrors"
                          [type]="showPassword ? 'text' : 'password'"
                          required>
@@ -64,22 +64,22 @@
                            type="checkbox"
                            formControlName="remember"
                            id="rememberCheck1">
-                    <label class="form-check-label" for="rememberCheck1">Remember me</label>
+                    <label class="form-check-label" for="rememberCheck1">Запам'ятати мене</label>
                   </div>
                 </div>
 
                 <div class="col-12">
-                  <button class="btn btn-primary w-100" type="submit">Login</button>
+                  <button class="btn btn-primary w-100" type="submit">Вхід</button>
                 </div>
 
                 <div class="col-12 fw-bold">
-                  <p class="small mb-0">Don't have account?
+                  <p class="small mb-0">Немає аккаунту?
                     <a class="link-danger" routerLink="/register">
-                      Register
+                      Реєстрація
                     </a>
                   </p>
                   <p class="small mb-0">
-                    <a class="link-danger" (click)="openRecovery()">Forgot your password?</a>
+                    <a class="link-danger" (click)="openRecovery()">Забули пароль?</a>
                   </p>
                 </div>
 
@@ -101,8 +101,8 @@
 
     <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
       <h1>404</h1>
-      <h2>You are already logged in.</h2>
-      <a class="btn" routerLink="/dashboard">Back to Dashboard</a>
+      <h2>Ви вже увійшли в систему.</h2>
+      <a class="btn" routerLink="/dashboard">Повернутися до панелі управління</a>
     </section>
 
   </div>

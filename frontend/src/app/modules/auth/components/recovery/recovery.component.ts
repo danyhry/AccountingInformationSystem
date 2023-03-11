@@ -38,7 +38,7 @@ export class RecoveryFormComponent implements OnInit {
         .subscribe({
           next: () => {
             // this.notificationService.showSuccessMessage('Message was sent');
-            this.notificationService.showSuccessMessage(`We have sent link to restore access on your email ${this.recoveryForm.value.email}.`)
+            this.notificationService.showSuccessMessage(`Ми надіслали посилання для відновлення доступу на вашу електронну пошту ${this.recoveryForm.value.email}.`)
             console.log("recovery submit successfully");
           },
           error: (response) => {
@@ -46,7 +46,7 @@ export class RecoveryFormComponent implements OnInit {
           }
         });
     } else {
-      this.notificationService.showErrorMessage(`Something is wrong`);
+      this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
     }
   }
 }

@@ -22,18 +22,18 @@ public class IncomeService {
 
     public List<Income> getAllIncomes() {
         return incomeDao.getAllIncomes()
-                .orElseThrow(() -> new NotFoundException("Incomes are not found"));
+                .orElseThrow(() -> new NotFoundException("Доходи не знайдено"));
     }
 
     public Income createIncome(Income income) {
         income.setDate(income.getDate().plusDays(1));
         return incomeDao.createIncome(income)
-                .orElseThrow(() -> new NotFoundException("Incomes is not created"));
+                .orElseThrow(() -> new NotFoundException("Дохід не створений"));
     }
 
     public Income getIncomeById(Long id) {
         return incomeDao.getIncomeById(id)
-                .orElseThrow(() -> new NotFoundException("Income is not found"));
+                .orElseThrow(() -> new NotFoundException("Дохід не знайдено"));
     }
 
     public boolean deleteIncomeById(Long id) {
@@ -43,7 +43,7 @@ public class IncomeService {
 
     public Income updateIncomeById(Long id, Income income) {
         Income existingIncome = incomeDao.getIncomeById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Income with id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Дохід з id: " + id + " не знайдено"));
 
         existingIncome.setCategoryId(income.getCategoryId());
         existingIncome.setDescription(income.getDescription());
@@ -51,16 +51,16 @@ public class IncomeService {
         existingIncome.setDate(income.getDate().plusDays(1));
 
         return incomeDao.updateIncome(existingIncome)
-                .orElseThrow(() -> new NotFoundException("Income is not updated"));
+                .orElseThrow(() -> new NotFoundException("Дохід не оновлений"));
     }
 
     public List<Income> getIncomesByUserId(Long userId) {
         return this.incomeDao.getIncomesByUserId(userId)
-                .orElseThrow(() -> new NotFoundException("Incomes are not found"));
+                .orElseThrow(() -> new NotFoundException("Доходи не знайдено"));
     }
 
     public List<Income> getIncomesByUserIdAndDate(Long userId, LocalDate date) {
         return incomeDao.getIncomesByUserIdAndDate(userId, date)
-                .orElseThrow(() -> new NotFoundException("Incomes are not found"));
+                .orElseThrow(() -> new NotFoundException("Доходи не знайдено"));
     }
 }

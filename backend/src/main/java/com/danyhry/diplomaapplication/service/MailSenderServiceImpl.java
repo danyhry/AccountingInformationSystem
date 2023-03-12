@@ -52,7 +52,7 @@ public class MailSenderServiceImpl implements MailSenderService {
     public boolean sendEmailForRecoverPasswordPassword(User user) throws MailException {
 
         User userFromDb = userDao.getUserByEmail(user.getEmail())
-                .orElseThrow(() -> new NotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("Користувача не знайдено"));
 
         log.debug("Starting to generateNewPassword() with email={}", userFromDb.getEmail());
 
@@ -62,17 +62,17 @@ public class MailSenderServiceImpl implements MailSenderService {
         String encodedPassword = encoder.encode(newPassword);
         int result = userDao.updateUserPassword(userFromDb.getId(), encodedPassword);
         if (result != 1) {
-            log.error("User`s password wasn`t updated");
+            log.error("Пароль користувача не вдалося оновити");
             return false;
         }
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         String PASSWORD_TEXT = String.format("""
-                        Hello!\s
-                        Unfortunately, you forgot your password.\s
-                        New password is: %s
-                        Otherwise, if it was not you, then just ignore this letter
+                        Привіт!\s
+                        На жаль, ви забули свій пароль.\s
+                        Новий пароль: %s
+                        В іншому випадку, якщо це не ви, то просто проігноруйте цей лист
                         """,
                 newPassword);
 
@@ -82,7 +82,7 @@ public class MailSenderServiceImpl implements MailSenderService {
         mailMessage.setText(PASSWORD_TEXT);
 
         mailSender.send(mailMessage);
-        log.debug("Password was successfully recovered");
+        log.debug("Пароль було успішно відновлено");
         return true;
     }
 

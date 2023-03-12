@@ -20,18 +20,18 @@ public class ExpenseService {
 
     public List<Expense> getAllExpenses() {
         return expenseDao.getAllExpenses()
-                .orElseThrow(() -> new NotFoundException("Expenses are not found"));
+                .orElseThrow(() -> new NotFoundException("Витрати не знайдені"));
     }
 
     public Expense createExpense(Expense expense) {
         expense.setDate(expense.getDate().plusDays(1));
         return expenseDao.createExpense(expense)
-                .orElseThrow(() -> new NotFoundException("Expenses is not created"));
+                .orElseThrow(() -> new NotFoundException("Витрати не створені"));
     }
 
     public Expense getExpenseById(Long id) {
         return expenseDao.getExpenseById(id)
-                .orElseThrow(() -> new NotFoundException("Expense is not found"));
+                .orElseThrow(() -> new NotFoundException("Витрату не знайдено"));
     }
 
     public boolean deleteExpenseById(Long id) {
@@ -41,7 +41,7 @@ public class ExpenseService {
 
     public Expense updateExpenseById(Long id, Expense expense) {
         Expense existingExpense = expenseDao.getExpenseById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Expense with id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Витрата з id: " + id + " не знайдена"));
 
         existingExpense.setCategoryId(expense.getCategoryId());
         existingExpense.setDescription(expense.getDescription());
@@ -49,11 +49,11 @@ public class ExpenseService {
         existingExpense.setDate(expense.getDate().plusDays(1));
 
         return expenseDao.updateExpense(existingExpense)
-                .orElseThrow(() -> new NotFoundException("Expense is not updated"));
+                .orElseThrow(() -> new NotFoundException("Витрата не оновлена"));
     }
 
     public List<Expense> getExpensesByUserId(Long userId) {
         return expenseDao.getExpensesByUserId(userId)
-                .orElseThrow(() -> new NotFoundException("Expenses are not found"));
+                .orElseThrow(() -> new NotFoundException("Витрати не знайдені"));
     }
 }

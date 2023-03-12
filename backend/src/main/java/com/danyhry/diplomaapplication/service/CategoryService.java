@@ -20,22 +20,22 @@ public class CategoryService {
 
     public List<Category> getAllCategories() {
         return categoryDao.getAllCategories()
-                .orElseThrow(() -> new NotFoundException("Categories are not found"));
+                .orElseThrow(() -> new NotFoundException("Категорій не знайдено"));
     }
 
     public Category getCategoryById(Long categoryId) {
         return categoryDao.getCategoryById(categoryId)
-                .orElseThrow(() -> new NotFoundException("Category is not found"));
+                .orElseThrow(() -> new NotFoundException("Категорія не знайдена"));
     }
 
     public Category createCategory(Category category) {
         return categoryDao.createCategory(category)
-                .orElseThrow(() -> new NotFoundException("Category is not created"));
+                .orElseThrow(() -> new NotFoundException("Категорія не створена"));
     }
 
     public Category updateCategory(Category category, Long id) {
         return categoryDao.updateCategory(category, id)
-                .orElseThrow(() -> new NotFoundException("Category is not updated"));
+                .orElseThrow(() -> new NotFoundException("Категорія не оновлена"));
     }
 
     public boolean deleteCategory(Long id) {

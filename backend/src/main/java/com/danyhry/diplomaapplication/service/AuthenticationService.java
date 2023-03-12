@@ -25,7 +25,7 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest registerRequest) {
         String email = registerRequest.getEmail();
         if (userDao.getUserByEmail(email).isPresent()) {
-            throw new UserAlreadyExistsException(String.format("User with email - %s already exists", email));
+            throw new UserAlreadyExistsException(String.format("Користувач з поштою - %s вже існує", email));
         }
 
         User user = User.builder()
@@ -39,7 +39,7 @@ public class AuthenticationService {
         int result = userDao.createUser(user);
 
         if (result == 0) {
-            throw new CommonException("Failed to save user to database");
+            throw new CommonException("Помилка при додаванні користувача в базу данних");
         }
 
         String jwtToken = jwtService.generateToken(user);
@@ -52,7 +52,7 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
 
         User user = userDao.getUserByEmail(authenticationRequest.getEmail())
-                .orElseThrow(() -> new UserException("User is not found"));
+                .orElseThrow(() -> new UserException("Користувача не знайдено"));
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 

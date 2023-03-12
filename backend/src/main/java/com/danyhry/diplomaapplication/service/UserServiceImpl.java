@@ -27,13 +27,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userDao.getAllUsers()
-                .orElseThrow(() -> new NotFoundException("Users are not found"));
+                .orElseThrow(() -> new NotFoundException("Користувачів не знайдено"));
     }
 
     @Override
     public User getUserById(Long id) {
         return userDao.getUserById(id)
-                .orElseThrow(() -> new NotFoundException("Not found User by id = " + id));
+                .orElseThrow(() -> new NotFoundException(String.format("Користувача з id %s не знайдено", id)));
     }
 
     @Override
@@ -42,12 +42,11 @@ public class UserServiceImpl implements UserService {
         users.ifPresentOrElse(User -> {
             int result = userDao.deleteUserById(id);
             if (result != 1) {
-                log.error("Could not delete User");
-                throw new IllegalStateException("Could not delete User");
+                throw new IllegalStateException("Не вдалося видалити користувача");
             }
         }, () -> {
             log.error(String.format("User with id %s not found", id));
-            throw new NotFoundException(String.format("User with id %s not found", id));
+            throw new NotFoundException(String.format("Користувача з id %s не знайдено", id));
         });
     }
 
@@ -60,17 +59,17 @@ public class UserServiceImpl implements UserService {
                 .findFirst()
                 .map(firstUser -> {
                     User user = userDao.updateUser(updatedUser, firstUser.getId())
-                            .orElseThrow(() -> new IllegalStateException("Could not update User"));
+                            .orElseThrow(() -> new IllegalStateException("Не вдалося оновити користувача"));
                     user.setId(id);
                     return user;
                 })
-                .orElseThrow(() -> new NotFoundException(String.format("User with id %s not found", id)));
+                .orElseThrow(() -> new NotFoundException(String.format("Користувача з id %s не знайдено", id)));
     }
 
     @Override
     public User findByEmail(String email) {
         return this.userDao.getUserByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User with email " + email + "not found"));
+                .orElseThrow(() -> new NotFoundException("Користувача з поштою " + email + " не знайдено"));
     }
 
     @Override
@@ -82,15 +81,15 @@ public class UserServiceImpl implements UserService {
 
         try {
             if (!newPassword.equals(confirmPassword)) {
-                throw new UserException("Passwords must be same");
+                throw new UserException("Паролі мають співпадати");
             }
             String email = userDao.getUserById(id)
-                    .orElseThrow(() -> new UserException("User not found"))
+                    .orElseThrow(() -> new UserException("Користувача не знайдено"))
                     .getEmail();
             String dbPass = userDao.getUserPasswordByEmail(email)
-                    .orElseThrow(() -> new NotFoundException("User`s password is not found"));
+                    .orElseThrow(() -> new NotFoundException("Пароль користувача не знайдено"));
             if (!encoder.matches(oldPassword, dbPass) || StringUtils.isBlank(newPassword)) {
-                throw new UserException("Wrong Password");
+                throw new UserException("Неправильний пароль");
             }
         } catch (UserException e) {
             throw new UserException(e.getMessage());
@@ -102,6 +101,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Role> getRoles() {
         return this.userDao.getRoles()
-                .orElseThrow(() -> new NotFoundException("Roles are not found"));
+                .orElseThrow(() -> new NotFoundException("Ролей не знайдено"));
     }
 }

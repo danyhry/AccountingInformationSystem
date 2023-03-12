@@ -26,7 +26,7 @@ public class IncomeService {
     }
 
     public Income createIncome(Income income) {
-        income.setDate(income.getDate().plusDays(1));
+//        income.setDate(income.getDate().plusDays(1));
         return incomeDao.createIncome(income)
                 .orElseThrow(() -> new NotFoundException("Дохід не створений"));
     }

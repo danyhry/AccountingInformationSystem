@@ -61,7 +61,7 @@ export class RegisterComponent extends Base implements OnInit {
         .subscribe(
           {
             next: () => {
-              this.notificationService.showSuccessMessage(`User was successfully registered.`);
+              this.notificationService.showSuccessMessage(`Користувач успішно зареєстрований.`);
               this.router.navigateByUrl('/login');
             },
             error: (response) => {

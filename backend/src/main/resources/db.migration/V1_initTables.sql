@@ -31,7 +31,7 @@ CREATE TABLE incomes
 (
     id          BIGSERIAL PRIMARY KEY,
     user_id     BIGINT      NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    category_id INTEGER REFERENCES categories (id),
+    category_id INTEGER REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE,
     description VARCHAR(50) NOT NULL,
     amount      BIGINT      NOT NULL,
     date        DATE        NOT NULL
@@ -41,7 +41,7 @@ CREATE TABLE expenses
 (
     id          BIGSERIAL PRIMARY KEY,
     user_id     BIGINT      NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    category_id INTEGER REFERENCES categories (id),
+    category_id INTEGER REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE,
     description VARCHAR(50) NOT NULL,
     amount      BIGINT      NOT NULL,
     date        DATE        NOT NULL

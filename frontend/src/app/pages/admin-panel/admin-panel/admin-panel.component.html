@@ -1,0 +1,12 @@
+<mat-tab-group (selectedTabChange)="onTabChanged($event)" mat-align-tabs="center">
+  <mat-tab label="Користувачі">
+    <div class="admin-panel-content" *ngIf="activeTab === 'користувачі'">
+      <app-user></app-user>
+    </div>
+  </mat-tab>
+  <mat-tab label="Категорії">
+    <div class="admin-panel-content" *ngIf="activeTab === 'категорії'">
+      <app-categories></app-categories>
+    </div>
+  </mat-tab>
+</mat-tab-group>

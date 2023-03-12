@@ -24,7 +24,7 @@ public class ExpenseService {
     }
 
     public Expense createExpense(Expense expense) {
-        expense.setDate(expense.getDate().plusDays(1));
+//        expense.setDate(expense.getDate().plusDays(1));
         return expenseDao.createExpense(expense)
                 .orElseThrow(() -> new NotFoundException("Витрати не створені"));
     }

@@ -12,21 +12,27 @@ import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.componen
 import {TokenInterceptor} from "./interceptor/token.interceptor";
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {SharedModule} from "./shared/shared.module";
+import { CategoriesComponent } from './pages/admin-panel/categories/categories.component';
+import { AdminPanelComponent } from './pages/admin-panel/admin-panel/admin-panel.component';
+import {AdminLayoutModule} from "./layouts/admin-layout/admin-layout.module";
+import { CreateCategoryComponent } from './pages/admin-panel/categories/create-category/create-category.component';
+import { UpdateCategoryComponent } from './pages/admin-panel/categories/update-category/update-category.component';
 
 @NgModule({
-  declarations: [AppComponent, AdminLayoutComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    NgbModule,
-    ReactiveFormsModule,
-    ToastrModule.forRoot(),
-    ComponentsModule,
-    FontAwesomeModule,
-    SharedModule,
-  ],
+  declarations: [AppComponent, AdminLayoutComponent, CategoriesComponent, AdminPanelComponent, CreateCategoryComponent, UpdateCategoryComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        NgbModule,
+        ReactiveFormsModule,
+        ToastrModule.forRoot(),
+        ComponentsModule,
+        FontAwesomeModule,
+        SharedModule,
+        AdminLayoutModule,
+    ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   exports: [],
   bootstrap: [AppComponent]

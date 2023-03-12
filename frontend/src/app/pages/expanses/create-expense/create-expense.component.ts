@@ -61,6 +61,10 @@ export class CreateExpenseComponent extends Base implements OnInit {
           const expense = this.createExpenseForm.value;
           expense.userId = user.id;
 
+          expense.date = new Date(expense.date);
+          const dateValue = expense.date ? new Date(expense.date.getTime() - expense.date.getTimezoneOffset() * 60 * 1000) : null;
+          expense.date = dateValue ? dateValue.toISOString() : null;
+
           this.expenseService.addExpense(expense)
             .pipe(takeUntil(this.destroy$))
             .subscribe({

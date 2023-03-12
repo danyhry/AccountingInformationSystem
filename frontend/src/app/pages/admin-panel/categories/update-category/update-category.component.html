@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Оновити категорію</h1>
+<div mat-dialog-content>
+  <form [formGroup]="categoryForm">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Назва</mat-label>
+      <input matInput placeholder="Назва" formControlName="name">
+    </mat-form-field>
+
+  </form>
+
+  <div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close>Зачинити</button>
+    <button mat-raised-button color="primary" (click)="updateCategory()">Оновити</button>
+  </div>
+
+</div>

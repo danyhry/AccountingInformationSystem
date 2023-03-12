@@ -45,7 +45,7 @@ export class CreateIncomeComponent extends Base implements OnInit {
       categoryId: ['', Validators.required],
       amount: ['', [Validators.required, Validators.pattern('^[0-9]+([,.][0-9]{1,2})?$')]],
       description: ['', [Validators.maxLength(50)]],
-      date: [currentDate.toISOString().substring(0, 10), [Validators.required]]
+      date: [currentDate, [Validators.required]]
     });
   }
 
@@ -53,12 +53,15 @@ export class CreateIncomeComponent extends Base implements OnInit {
     console.log(this.createIncomeForm.value);
 
     if (this.createIncomeForm.valid && this.userService.isAuthenticated()) {
-
       this.userService.getUser()
         .pipe(takeUntil(this.destroy$))
         .subscribe(user => {
           const income = this.createIncomeForm.value;
           income.userId = user.id;
+
+          income.date = new Date(income.date);
+          const dateValue = income.date ? new Date(income.date.getTime() - income.date.getTimezoneOffset() * 60 * 1000) : null;
+          income.date = dateValue ? dateValue.toISOString() : null;
 
           this.incomeService.addIncome(income)
             .pipe(takeUntil(this.destroy$))
@@ -77,5 +80,6 @@ export class CreateIncomeComponent extends Base implements OnInit {
       this.notificationService.showErrorMessage(`Something is wrong.`);
     }
   }
+
 
 }

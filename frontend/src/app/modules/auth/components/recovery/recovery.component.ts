@@ -1,4 +1,3 @@
-// recovery-form.component.ts
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from "../../../../services/notification.service";

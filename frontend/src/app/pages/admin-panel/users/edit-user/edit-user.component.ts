@@ -2,11 +2,11 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {takeUntil} from "rxjs";
-import {User} from "../../../models/user";
-import {UserService} from "../../../services/user.service";
-import {Base} from "../../../services/destroy.service";
-import {NotificationService} from "../../../services/notification.service";
-import {Role} from "../../../models/role";
+import {User} from "../../../../models/user";
+import {UserService} from "../../../../services/user.service";
+import {Base} from "../../../../services/destroy.service";
+import {NotificationService} from "../../../../services/notification.service";
+import {Role} from "../../../../models/role";
 
 @Component({
   selector: 'app-edit-user',

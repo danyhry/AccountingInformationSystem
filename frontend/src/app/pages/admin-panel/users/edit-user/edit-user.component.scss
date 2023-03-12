@@ -1,0 +1,11 @@
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-dialog-content {
+  overflow: visible;
+}
+
+:host ::ng-deep .mat-form-field-wrapper{
+  padding-bottom: 0;
+}

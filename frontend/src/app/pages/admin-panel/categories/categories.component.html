@@ -1,0 +1,63 @@
+<mat-card class="card">
+  <mat-card-title-group>
+    <mat-card-title class="title">Категорії</mat-card-title>
+    <button mat-raised-button color="primary" (click)="createCategory()">
+      Додати категорію
+    </button>
+  </mat-card-title-group>
+  <mat-card-content>
+    <mat-form-field appearance="standard">
+      <mat-label>Фільтр</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+    <mat-table [dataSource]="categoriesDataSource" matSort>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+        <mat-cell *matCellDef="let category">{{category.id}}</mat-cell>
+      </ng-container>
+
+      <!-- Progress Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Назва</mat-header-cell>
+        <mat-cell *matCellDef="let category">{{category.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Дія</mat-header-cell>
+        <mat-cell *matCellDef="let category">
+          <button mat-icon-button
+                  color="primary"
+                  (click)="updateCategory(category)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button
+                  color="warn"
+                  (click)="deleteCategory(category)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+      <!--      <tr mat-row *matRowDef="let user; columns: displayedColumns;"></tr>-->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Нічого не знайдено за фільтром - "{{input.value}}"</td>
+      </tr>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Обрати сторінку категорії"></mat-paginator>
+
+  </mat-card-content>
+</mat-card>
+
+
+<ng-template #emptyMessage>
+  <p class="mat-h1">There are no categories</p>
+</ng-template>

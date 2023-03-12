@@ -1,17 +1,17 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder} from "@angular/forms";
-import {User} from "../../models/user";
-import {UserService} from "../../services/user.service";
+import {User} from "../../../models/user";
+import {UserService} from "../../../services/user.service";
 import {MatPaginator} from "@angular/material/paginator";
-import {Base} from "../../services/destroy.service";
+import {Base} from "../../../services/destroy.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
 import {takeUntil} from "rxjs";
 import {EditUserComponent} from "./edit-user/edit-user.component";
-import {NotificationService} from "../../services/notification.service";
+import {NotificationService} from "../../../services/notification.service";
 import {CreateUserComponent} from "./create-user/create-user.component";
-import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
+import {ConfirmationDialogComponent} from "../../../modules/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: "app-user",

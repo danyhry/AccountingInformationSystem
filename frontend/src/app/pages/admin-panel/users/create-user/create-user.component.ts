@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {User} from "../../../models/user";
-import {NotificationService} from "../../../services/notification.service";
+import {User} from "../../../../models/user";
+import {NotificationService} from "../../../../services/notification.service";
 import {takeUntil} from "rxjs";
-import {AuthService} from "../../../services/auth.service";
-import {Base} from "../../../services/destroy.service";
-import {MustMatch} from "../../../modules/auth/validators/must-match.validator";
+import {AuthService} from "../../../../services/auth.service";
+import {Base} from "../../../../services/destroy.service";
+import {MustMatch} from "../../../../modules/auth/validators/must-match.validator";
 
 @Component({
   selector: 'app-create-user',

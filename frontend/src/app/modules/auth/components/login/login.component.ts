@@ -33,13 +33,10 @@ export class LoginComponent extends Base implements OnInit {
               private router: Router,
               private fb: FormBuilder,
               private userService: UserService,
-              private modal: NgbModal,
-              private config: NgbModalConfig,
               private dialog: MatDialog,
               private notificationService: NotificationService
   ) {
     super();
-    config.backdrop = false;
   }
 
   ngOnInit(): void {

@@ -41,7 +41,7 @@ import {FormsModule} from "@angular/forms";
 @NgModule({
   declarations: [
     CanvasJSChart,
-    CustomDatePipe
+    CustomDatePipe,
   ],
   imports: [
     MatToolbarModule,
@@ -99,7 +99,7 @@ import {FormsModule} from "@angular/forms";
     MatCardModule,
     MatDatepickerModule,
     TooltipModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

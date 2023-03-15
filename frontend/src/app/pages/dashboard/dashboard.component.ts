@@ -52,10 +52,12 @@ export class DashboardComponent extends Base implements OnInit {
   };
   incomes!: Income[];
   expenses!: Expense[];
+  activeTab: string = 'користувачі';
+
 
 
   constructor(private incomeService: IncomeService,
-              public userService: UserService,
+              private userService: UserService,
               private expenseService: ExpenseService,
               private categoryService: CategoryService
   ) {
@@ -74,6 +76,10 @@ export class DashboardComponent extends Base implements OnInit {
     this.getIncomesByCurrentMonth();
     this.getExpensesByCurrentMonth();
 
+  }
+
+  onTabChanged(event: any) {
+    this.activeTab = event.tab.textLabel.toLowerCase();
   }
 
   private fetchUser() {

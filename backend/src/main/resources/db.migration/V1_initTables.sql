@@ -48,6 +48,35 @@ CREATE TABLE expenses
 );
 
 
+CREATE TABLE address
+(
+    id             SERIAL PRIMARY KEY,
+    user_id        BIGINT       NOT NULL,
+    street_address VARCHAR(255) NOT NULL,
+    city           VARCHAR(100) NOT NULL,
+    state          VARCHAR(100) NOT NULL,
+    zip_code       VARCHAR(20)  NOT NULL
+);
+
+CREATE TABLE utility_type
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE utilities
+(
+    id              SERIAL PRIMARY KEY,
+    address_id      BIGINT NOT NULL,
+    utility_type_id BIGINT NOT NULL,
+    rate_per_unit   BIGINT NOT NULL,
+    current_usage   BIGINT NOT NULL,
+    previous_usage  BIGINT,
+    amount_to_pay   BIGINT NOT NULL,
+    FOREIGN KEY (address_id) REFERENCES address (id),
+    FOREIGN KEY (utility_type_id) REFERENCES utility_type (id)
+);
+
 
 CREATE OR REPLACE FUNCTION update_user_roles() RETURNS TRIGGER AS
 $$

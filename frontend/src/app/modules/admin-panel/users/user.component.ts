@@ -11,7 +11,7 @@ import {takeUntil} from "rxjs";
 import {EditUserComponent} from "./edit-user/edit-user.component";
 import {NotificationService} from "../../../services/notification.service";
 import {CreateUserComponent} from "./create-user/create-user.component";
-import {ConfirmationDialogComponent} from "../../../modules/confirmation-dialog/confirmation-dialog.component";
+import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: "app-user",

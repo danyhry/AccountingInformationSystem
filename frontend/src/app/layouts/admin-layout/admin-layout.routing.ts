@@ -8,7 +8,7 @@ import {IncomesComponent} from "../../pages/incomes/incomes.component";
 import {ExpansesComponent} from "../../pages/expanses/expanses.component";
 import {FaqComponent} from "../../pages/faq/faq.component";
 import {ContactComponent} from "../../pages/contact/contact.component";
-import {AdminPanelComponent} from "../../pages/admin-panel/admin-panel/admin-panel.component";
+import {AdminPanelComponent} from "../../modules/admin-panel/admin-panel.component";
 
 export const AdminLayoutRoutes: Routes = [
   {path: "dashboard", component: DashboardComponent},

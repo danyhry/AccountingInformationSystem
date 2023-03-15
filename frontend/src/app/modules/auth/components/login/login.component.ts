@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from "../../../../services/auth.service";
 import {UserService} from "../../../../services/user.service";
-import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
 import {Base} from "../../../../services/destroy.service";
 import {takeUntil} from "rxjs";
 import {User} from "../../../../models/user";
@@ -15,7 +14,6 @@ import {NotificationService} from "../../../../services/notification.service";
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [NgbModalConfig, NgbModal]
 })
 export class LoginComponent extends Base implements OnInit {
 

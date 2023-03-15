@@ -10,7 +10,7 @@ import {Category} from "../../../models/category";
 import {Base} from "../../../services/destroy.service";
 import {takeUntil} from "rxjs";
 import {CreateCategoryComponent} from "./create-category/create-category.component";
-import {ConfirmationDialogComponent} from "../../../modules/confirmation-dialog/confirmation-dialog.component";
+import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmation-dialog.component";
 import {UpdateCategoryComponent} from "./update-category/update-category.component";
 
 @Component({

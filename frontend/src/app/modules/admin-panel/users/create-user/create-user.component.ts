@@ -6,7 +6,7 @@ import {NotificationService} from "../../../../services/notification.service";
 import {takeUntil} from "rxjs";
 import {AuthService} from "../../../../services/auth.service";
 import {Base} from "../../../../services/destroy.service";
-import {MustMatch} from "../../../../modules/auth/validators/must-match.validator";
+import {MustMatch} from "../../../auth/validators/must-match.validator";
 
 @Component({
   selector: 'app-create-user',

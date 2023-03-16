@@ -17,6 +17,7 @@ import {UpdateExpenseComponent} from "../../pages/expanses/update-expense/update
 import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
 import {AdminPanelModule} from "../../modules/admin-panel/admin-panel.module";
 import {DashboardComponent} from "../../pages/dashboard/dashboard.component";
+import {UtilitiesComponent} from "../../pages/utilities/utilities.component";
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import {DashboardComponent} from "../../pages/dashboard/dashboard.component";
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     ReactiveFormsModule,
-    AdminPanelModule,
+    AdminPanelModule
   ],
   declarations: [
     DashboardComponent,
@@ -39,7 +40,8 @@ import {DashboardComponent} from "../../pages/dashboard/dashboard.component";
     CreateIncomeComponent,
     CreateExpenseComponent,
     UpdateExpenseComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    UtilitiesComponent
   ],
   exports: [],
   providers: []

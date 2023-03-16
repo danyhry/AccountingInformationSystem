@@ -20,9 +20,9 @@ export class SidebarComponent extends Base implements OnInit {
 
   private readonly _mobileQueryListener: () => void;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef,
+  constructor(public authService: AuthService,
+              private changeDetectorRef: ChangeDetectorRef,
               private media: MediaMatcher,
-              public authService: AuthService,
               private router: Router,
               private userService: UserService,
   ) {
@@ -32,20 +32,16 @@ export class SidebarComponent extends Base implements OnInit {
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  ngOnInit() {
 
+  ngOnInit() {
     this.userService.userChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe(user => {
         this.user = user;
         if (user?.id == 0) {
-          this.getUser();
+          this.user = JSON.parse(localStorage.getItem('currentUser') ?? '{}');
         }
       });
-  }
-
-  getUser() {
-    this.user = JSON.parse(localStorage.getItem('currentUser') ?? '{}');
   }
 
   _logOut() {

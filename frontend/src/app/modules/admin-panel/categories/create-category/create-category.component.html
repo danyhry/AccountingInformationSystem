@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Створити категорію</h1>
 <div mat-dialog-content>
-  <form [formGroup]="categoryForm">
+  <form [formGroup]="categoryForm" class="form">
 
     <mat-form-field appearance="outline">
       <mat-label>Назва</mat-label>
@@ -10,7 +10,7 @@
   </form>
 
   <div mat-dialog-actions [align]="'end'">
-    <button mat-raised-button color="warn" mat-dialog-close>Зачинити</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Зачинити</button>
     <button mat-raised-button color="primary" (click)="createCategory()">Створити</button>
   </div>
 

@@ -9,8 +9,8 @@
     </mat-card-title-group>
     <mat-card-content>
       <mat-form-field appearance="fill">
-        <mat-label>Фільтр</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+        <mat-label>Пошук</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Знайти витрату" #input>
       </mat-form-field>
       <mat-table [dataSource]="dataSource" matSort>
 

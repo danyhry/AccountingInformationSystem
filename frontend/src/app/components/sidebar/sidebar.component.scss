@@ -1,8 +1,19 @@
 mat-sidenav {
   width: 225px;
-  background: #57989a;
+  background: #36acba;
   padding: 16px 0 16px 0;
-  text-align: center;
+  text-align: left;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: grey;
+  box-shadow: inset 0 0 4px #707070;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a848f;
+  border-radius: 10px;
 }
 
 .content {
@@ -11,19 +22,17 @@ mat-sidenav {
 }
 
 .menu-button {
-  width: 100%;
-  display: flex;
-  font-size: 1rem;
-  font-weight: 500;
 
   mat-icon {
-    margin-right: 8px;
+    vertical-align: middle;
+    margin-right: 5px;
   }
+
 }
 
-button.mat-menu-item {
-  font-weight: 500;
-}
+//button.mat-menu-item {
+//  font-weight: 500;
+//}
 
 
 .example-is-mobile .example-toolbar {

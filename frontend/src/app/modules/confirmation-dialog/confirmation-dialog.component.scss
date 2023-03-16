@@ -1,13 +1,14 @@
-mat-dialog-content {
-  margin-top: 10px;
+.mat-dialog-content {
+  margin: 10px;
 }
 
 .mat-dialog-title {
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
+  margin: 10px;
 }
 
 .mat-dialog-actions button {
-  margin-left: 10px;
+  margin: 5px 10px 10px 0;
 }

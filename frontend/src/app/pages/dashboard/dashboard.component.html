@@ -1,23 +1,3 @@
-<!--<ng-container class="content" *ngIf="isAuthenticated; else showModeTemplate">-->
-<!--  <mat-tab-group (selectedTabChange)="onTabChanged($event)" mat-align-tabs="center">-->
-<!--    <mat-tab label="Бюджет">-->
-<!--      <div class="dashboard-content" *ngIf="activeTab === 'бюджет'">-->
-<!--        <app-budget-information></app-budget-information>-->
-<!--      </div>-->
-<!--    </mat-tab>-->
-<!--    <mat-tab label="Доходи">-->
-<!--      <div class="dashboard-content" *ngIf="activeTab === 'доходи'">-->
-<!--        <app-incomes-chart></app-incomes-chart>-->
-<!--      </div>-->
-<!--    </mat-tab>-->
-<!--    <mat-tab label="Витрати">-->
-<!--      <div class="dashboard-content" *ngIf="activeTab === 'витрати'">-->
-<!--        <app-incomes-chart></app-incomes-chart>-->
-<!--      </div>-->
-<!--    </mat-tab>-->
-<!--  </mat-tab-group>-->
-<!--</ng-container>-->
-
 <ng-container class="content" *ngIf="isAuthenticated; else showModeTemplate">
   <!--  <h2 class="total-budget">Total Budget for {{currentMonth}}: {{totalBudget}}</h2>-->
 
@@ -158,7 +138,7 @@
               <thead class="table-secondary">
               <tr>
                 <th scope="col">Категорія</th>
-                <th scope="col">Калькість</th>
+                <th scope="col">Кількість</th>
                 <th scope="col">Дата</th>
                 <th scope="col">Опис</th>
               </tr>

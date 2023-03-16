@@ -15,9 +15,6 @@
 
     <div class="items">
       <span>Керування доходами та витратами</span>
-      <!--      <a mat-button routerLink="dashboard">Dashboard</a>-->
-      <!--      <a mat-button routerLink="users">Users</a>-->
-      <!--      <a mat-button routerLink="tables">Tables</a>-->
     </div>
 
     <div class="spacer"></div>
@@ -40,44 +37,51 @@
         <mat-list-item class="menu-button"
                        routerLink="/dashboard">
           <mat-icon>home</mat-icon>
-          <span>Панель управління</span>
+          Панель управління
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/incomes">
           <mat-icon>attach_money</mat-icon>
-          <span>Доходи</span>
+          Доходи
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/expanses">
           <mat-icon>money_off</mat-icon>
-          <span>Витрати</span>
+          Витрати
         </mat-list-item>
 
         <mat-list-item *ngIf="user?.role?.name === 'ADMIN'"
                        class="menu-button"
                        routerLink="/admin">
           <mat-icon>person</mat-icon>
-          <span>Панель адміна</span>
+          Панель адміна
+        </mat-list-item>
+
+        <mat-list-item *ngIf="!!user"
+                       class="menu-button"
+                       routerLink="/utilities">
+          <mat-icon>description</mat-icon>
+          Платежі
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/ideas">
           <mat-icon>info</mat-icon>
-          <span>Ідеї для інвестицій</span>
+          Ідеї
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/faq">
           <mat-icon>help_outline</mat-icon>
-          <span>Найчастіші питання</span>
+          Інформація
         </mat-list-item>
 
         <mat-list-item class="menu-button"
                        routerLink="/contact">
           <mat-icon>contact_mail</mat-icon>
-          <span>З'єднатися з нами</span>
+          З'єднатися з нами
         </mat-list-item>
 
       </mat-nav-list>

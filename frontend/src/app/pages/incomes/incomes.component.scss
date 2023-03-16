@@ -4,11 +4,10 @@
   margin: 16px;
 }
 
-.mat-form-field {
-  margin-bottom: 16px;
+.mat-mdc-form-field {
+  font-size: 14px;
   width: 100%;
 }
-
 
 button[type="submit"] {
   align-self: flex-end;
@@ -38,34 +37,33 @@ p {
   margin-top: 10px;
 }
 
-
 .error-404 {
   padding: 30px;
-}
 
-.error-404 h1 {
-  font-size: 180px;
-  font-weight: 700;
-  color: #4154f1;
-  margin-bottom: 0;
-  line-height: 150px;
-}
+  h1 {
+    font-size: 180px;
+    font-weight: 700;
+    color: #4154f1;
+    margin-bottom: 0;
+    line-height: 150px;
+  }
 
-.error-404 h2 {
-  font-size: 24px;
-  font-weight: 700;
-  color: #012970;
-  margin-bottom: 30px;
-}
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #012970;
+    margin-bottom: 30px;
+  }
 
-.error-404 .btn {
-  background: #2d6b9d;
-  color: #fff;
-  padding: 8px 30px;
-}
+  .btn {
+    background: #2d6b9d;
+    color: #fff;
+    padding: 8px 30px;
+  }
 
-.error-404 .btn:hover {
-  background: #3e4f6f;
+  .btn:hover {
+    background: #3e4f6f;
+  }
 }
 
 .button-group {

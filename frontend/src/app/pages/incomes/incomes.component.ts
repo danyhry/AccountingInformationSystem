@@ -15,7 +15,7 @@ import {Category} from "../../models/category";
 import {CategoryService} from "../../services/category.service";
 import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
 import {NotificationService} from "../../services/notification.service";
-import { jsPDF } from 'jspdf';
+import {jsPDF} from 'jspdf';
 import autoTable from "jspdf-autotable";
 
 export const MY_DATE_FORMAT = {
@@ -153,6 +153,8 @@ export class IncomesComponent extends Base implements OnInit {
   exportPDF() {
     // Initialize jsPDF
     const doc = new jsPDF("p", "mm", "a4");
+
+
     // Define columns and rows for the table
     const columns = ['Категорія', 'Кількість', 'Дата', 'Опис'];
     let rows: any[][] = [];
@@ -169,7 +171,7 @@ export class IncomesComponent extends Base implements OnInit {
       const description = income.description;
       rows.push([category, amount, formattedDate, description]);
     });
-
+    console.log(rows);
     autoTable(doc, {
       head: [columns],
       body: rows

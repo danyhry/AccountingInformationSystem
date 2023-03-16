@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Створити користувача</h1>
 <div mat-dialog-content>
-  <form [formGroup]="userForm">
+  <form [formGroup]="userForm" class="form">
 
       <mat-form-field appearance="outline">
         <mat-label>Ім'я</mat-label>
@@ -29,7 +29,7 @@
   </form>
 
   <div mat-dialog-actions [align]="'end'">
-    <button mat-raised-button color="warn" mat-dialog-close>Зачинити</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Зачинити</button>
     <button mat-raised-button color="primary" (click)="createUser()">Створити</button>
   </div>
 

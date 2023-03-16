@@ -4,8 +4,8 @@
   margin: 16px;
 }
 
-.mat-form-field {
-  margin-bottom: 16px;
+.mat-mdc-form-field {
+  font-size: 14px;
   width: 100%;
 }
 
@@ -33,10 +33,4 @@ button[type="submit"] {
 
 .mat-list-item {
   margin-bottom: 10px;
-}
-
-p {
-  font-size: 18px;
-  font-weight: 500;
-  margin-top: 10px;
 }

@@ -8,9 +8,9 @@
       </div>
     </mat-card-title-group>
     <mat-card-content>
-      <mat-form-field appearance="fill">
-        <mat-label>Фільтр</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+      <mat-form-field>
+        <mat-label>Пошук</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Знайти дохід" #input>
       </mat-form-field>
       <mat-table [dataSource]="dataSource" matSort id="income-table">
 
@@ -35,7 +35,7 @@
         </ng-container>
 
         <ng-container matColumnDef="action">
-          <mat-header-cell *matHeaderCellDef>Дія</mat-header-cell>
+          <mat-header-cell style="text-align: center;" *matHeaderCellDef>Дія</mat-header-cell>
           <mat-cell *matCellDef="let income">
             <button mat-icon-button
                     color="primary"

@@ -4,9 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
-// Be sure that you only ever include this mixin once!
 @include mat.core();
-
 
 
 $mat-theme-primary-palette: map-merge(mat.$cyan-palette, (501: #36acba, 601: #00e2ff, contrast: (100: black,)));
@@ -70,14 +68,8 @@ $mat-dark-theme-warn: mat.define-palette(
 
 
 $mat-density: 0;
-// @include mat.elevation(
-//   $zValue: 12,
-//   $color: #000,
-//   $opacity: 0.5
-// );
 
 $kids-typography: mat.define-typography-config(
-  // Specify "Comic Sans" as the default font family for all levels.
   $font-family: 'Roboto',
 );
 
@@ -99,8 +91,18 @@ $mat-dark-theme: mat.define-dark-theme((
   )
 ));
 
-@include mat.all-component-themes($mat-core-theme);
+//@include mat.all-component-themes($mat-core-theme);
+@include mat.all-legacy-component-themes($mat-core-theme);
 
 .dark-theme {
   @include mat.all-component-colors($mat-dark-theme);
+}
+
+.material-icons {
+  font-size: 24px;
+  font-family: 'Material Icons', 'Material Icons', sans-serif;
+
+  .mat-badge-content {
+    font-family: 'Roboto', sans-serif;
+  }
 }

@@ -18,17 +18,6 @@ import {NotificationService} from "../../services/notification.service";
 import {jsPDF} from 'jspdf';
 import autoTable from "jspdf-autotable";
 
-export const MY_DATE_FORMAT = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'DD-MM-YYYY',
-    monthYearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
-  },
-};
 
 @Component({
   selector: 'app-incomes',
@@ -171,7 +160,7 @@ export class IncomesComponent extends Base implements OnInit {
       const description = income.description;
       rows.push([category, amount, formattedDate, description]);
     });
-    console.log(rows);
+
     autoTable(doc, {
       head: [columns],
       body: rows

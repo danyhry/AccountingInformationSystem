@@ -24,19 +24,23 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<List<User>> getAllUsers() {
         String sql = """
-                SELECT u.*, r.id as role_id, r.name as role_name
+                SELECT u.*, r.name as role_name
                 FROM users u
-                JOIN roles r ON u.role_id = r.id
+                LEFT JOIN roles r ON u.role_id = r.id
+                LEFT JOIN address a ON u.address_id = a.id
                 """;
         return Optional.of(jdbcTemplate.query(sql, new UserRowMapper()));
     }
 
     @Override
     public Optional<User> getUserById(Long id) {
-        String sql = "SELECT u.*, r.id as role_id, r.name as role_name " +
-                "FROM users u " +
-                "JOIN roles r ON u.role_id = r.id " +
-                "WHERE u.id = ?";
+        String sql = """
+                SELECT u.*, r.name as role_name
+                FROM users u
+                LEFT JOIN roles r ON u.role_id = r.id
+                LEFT JOIN address a ON u.address_id = a.id
+                WHERE u.id = ?
+                """;
         return jdbcTemplate.query(sql, new UserRowMapper(), id)
                 .stream()
                 .findFirst();
@@ -65,7 +69,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> getUserByEmail(String email) {
-        String sql = "SELECT u.id, u.name, u.surname, u.email, u.password, r.id as role_id, r.name as role_name "
+        String sql = "SELECT u.*, r.id as role_id, r.name as role_name "
                 + "FROM users u "
                 + "JOIN user_roles ur ON u.id = ur.user_id "
                 + "JOIN roles r ON ur.role_id = r.id "

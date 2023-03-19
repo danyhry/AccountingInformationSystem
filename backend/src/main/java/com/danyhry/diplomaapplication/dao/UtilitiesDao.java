@@ -1,14 +1,17 @@
 package com.danyhry.diplomaapplication.dao;
 
-import com.danyhry.diplomaapplication.model.Utilities;
+import com.danyhry.diplomaapplication.model.Utility;
+import com.danyhry.diplomaapplication.model.UtilityType;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UtilitiesDao {
-    void saveUtility(Utilities utilities);
+    Optional<Utility> saveUtility(Utility utilities);
 
-    Optional<List<Utilities>> getUtilitiesByAddress(Long addressId);
+    Optional<UtilityType> createUtilityType(UtilityType utilityType);
 
-    Optional<List<Utilities>> getUtilitiesByAddressAndType(Long addressId, String utilityType);
+    Optional<List<UtilityType>> getUtilityTypes();
+
+    int deleteUtilityTypeById(Long id);
 }

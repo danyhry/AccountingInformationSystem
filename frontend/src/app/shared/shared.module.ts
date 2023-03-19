@@ -32,11 +32,12 @@ import {
   MatMomentDateModule,
   MomentDateAdapter
 } from "@angular/material-moment-adapter";
-import {MY_DATE_FORMAT} from "../pages/incomes/incomes.component";
 import {CustomDatePipe} from "../utils/CustomDatePipe";
 import {NgxChartsModule, TooltipModule} from "@swimlane/ngx-charts";
 import {MatCardModule} from "@angular/material/card";
 import {FormsModule} from "@angular/forms";
+import {MY_DATE_FORMAT} from "../models/const/full-date-format.const";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import {FormsModule} from "@angular/forms";
     MatMomentDateModule,
     TooltipModule,
     FormsModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatToolbarModule,
@@ -100,6 +102,7 @@ import {FormsModule} from "@angular/forms";
     MatDatepickerModule,
     TooltipModule,
     FormsModule,
+    MatAutocompleteModule
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

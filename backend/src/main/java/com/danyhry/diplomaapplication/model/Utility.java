@@ -9,12 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Utilities {
+public class Utility {
     private Long id;
     private Long addressId;
     private Long utilityTypeId; // e.g. water, gas, electricity
-    private Long ratePerUnit;
-    private Long currentUsage;
-    private Long previousUsage;
+    private Long previousValue;
+    private Long currentValue;
+    private Long tariff;
+    private Long usage;
     private Long amountToPay;
 }

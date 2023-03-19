@@ -1,7 +1,7 @@
 package com.danyhry.diplomaapplication.dao;
 
-import com.danyhry.diplomaapplication.dao.RowMappers.UtilitiesRowMapper;
-import com.danyhry.diplomaapplication.model.Utilities;
+import com.danyhry.diplomaapplication.model.Utility;
+import com.danyhry.diplomaapplication.model.UtilityType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,23 +18,39 @@ public class UtilitiesDaoImpl implements UtilitiesDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public void saveUtility(Utilities utilities) {
+    public Optional<Utility> saveUtility(Utility utility) {
         String sql = """
-                INSERT INTO utilities (address_id, utility_type_id, rate_per_unit, current_usage, previous_usage, amount_to_pay)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO utilities (address_id, utility_type_id, previous_value, current_value, tariff)
+                VALUES (?, ?, ?, ?, ?)
                 """;
-        jdbcTemplate.update(sql, utilities.getAddressId(), utilities.getUtilityTypeId(), utilities.getRatePerUnit(), utilities.getCurrentUsage(), utilities.getPreviousUsage(), utilities.getAmountToPay());
+        jdbcTemplate.update(sql, utility.getAddressId(), utility.getUtilityTypeId(), utility.getPreviousValue(), utility.getCurrentValue(), utility.getTariff());
+        return Optional.of(utility);
     }
 
     @Override
-    public Optional<List<Utilities>> getUtilitiesByAddress(Long addressId) {
-        String sql = "SELECT * FROM utilities WHERE address_id = ?";
-        return Optional.of(jdbcTemplate.query(sql, new Object[]{addressId}, new UtilitiesRowMapper()));
+    public Optional<UtilityType> createUtilityType(UtilityType utilityType) {
+        String query = "INSERT INTO utility_type (name) VALUES (?)";
+        jdbcTemplate.update(query, utilityType.getName());
+        return Optional.of(utilityType);
     }
 
     @Override
-    public Optional<List<Utilities>> getUtilitiesByAddressAndType(Long addressId, String utilityType) {
-        String sql = "SELECT * FROM utilities JOIN utility_type ON utilities.utility_type_id = utility_type.id WHERE address_id = ? AND name = ?";
-        return Optional.of(jdbcTemplate.query(sql, new Object[]{addressId, utilityType}, new UtilitiesRowMapper()));
+    public Optional<List<UtilityType>> getUtilityTypes() {
+        String sql = """
+                SELECT * FROM utility_type
+                """;
+        return Optional.of(jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Long id = rs.getLong("id");
+            String name = rs.getString("name");
+            return new UtilityType(id, name);
+        }));
     }
+
+    @Override
+    public int deleteUtilityTypeById(Long id) {
+        String sql = "DELETE FROM utility_type WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
+    }
+
+
 }

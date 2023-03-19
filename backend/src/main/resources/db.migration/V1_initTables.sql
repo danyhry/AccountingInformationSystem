@@ -6,12 +6,13 @@ CREATE TABLE roles
 
 CREATE TABLE users
 (
-    id       BIGSERIAL PRIMARY KEY,
-    name     VARCHAR(255)        NOT NULL,
-    surname  VARCHAR(255),
-    password VARCHAR(255)        NOT NULL,
-    email    VARCHAR(255) UNIQUE NOT NULL,
-    role_id  INTEGER             NOT NULL REFERENCES roles (id) ON DELETE CASCADE ON UPDATE CASCADE
+    id         BIGSERIAL PRIMARY KEY,
+    name       VARCHAR(255)        NOT NULL,
+    surname    VARCHAR(255),
+    password   VARCHAR(255)        NOT NULL,
+    email      VARCHAR(255) UNIQUE NOT NULL,
+    role_id    INTEGER             NOT NULL REFERENCES roles (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    address_id INTEGER REFERENCES address (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE user_roles
@@ -53,9 +54,7 @@ CREATE TABLE address
     id             SERIAL PRIMARY KEY,
     user_id        BIGINT       NOT NULL,
     street_address VARCHAR(255) NOT NULL,
-    city           VARCHAR(100) NOT NULL,
-    state          VARCHAR(100) NOT NULL,
-    zip_code       VARCHAR(20)  NOT NULL
+    city           VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE utility_type
@@ -69,12 +68,13 @@ CREATE TABLE utilities
     id              SERIAL PRIMARY KEY,
     address_id      BIGINT NOT NULL,
     utility_type_id BIGINT NOT NULL,
-    rate_per_unit   BIGINT NOT NULL,
-    current_usage   BIGINT NOT NULL,
-    previous_usage  BIGINT,
-    amount_to_pay   BIGINT NOT NULL,
-    FOREIGN KEY (address_id) REFERENCES address (id),
-    FOREIGN KEY (utility_type_id) REFERENCES utility_type (id)
+    previous_value  BIGINT NOT NULL,
+    current_value   BIGINT NOT NULL,
+    tariff          BIGINT NOT NULL,
+    usage           BIGINT,
+    amount_to_pay   BIGINT,
+    FOREIGN KEY (address_id) REFERENCES address (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (utility_type_id) REFERENCES utility_type (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 

@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Address {
+public class UtilityType {
     private Long id;
-    private Long userId;
-    private String streetAddress;
-    private String city;
+    private String name;
 }

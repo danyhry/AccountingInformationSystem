@@ -1,94 +1,51 @@
 package com.danyhry.diplomaapplication.service;
 
 import com.danyhry.diplomaapplication.dao.UtilitiesDao;
-import com.danyhry.diplomaapplication.model.Utilities;
+import com.danyhry.diplomaapplication.model.Utility;
+import com.danyhry.diplomaapplication.model.UtilityType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UtilitiesService {
     private final UtilitiesDao utilitiesDao;
 
-    public void saveUtility(Utilities utilities) {
-        validateInputs(utilities);
+    public Utility saveUtility(Utility utilityDto) {
+        Utility utility = new Utility();
+        utility.setAddressId(utilityDto.getAddressId());
+        utility.setUtilityTypeId(utilityDto.getUtilityTypeId());
+        utility.setPreviousValue(utilityDto.getPreviousValue());
+        utility.setCurrentValue(utilityDto.getCurrentValue());
+        utility.setTariff(utilityDto.getTariff());
 
+        // Calculate usage
+        Long usage = utility.getCurrentValue() - utility.getPreviousValue();
+        utility.setUsage(usage);
 
-        // Calculate the utility cost based on the difference between the current and previous usage
-        Long usageDifference = utilities.getCurrentUsage() - utilities.getPreviousUsage();
-        Long utilityCost = usageDifference * utilities.getRatePerUnit();
+        // Calculate amountToPay
+        Long amountToPay = usage * utility.getTariff();
+        utility.setAmountToPay(amountToPay);
 
-        // Set the amount for the current utility reading based on the utility cost
-        utilities.setAmountToPay(utilityCost);
-
-        // Save the current utility reading to the database
-        utilitiesDao.saveUtility(utilities);
-    }
-
-    public List<Utilities> getUtilitiesByAddress(Long addressId) {
-        return utilitiesDao.getUtilitiesByAddress(addressId)
+        return utilitiesDao.saveUtility(utility)
                 .orElseThrow();
     }
 
-    public double calculateWaterUtility(Utilities utilities) {
-        validateInputs(utilities);
-        return utilities.getRatePerUnit() * utilities.getCurrentUsage();
-    }
-
-    public double calculateElectricityUtility(Utilities utilities) {
-        validateInputs(utilities);
-        return utilities.getRatePerUnit() * utilities.getCurrentUsage();
-    }
-
-    public double calculateGasUtility(Utilities utilities) {
-        validateInputs(utilities);
-        return utilities.getRatePerUnit() * utilities.getCurrentUsage();
-    }
-
-    public Long getPreviousUtilityValue(Long addressId, String utilityType) {
-        List<Utilities> utilities = utilitiesDao.getUtilitiesByAddressAndType(addressId, utilityType)
+    public void createUtilityType(UtilityType utilityType) {
+        utilitiesDao.createUtilityType(utilityType)
                 .orElseThrow();
-        return utilities.get(utilities.size() - 1).getCurrentUsage();
     }
 
-    public Long getRatePerUnit(Long addressId, String utilityType) {
-        List<Utilities> utilities = utilitiesDao.getUtilitiesByAddressAndType(addressId, utilityType)
+    public int deleteUtilityTypeById(Long id) {
+        return utilitiesDao.deleteUtilityTypeById(id);
+    }
+
+    public List<UtilityType> getUtilityTypes() {
+        return utilitiesDao.getUtilityTypes()
                 .orElseThrow();
-        return utilities.get(0).getRatePerUnit();
     }
-
-    private Utilities getPreviousUtilities(Utilities utilities) {
-        List<Utilities> utilitiesList = utilitiesDao.getUtilitiesByAddress(utilities.getAddressId())
-                .orElseThrow();
-        for (int i = utilitiesList.size() - 1; i >= 0; i--) {
-            Utilities previousUtilities = utilitiesList.get(i);
-            if (previousUtilities.getUtilityTypeId().equals(utilities.getUtilityTypeId())) {
-                return previousUtilities;
-            }
-        }
-        return null;
-    }
-
-    private void validateInputs(Utilities utilities) {
-        if (utilities == null) {
-            throw new IllegalArgumentException("Utilities object cannot be null");
-        }
-        if (utilities.getAddressId() == null) {
-            throw new IllegalArgumentException("Address ID cannot be null");
-        }
-        if (utilities.getUtilityTypeId() == null) {
-            throw new IllegalArgumentException("Utility type cannot be blank");
-        }
-        if (utilities.getRatePerUnit() <= 0) {
-            throw new IllegalArgumentException("Rate per unit must be greater than zero");
-        }
-        if (utilities.getCurrentUsage() < 0) {
-            throw new IllegalArgumentException("Usage cannot be negative");
-        }
-    }
-
-
-
 }

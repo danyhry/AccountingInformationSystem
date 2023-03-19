@@ -26,7 +26,7 @@ import {UtilitiesComponent} from "../../pages/utilities/utilities.component";
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     ReactiveFormsModule,
-    AdminPanelModule
+    AdminPanelModule,
   ],
   declarations: [
     DashboardComponent,

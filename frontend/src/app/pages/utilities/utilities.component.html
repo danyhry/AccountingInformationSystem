@@ -1,1 +1,36 @@
-<p>utilities works!</p>
+<div class="utility-form">
+  <form [formGroup]="utilityForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field>
+      <mat-select placeholder="Адреса" formControlName="addressId">
+        <mat-option *ngFor="let address of addresses" [value]="address.id">
+          {{address.streetAddress}}, {{address.city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Utility Type" formControlName="utilityTypeId">
+        <mat-option *ngFor="let utilityType of utilityTypes" [value]="utilityType.id">
+          {{utilityType.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Previous Value" formControlName="previousValue">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Current Value" formControlName="currentValue">
+      <mat-error *ngIf="utilityForm.controls['currentValue'].hasError('required')">Current Value is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Tariff" formControlName="tariff">
+      <mat-error *ngIf="utilityForm.controls['tariff'].hasError('required')">Tariff is required</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </form>
+</div>

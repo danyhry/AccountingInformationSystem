@@ -157,12 +157,12 @@
       <div class="col-12 mt-2">
         <mat-card class="top-selling">
           <div class="filter">
-            <button mat-icon-button [matMenuTriggerFor]="incomeFilterMenu"><mat-icon>more_vert</mat-icon></button>
-            <mat-menu #incomeFilterMenu="matMenu">
+            <button mat-icon-button [matMenuTriggerFor]="expenseFilterMenu"><mat-icon>more_vert</mat-icon></button>
+            <mat-menu #expenseFilterMenu="matMenu">
               <h5 mat-menu-header>Фільтр</h5>
-              <button mat-menu-item (click)="selectedIncomeFilter = 'thisMonth'">Цей місяць</button>
-              <button mat-menu-item (click)="selectedIncomeFilter = 'thisYear'">Цей рік</button>
-              <button mat-menu-item (click)="selectedIncomeFilter = 'total'">Загалом</button>
+              <button mat-menu-item (click)="selectedExpenseFilter = 'thisMonth'">Цей місяць</button>
+              <button mat-menu-item (click)="selectedExpenseFilter = 'thisYear'">Цей рік</button>
+              <button mat-menu-item (click)="selectedExpenseFilter = 'total'">Загалом</button>
             </mat-menu>
           </div>
 

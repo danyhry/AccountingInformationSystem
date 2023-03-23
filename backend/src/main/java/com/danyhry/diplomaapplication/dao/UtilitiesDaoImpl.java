@@ -1,5 +1,6 @@
 package com.danyhry.diplomaapplication.dao;
 
+import com.danyhry.diplomaapplication.dao.RowMappers.UtilityRowMapper;
 import com.danyhry.diplomaapplication.model.Utility;
 import com.danyhry.diplomaapplication.model.UtilityType;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,29 @@ public class UtilitiesDaoImpl implements UtilitiesDao {
     @Override
     public Optional<Utility> saveUtility(Utility utility) {
         String sql = """
-                INSERT INTO utilities (address_id, utility_type_id, previous_value, current_value, tariff)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO utilities (address_id, user_id, utility_type_id, previous_value, current_value, tariff, usage, amount_to_pay)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
-        jdbcTemplate.update(sql, utility.getAddressId(), utility.getUtilityTypeId(), utility.getPreviousValue(), utility.getCurrentValue(), utility.getTariff());
+        jdbcTemplate.update(sql,
+                utility.getAddressId(),
+                utility.getUserId(),
+                utility.getUtilityTypeId(),
+                utility.getPreviousValue(),
+                utility.getCurrentValue(),
+                utility.getTariff(),
+                utility.getUsage(),
+                utility.getAmountToPay()
+        );
         return Optional.of(utility);
+    }
+
+    @Override
+    public Optional<List<Utility>> getUtilitiesByUserId(Long userId) {
+        String sql = """
+                SELECT * FROM utilities
+                WHERE user_id = ?
+                """;
+        return Optional.of(jdbcTemplate.query(sql, new UtilityRowMapper(), userId));
     }
 
     @Override

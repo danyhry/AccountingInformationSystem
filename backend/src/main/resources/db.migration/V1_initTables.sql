@@ -66,13 +66,16 @@ CREATE TABLE utility_type
 CREATE TABLE utilities
 (
     id              SERIAL PRIMARY KEY,
-    address_id      BIGINT NOT NULL,
-    utility_type_id BIGINT NOT NULL,
-    previous_value  BIGINT NOT NULL,
-    current_value   BIGINT NOT NULL,
-    tariff          BIGINT NOT NULL,
+    user_id         BIGINT       NOT NULL,
+    address_id      BIGINT,
+    utility_type_id BIGINT       NOT NULL,
+    personal_number VARCHAR(100) NOT NULL,
+    previous_value  BIGINT       NOT NULL,
+    current_value   BIGINT       NOT NULL,
+    tariff          BIGINT       NOT NULL,
     usage           BIGINT,
     amount_to_pay   BIGINT,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (address_id) REFERENCES address (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (utility_type_id) REFERENCES utility_type (id) ON DELETE CASCADE ON UPDATE CASCADE
 );

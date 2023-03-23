@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Utility {
     private Long id;
     private Long addressId;
+    private Long userId;
     private Long utilityTypeId; // e.g. water, gas, electricity
     private Long previousValue;
     private Long currentValue;

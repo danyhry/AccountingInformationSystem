@@ -20,8 +20,10 @@ export class UtilitiesComponent extends Base implements OnInit {
   utilityForm: FormGroup;
   utilityTypes!: UtilityType[];
   addresses!: Address[];
+  utilities!: Utility[];
 
   userId!: number;
+  isNew!: boolean;
 
   constructor(private fb: FormBuilder,
               private addressService: AddressService,
@@ -58,6 +60,12 @@ export class UtilitiesComponent extends Base implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((utilityTypes: UtilityType[]) => {
         this.utilityTypes = utilityTypes;
+      });
+
+    this.utilitiesService.getUtilitiesByUserId(this.userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((utilities: Utility[]) => {
+        this.utilities = utilities;
       });
   }
 

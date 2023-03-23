@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface UtilitiesDao {
     Optional<Utility> saveUtility(Utility utilities);
 
+    Optional<List<Utility>> getUtilitiesByUserId(Long userId);
+
     Optional<UtilityType> createUtilityType(UtilityType utilityType);
 
     Optional<List<UtilityType>> getUtilityTypes();

@@ -9,6 +9,9 @@ import {AdminPanelComponent} from "./admin-panel.component";
 import {CategoriesComponent} from "./categories/categories.component";
 import {CreateCategoryComponent} from "./categories/create-category/create-category.component";
 import {UpdateCategoryComponent} from "./categories/update-category/update-category.component";
+import {CreateUtilityTypeComponent} from "./utility-types/create-utility-type/create-utility-type.component";
+import {UpdateUtilityTypeComponent} from "./utility-types/update-utility-type/update-utility-type.component";
+import {UtilityTypesComponent} from "./utility-types/utility-types.component";
 
 
 @NgModule({
@@ -25,7 +28,10 @@ import {UpdateCategoryComponent} from "./categories/update-category/update-categ
     CreateUserComponent,
     CategoriesComponent,
     CreateCategoryComponent,
-    UpdateCategoryComponent
+    UpdateCategoryComponent,
+    UtilityTypesComponent,
+    CreateUtilityTypeComponent,
+    UpdateUtilityTypeComponent
   ],
   exports: [
     AdminPanelComponent,

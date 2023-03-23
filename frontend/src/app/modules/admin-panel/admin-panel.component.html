@@ -9,4 +9,9 @@
       <app-categories></app-categories>
     </div>
   </mat-tab>
+  <mat-tab label="Комунальні типи">
+    <div class="admin-panel-content" *ngIf="activeTab === 'комунальні типи'">
+      <app-utility-types></app-utility-types>
+    </div>
+  </mat-tab>
 </mat-tab-group>

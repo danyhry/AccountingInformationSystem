@@ -13,18 +13,30 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UtilitiesService {
+
     private final UtilitiesDao utilitiesDao;
 
     public Utility saveUtility(Utility utilityDto) {
         Utility utility = new Utility();
         utility.setAddressId(utilityDto.getAddressId());
+
+        //TODO: check if user exists
+        utility.setUserId(utilityDto.getUserId());
         utility.setUtilityTypeId(utilityDto.getUtilityTypeId());
-        utility.setPreviousValue(utilityDto.getPreviousValue());
+
+        if (utilityDto.getPreviousValue() == null) {
+            utility.setPreviousValue(0L);
+        }
         utility.setCurrentValue(utilityDto.getCurrentValue());
         utility.setTariff(utilityDto.getTariff());
 
         // Calculate usage
         Long usage = utility.getCurrentValue() - utility.getPreviousValue();
+
+        if (usage < 0) {
+            throw new IllegalStateException("Різниця не може бути від'ємною");
+        }
+
         utility.setUsage(usage);
 
         // Calculate amountToPay
@@ -32,6 +44,11 @@ public class UtilitiesService {
         utility.setAmountToPay(amountToPay);
 
         return utilitiesDao.saveUtility(utility)
+                .orElseThrow();
+    }
+
+    public List<Utility> getUtilitiesByUserId(Long userId) {
+        return utilitiesDao.getUtilitiesByUserId(userId)
                 .orElseThrow();
     }
 
@@ -48,4 +65,5 @@ public class UtilitiesService {
         return utilitiesDao.getUtilityTypes()
                 .orElseThrow();
     }
+
 }

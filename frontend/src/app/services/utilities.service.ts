@@ -21,9 +21,9 @@ export class UtilitiesService {
     return this.http.get<Utility[]>(this.apiUrl);
   }
 
-  getUtilityByUserId(userId: number): Observable<Utility> {
+  getUtilitiesByUserId(userId: number): Observable<Utility[]> {
     const url = `${this.apiUrl}/${userId}`;
-    return this.http.get<Utility>(url);
+    return this.http.get<Utility[]>(url);
   }
 
   updateUtility(utility: Utility): Observable<Utility> {

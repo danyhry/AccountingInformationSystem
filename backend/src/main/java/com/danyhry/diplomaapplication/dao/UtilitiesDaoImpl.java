@@ -48,8 +48,8 @@ public class UtilitiesDaoImpl implements UtilitiesDao {
 
     @Override
     public Optional<UtilityType> createUtilityType(UtilityType utilityType) {
-        String query = "INSERT INTO utility_type (name) VALUES (?)";
-        jdbcTemplate.update(query, utilityType.getName());
+        String query = "INSERT INTO utility_type (name, tariff) VALUES (?, ?)";
+        jdbcTemplate.update(query, utilityType.getName(), utilityType.getTariff());
         return Optional.of(utilityType);
     }
 
@@ -61,13 +61,46 @@ public class UtilitiesDaoImpl implements UtilitiesDao {
         return Optional.of(jdbcTemplate.query(sql, (rs, rowNum) -> {
             Long id = rs.getLong("id");
             String name = rs.getString("name");
-            return new UtilityType(id, name);
+            Long tariff = rs.getLong("tariff");
+            return new UtilityType(id, name, tariff);
         }));
     }
 
     @Override
     public int deleteUtilityTypeById(Long id) {
         String sql = "DELETE FROM utility_type WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public Optional<UtilityType> getUtilityTypeById(Long utilityId) {
+        String sql = """
+                SELECT * FROM utility_type
+                WHERE id = ?
+                """;
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+                    Long id = rs.getLong("id");
+                    String name = rs.getString("name");
+                    Long tariff = rs.getLong("tariff");
+                    return new UtilityType(id, name, tariff);
+                }, utilityId)
+                .stream()
+                .findFirst();
+    }
+
+    @Override
+    public Optional<UtilityType> updateUtilityType(UtilityType utilityType, Long id) {
+        String sql = """
+                UPDATE utility_type
+                SET name = ?, tariff = ? WHERE id = ?
+                """;
+        jdbcTemplate.update(sql, utilityType.getName(), utilityType.getTariff(), id);
+        return Optional.of(utilityType);
+    }
+
+    @Override
+    public int deleteUtilityById(Long id) {
+        String sql = "DELETE FROM utilities WHERE id = ?";
         return jdbcTemplate.update(sql, id);
     }
 

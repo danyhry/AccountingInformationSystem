@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Оновлення даних</h1>
+<div mat-dialog-content>
+  <form [formGroup]="utilityForm" class="form">
+
+<!--    <mat-form-field>-->
+<!--      <mat-label>Тип послуги</mat-label>-->
+<!--      <mat-select formControlName="utilityTypeId">-->
+<!--        <mat-option *ngFor="let utilityType of utilityTypes" [value]="utilityType.id">-->
+<!--          {{ utilityType.name }}-->
+<!--        </mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+
+    <mat-form-field appearance="outline">
+      <mat-label>Покази</mat-label>
+      <input matInput placeholder="Покази" formControlName="currentValue">
+    </mat-form-field>
+
+
+  </form>
+
+  <div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close>Зачинити</button>
+    <button mat-raised-button color="primary" (click)="updateCategory()">Оновити</button>
+  </div>
+
+</div>

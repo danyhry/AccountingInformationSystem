@@ -7,11 +7,15 @@
       <input matInput placeholder="Назва" formControlName="name">
     </mat-form-field>
 
+    <mat-form-field appearance="outline">
+      <mat-label>Тариф</mat-label>
+      <input matInput placeholder="Тариф" formControlName="tariff">
+    </mat-form-field>
   </form>
 
   <div mat-dialog-actions [align]="'end'">
     <button mat-raised-button color="warn" [mat-dialog-close]="false">Зачинити</button>
-    <button mat-raised-button color="primary" (click)="updateCategory()">Оновити</button>
+    <button mat-raised-button color="primary" (click)="updateUtilityType()">Оновити</button>
   </div>
 
 </div>

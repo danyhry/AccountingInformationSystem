@@ -16,4 +16,10 @@ public interface UtilitiesDao {
     Optional<List<UtilityType>> getUtilityTypes();
 
     int deleteUtilityTypeById(Long id);
+
+    Optional<UtilityType> getUtilityTypeById(Long id);
+
+    Optional<UtilityType> updateUtilityType(UtilityType utilityType, Long id);
+
+    int deleteUtilityById(Long id);
 }

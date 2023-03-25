@@ -27,27 +27,28 @@ export class UpdateUtilityTypeComponent extends Base implements OnInit {
 
   ngOnInit(): void {
     this.utilityTypeForm = this.formBuilder.group({
-      id: [''],
-      name: ['']
+      name: [''],
+      tariff: [''],
     });
 
     if (this.utilityTypeEditData) {
       this.utilityTypeForm.controls['name'].setValue(this.utilityTypeEditData.name);
+      this.utilityTypeForm.controls['tariff'].setValue(this.utilityTypeEditData.tariff);
     }
   }
 
-  updateCategory() {
+  updateUtilityType(): void {
     if (this.utilityTypeForm.valid) {
       this.utilityTypeService.updateUtilityType(this.utilityTypeEditData.id, this.utilityTypeForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.notificationService.showSuccessMessage(`Категорію успішно оновлено.`);
+            this.notificationService.showSuccessMessage(`Тип успішно оновлено.`);
             this.dialogRef.close('update');
           },
-          error: () => {
-            console.log("error");
-            this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
+          error: (response) => {
+            console.log(response)
+            this.notificationService.showErrorMessage(response.error.error);
           }
         })
     }

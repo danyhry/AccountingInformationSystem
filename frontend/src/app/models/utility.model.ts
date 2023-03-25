@@ -1,5 +1,6 @@
 export interface Utility {
   id: number;
+  userId: number;
   addressId: number;
   utilityTypeId: number;
   previousValue: number;

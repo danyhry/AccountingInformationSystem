@@ -25,7 +25,8 @@ export class CreateUtilityTypeComponent extends Base implements OnInit {
 
   ngOnInit(): void {
     this.utilityTypeForm = this.formBuilder.group({
-      name: ['']
+      name: [''],
+      tariff: ['']
     });
   }
 
@@ -33,6 +34,7 @@ export class CreateUtilityTypeComponent extends Base implements OnInit {
     if (this.utilityTypeForm.valid) {
       const data = {
         name: this.utilityTypeForm.value.name,
+        tariff: this.utilityTypeForm.value.tariff,
       };
       this.utilityTypeService.createUtilityType(data)
         .pipe(takeUntil(this.destroy$))

@@ -18,6 +18,8 @@ import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/con
 import {AdminPanelModule} from "../../modules/admin-panel/admin-panel.module";
 import {DashboardComponent} from "../../pages/dashboard/dashboard.component";
 import {UtilitiesComponent} from "../../pages/utilities/utilities.component";
+import {UpdateUtilityComponent} from "../../pages/utilities/update-utility/update-utility.component";
+import {CreateUtilityComponent} from "../../pages/utilities/create-utility/create-utility.component";
 
 @NgModule({
   imports: [
@@ -41,7 +43,9 @@ import {UtilitiesComponent} from "../../pages/utilities/utilities.component";
     CreateExpenseComponent,
     UpdateExpenseComponent,
     ConfirmationDialogComponent,
-    UtilitiesComponent
+    UtilitiesComponent,
+    CreateUtilityComponent,
+    UpdateUtilityComponent
   ],
   exports: [],
   providers: []

@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class UtilityType {
     private Long id;
     private String name;
+    private Long tariff;
 }

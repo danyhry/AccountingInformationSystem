@@ -61,7 +61,7 @@ export class ContactComponent extends Base implements OnInit {
       this.isShowError = false;
       this.notificationService.showSuccessMessage('Повідомлення відправлено');
     } else {
-      this.notificationService.showErrorMessage('Форма невалідна, заповніть, будь-ласка, значення правильно');
+      this.notificationService.showErrorMessage('Форма невалідна, заповніть значення');
       this.isShowError = true;
     }
   }

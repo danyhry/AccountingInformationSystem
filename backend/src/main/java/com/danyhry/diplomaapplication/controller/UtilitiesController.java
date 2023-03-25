@@ -26,7 +26,12 @@ public class UtilitiesController {
     @GetMapping("/{userId}")
     public ResponseEntity<List<Utility>> getUtilitiesByUserId(@PathVariable Long userId) {
         List<Utility> utilities = utilitiesService.getUtilitiesByUserId(userId);
-        return ResponseEntity.ok().body(utilities);
+        return new ResponseEntity<>(utilities, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUtilityTById(@PathVariable Long id) {
+        utilitiesService.deleteUtilityById(id);
     }
 
     @PostMapping("/utilityTypes")
@@ -35,10 +40,21 @@ public class UtilitiesController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/utilityTypes/{id}")
+    public ResponseEntity<?> updateUtilityType(@RequestBody UtilityType utilityType, @PathVariable Long id) {
+        utilitiesService.updateUtilityType(utilityType, id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/utilityTypes")
     public ResponseEntity<List<UtilityType>> getUtilityTypes() {
         List<UtilityType> utilityTypes = utilitiesService.getUtilityTypes();
         return new ResponseEntity<>(utilityTypes, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/utilityTypes/{id}")
+    public void deleteUtilityTypeById(@PathVariable Long id) {
+        utilitiesService.deleteUtilityTypeById(id);
     }
 
 }

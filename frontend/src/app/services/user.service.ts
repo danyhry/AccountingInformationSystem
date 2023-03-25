@@ -44,7 +44,6 @@ export class UserService {
   }
 
   editUser(id: number, item: Partial<User>): Observable<User> {
-    console.log(item);
     return this.http.put<User>(this.usersUrl + '/' + id, item);
   }
 

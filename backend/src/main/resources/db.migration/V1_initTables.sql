@@ -59,8 +59,9 @@ CREATE TABLE address
 
 CREATE TABLE utility_type
 (
-    id   SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL UNIQUE
+    id     SERIAL PRIMARY KEY,
+    name   VARCHAR(50) NOT NULL UNIQUE,
+    tariff BIGINT
 );
 
 CREATE TABLE utilities
@@ -77,7 +78,8 @@ CREATE TABLE utilities
     amount_to_pay   BIGINT,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (address_id) REFERENCES address (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (utility_type_id) REFERENCES utility_type (id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (utility_type_id) REFERENCES utility_type (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    UNIQUE (user_id, utility_type_id)
 );
 
 

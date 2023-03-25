@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Створити послугу</h1>
+<div mat-dialog-content>
+  <form [formGroup]="utilityForm" class="form">
+
+    <mat-form-field>
+      <mat-select placeholder="Адреса" formControlName="addressId">
+        <mat-option *ngFor="let address of addresses" [value]="address.id">
+          {{address.streetAddress}}, {{address.city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Тип послуги" formControlName="utilityTypeId">
+        <mat-option *ngFor="let utilityType of utilityTypes" [value]="utilityType.id">
+          {{utilityType.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Покази" formControlName="currentValue">
+      <mat-error *ngIf="utilityForm.controls['currentValue'].hasError('required')">Current Value is required</mat-error>
+    </mat-form-field>
+
+  </form>
+
+  <div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Зачинити</button>
+    <button mat-raised-button color="primary" (click)="createUtility()">Створити</button>
+  </div>
+
+</div>

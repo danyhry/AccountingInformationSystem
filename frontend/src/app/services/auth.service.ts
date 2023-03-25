@@ -38,7 +38,7 @@ export class AuthService {
           return authResponse;
         }),
         catchError((error: HttpErrorResponse) => {
-          const errorMessage = error.status === 401 ? 'Неправильна пошта або пароль' : 'Виникла помилка під час логіну';
+          const errorMessage = error.status === 401 ? 'Неправильна пошта або пароль' : 'Виникла помилка під час входу';
           return throwError(errorMessage);
         })
       );

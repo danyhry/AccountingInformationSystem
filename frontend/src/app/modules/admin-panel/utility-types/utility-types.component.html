@@ -1,7 +1,7 @@
 <mat-card class="card">
   <mat-card-title-group>
     <mat-card-title class="title">Типи</mat-card-title>
-    <button mat-raised-button color="primary" (click)="createCategory()">
+    <button mat-raised-button color="primary" (click)="createUtilityType()">
       Додати комунальний тип
     </button>
   </mat-card-title-group>
@@ -10,18 +10,22 @@
       <mat-label>Пошук</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Пошук типу" #input>
     </mat-form-field>
-    <mat-table [dataSource]="categoriesDataSource" matSort>
+    <mat-table [dataSource]="utilityTypesDataSource" matSort>
 
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-        <mat-cell *matCellDef="let category">{{category.id}}</mat-cell>
+        <mat-cell *matCellDef="let utilityType">{{utilityType.id}}</mat-cell>
       </ng-container>
 
-      <!-- Progress Column -->
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Назва</mat-header-cell>
-        <mat-cell *matCellDef="let category">{{category.name}}</mat-cell>
+        <mat-cell *matCellDef="let utilityType">{{utilityType.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="tariff">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Тариф</mat-header-cell>
+        <mat-cell *matCellDef="let utilityType">{{utilityType.tariff}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="action">

@@ -26,10 +26,9 @@ export class UtilityTypesComponent extends Base implements OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  displayedColumns: string[] = ['id', 'name', 'tariff', 'action'];
 
-  categoriesDataSource!: MatTableDataSource<any>;
-  utilityTypes!: UtilityType[];
+  utilityTypesDataSource!: MatTableDataSource<any>;
 
   constructor(private notificationService: NotificationService,
               private formBuilder: FormBuilder,
@@ -47,22 +46,22 @@ export class UtilityTypesComponent extends Base implements OnInit {
     this.utilityTypeService.getUtilityTypes()
       .pipe(takeUntil(this.destroy$))
       .subscribe((utilityTypes) => {
-        this.categoriesDataSource = new MatTableDataSource(utilityTypes);
-        this.categoriesDataSource.paginator = this.paginator;
-        this.categoriesDataSource.sort = this.sort;
+        this.utilityTypesDataSource = new MatTableDataSource(utilityTypes);
+        this.utilityTypesDataSource.paginator = this.paginator;
+        this.utilityTypesDataSource.sort = this.sort;
       });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.categoriesDataSource.filter = filterValue.trim().toLowerCase();
+    this.utilityTypesDataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.categoriesDataSource.paginator) {
-      this.categoriesDataSource.paginator.firstPage();
+    if (this.utilityTypesDataSource.paginator) {
+      this.utilityTypesDataSource.paginator.firstPage();
     }
   }
 
-  createCategory() {
+  createUtilityType() {
     this.dialog.open(CreateUtilityTypeComponent, {
       width: '35%'
     }).afterClosed()

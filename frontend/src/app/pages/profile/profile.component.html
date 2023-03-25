@@ -1,140 +1,234 @@
 <section class="section profile">
   <div class="row">
     <div class="col-xl-4">
-
       <div class="card">
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
           <img src="assets/img/account_circle_black_24dp.svg" alt="Profile" class="rounded-circle">
           <h2>{{user?.firstName}} {{user?.lastName}}</h2>
-<!--          <h3>Web Designer</h3>-->
         </div>
       </div>
     </div>
-
     <div class="col-xl-8">
-
       <div class="card">
         <div class="card-body pt-3">
           <!-- Bordered Tabs -->
-          <ul class="nav nav-tabs nav-tabs-bordered">
-
-            <li class="nav-item">
-              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Інформація</button>
-            </li>
-
-            <li class="nav-item">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Редагувати профіль</button>
-            </li>
-
-            <li class="nav-item">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Змінити пароль</button>
-            </li>
-
-          </ul>
-          <div class="tab-content pt-2">
-
-            <div class="tab-pane fade show active profile-overview" id="profile-overview">
-              <h5 class="card-title">Деталі профілю</h5>
-
-              <div class="row">
-                <div class="col-lg-3 col-md-4 label ">Ім'я</div>
-                <div class="col-lg-9 col-md-8">{{user?.firstName}}</div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-3 col-md-4 label ">Прізвище</div>
-                <div class="col-lg-9 col-md-8">{{user?.lastName}}</div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-3 col-md-4 label">Пошта</div>
-                <div class="col-lg-9 col-md-8">{{user?.email}}</div>
-              </div>
-
-            </div>
-
-            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-              <!-- Profile Edit Form -->
-              <form [formGroup]="editForm"
-                    (ngSubmit)="_onSubmitEditProfile()">
-
+          <mat-tab-group mat-align-tabs="start" class="border-bottom mb-3">
+<!--            <mat-tab label="Інформація" class="tab">-->
+<!--              <div class="row mt-3">-->
+<!--                <div class="col-lg-3 col-md-4 label mb-2">Ім'я</div>-->
+<!--                <div class="col-lg-9 col-md-8">{{user?.firstName}}</div>-->
+<!--              </div>-->
+<!--              <div class="row">-->
+<!--                <div class="col-lg-3 col-md-4 label mb-2">Прізвище</div>-->
+<!--                <div class="col-lg-9 col-md-8">{{user?.lastName}}</div>-->
+<!--              </div>-->
+<!--              <div class="row">-->
+<!--                <div class="col-lg-3 col-md-4 label mb-2">Пошта</div>-->
+<!--                <div class="col-lg-9 col-md-8">{{user?.email}}</div>-->
+<!--              </div>-->
+<!--            </mat-tab>-->
+            <mat-tab label="Редагувати профіль" class="tab">
+              <form [formGroup]="editForm" (ngSubmit)="_onSubmitEditProfile()">
                 <div class="row mb-3">
-                  <label for="firstName" class="col-md-4 col-lg-3 col-form-label">Ім'я</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input formControlName="firstName"
-                           type="text"
-                           class="form-control"
-                           id="firstName">
-                  </div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Ім'я</mat-label>
+                    <input formControlName="firstName" matInput type="text" placeholder="Ім'я" class="form-control">
+                  </mat-form-field>
                 </div>
-
                 <div class="row mb-3">
-                  <label for="lastName" class="col-md-4 col-lg-3 col-form-label">Прізвище</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input formControlName="lastName"
-                           type="text"
-                           class="form-control"
-                           id="lastName">
-                  </div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Прізвище</mat-label>
+                    <input formControlName="lastName" matInput type="text" placeholder="Прізвище" class="form-control">
+                  </mat-form-field>
                 </div>
-
                 <div class="row mb-3">
-                  <label for="email" class="col-md-4 col-lg-3 col-form-label">Пошта</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input formControlName="email"
-                           type="email"
-                           class="form-control"
-                           id="email">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Пошта</mat-label>
+                    <input formControlName="email" matInput type="email" placeholder="Пошта" class="form-control">
+                  </mat-form-field>
+                </div>
+                <div class="text-center row">
+                  <button type="submit" mat-raised-button color="primary">Зберегти</button>
+                </div>
+              </form>
+            </mat-tab>
+            <mat-tab  label="Змінити пароль" class="tab">
+                <!-- Change Password Form -->
+                <form [formGroup]="changePasswordForm" (ngSubmit)="_onSubmitPassword()">
+
+                  <div class="row mb-3">
+                    <mat-form-field>
+                      <mat-label>Нинішній пароль</mat-label>
+                      <input formControlName="currentPassword" matInput type="password" placeholder="Нинішній пароль" class="form-control">
+                    </mat-form-field>
                   </div>
-                </div>
 
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary">Зберегти</button>
-                </div>
-              </form><!-- End Profile Edit Form -->
-
-            </div>
-
-            <div class="tab-pane fade pt-3" id="profile-change-password">
-              <!-- Change Password Form -->
-              <form [formGroup]="changePasswordForm"
-                    (ngSubmit)="_onSubmitPassword()">
-
-                <div class="row mb-3">
-                  <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Нинішній пароль</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input formControlName="currentPassword" type="password" class="form-control" id="currentPassword">
+                  <div class="row mb-3">
+                    <mat-form-field>
+                      <mat-label>Новий пароль</mat-label>
+                      <input formControlName="newPassword" matInput type="password" placeholder="Новий пароль" class="form-control">
+                    </mat-form-field>
                   </div>
-                </div>
 
-                <div class="row mb-3">
-                  <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Новий пароль</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input formControlName="newPassword" type="password" class="form-control" id="newPassword">
+                  <div class="row mb-3">
+                    <mat-form-field>
+                      <mat-label>Повторіть новий пароль</mat-label>
+                      <input formControlName="renewPassword" matInput type="password" placeholder="Повторіть новий пароль" class="form-control">
+                    </mat-form-field>
                   </div>
-                </div>
 
-                <div class="row mb-3">
-                  <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Повторіть новий пароль</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input formControlName="renewPassword" type="password" class="form-control" id="renewPassword">
+                  <div class="text-center row">
+                    <button type="submit" mat-raised-button color="primary">Змінити пароль</button>
                   </div>
-                </div>
+                </form><!-- End Change Password Form -->
 
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary">Змінити пароль</button>
-                </div>
-              </form><!-- End Change Password Form -->
-
-            </div>
-
-          </div><!-- End Bordered Tabs -->
-
+            </mat-tab>
+          </mat-tab-group>
         </div>
       </div>
-
     </div>
   </div>
 </section>
+
+
+
+<!--<section class="section profile">-->
+<!--  <div class="row">-->
+<!--    <div class="col-xl-4">-->
+
+<!--      <div class="card">-->
+<!--        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">-->
+
+<!--          <img src="assets/img/account_circle_black_24dp.svg" alt="Profile" class="rounded-circle">-->
+<!--          <h2>{{user?.firstName}} {{user?.lastName}}</h2>-->
+<!--&lt;!&ndash;          <h3>Web Designer</h3>&ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="col-xl-8">-->
+
+<!--      <div class="card">-->
+<!--        <div class="card-body pt-3">-->
+<!--          &lt;!&ndash; Bordered Tabs &ndash;&gt;-->
+<!--          <ul class="nav nav-tabs nav-tabs-bordered">-->
+
+<!--            <li class="nav-item">-->
+<!--              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Інформація</button>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item">-->
+<!--              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Редагувати профіль</button>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item">-->
+<!--              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Змінити пароль</button>-->
+<!--            </li>-->
+
+<!--          </ul>-->
+<!--          <div class="tab-content pt-2">-->
+
+<!--            <div class="tab-pane fade show active profile-overview" id="profile-overview">-->
+<!--              <h5 class="card-title">Деталі профілю</h5>-->
+
+<!--              <div class="row">-->
+<!--                <div class="col-lg-3 col-md-4 label ">Ім'я</div>-->
+<!--                <div class="col-lg-9 col-md-8">{{user?.firstName}}</div>-->
+<!--              </div>-->
+
+<!--              <div class="row">-->
+<!--                <div class="col-lg-3 col-md-4 label ">Прізвище</div>-->
+<!--                <div class="col-lg-9 col-md-8">{{user?.lastName}}</div>-->
+<!--              </div>-->
+
+<!--              <div class="row">-->
+<!--                <div class="col-lg-3 col-md-4 label">Пошта</div>-->
+<!--                <div class="col-lg-9 col-md-8">{{user?.email}}</div>-->
+<!--              </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">-->
+
+<!--              &lt;!&ndash; Profile Edit Form &ndash;&gt;-->
+<!--              <form [formGroup]="editForm"-->
+<!--                    (ngSubmit)="_onSubmitEditProfile()">-->
+
+<!--                <div class="row mb-3">-->
+<!--                  <label for="firstName" class="col-md-4 col-lg-3 col-form-label">Ім'я</label>-->
+<!--                  <div class="col-md-8 col-lg-9">-->
+<!--                    <input formControlName="firstName"-->
+<!--                           type="text"-->
+<!--                           class="form-control"-->
+<!--                           id="firstName">-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="row mb-3">-->
+<!--                  <label for="lastName" class="col-md-4 col-lg-3 col-form-label">Прізвище</label>-->
+<!--                  <div class="col-md-8 col-lg-9">-->
+<!--                    <input formControlName="lastName"-->
+<!--                           type="text"-->
+<!--                           class="form-control"-->
+<!--                           id="lastName">-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="row mb-3">-->
+<!--                  <label for="email" class="col-md-4 col-lg-3 col-form-label">Пошта</label>-->
+<!--                  <div class="col-md-8 col-lg-9">-->
+<!--                    <input formControlName="email"-->
+<!--                           type="email"-->
+<!--                           class="form-control"-->
+<!--                           id="email">-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="text-center">-->
+<!--                  <button type="submit" class="btn btn-primary">Зберегти</button>-->
+<!--                </div>-->
+<!--              </form>&lt;!&ndash; End Profile Edit Form &ndash;&gt;-->
+
+<!--            </div>-->
+
+<!--            <div class="tab-pane fade pt-3" id="profile-change-password">-->
+<!--              &lt;!&ndash; Change Password Form &ndash;&gt;-->
+<!--              <form [formGroup]="changePasswordForm"-->
+<!--                    (ngSubmit)="_onSubmitPassword()">-->
+
+<!--                <div class="row mb-3">-->
+<!--                  <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Нинішній пароль</label>-->
+<!--                  <div class="col-md-8 col-lg-9">-->
+<!--                    <input formControlName="currentPassword" type="password" class="form-control" id="currentPassword">-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="row mb-3">-->
+<!--                  <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Новий пароль</label>-->
+<!--                  <div class="col-md-8 col-lg-9">-->
+<!--                    <input formControlName="newPassword" type="password" class="form-control" id="newPassword">-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="row mb-3">-->
+<!--                  <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Повторіть новий пароль</label>-->
+<!--                  <div class="col-md-8 col-lg-9">-->
+<!--                    <input formControlName="renewPassword" type="password" class="form-control" id="renewPassword">-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="text-center">-->
+<!--                  <button type="submit" class="btn btn-primary">Змінити пароль</button>-->
+<!--                </div>-->
+<!--              </form>&lt;!&ndash; End Change Password Form &ndash;&gt;-->
+
+<!--            </div>-->
+
+<!--          </div>&lt;!&ndash; End Bordered Tabs &ndash;&gt;-->
+
+<!--        </div>-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->

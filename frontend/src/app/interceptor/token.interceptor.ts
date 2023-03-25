@@ -30,7 +30,7 @@ export class TokenInterceptor implements HttpInterceptor {
             //   sessionStorage.clear();
             // }
             if (err.status === 500 && err.error.message.startsWith('JWT expired')) {
-              this.notificationService.showErrorMessage("JWT token закінчився, будь-ласка перелогіньтесь");
+              this.notificationService.showErrorMessage("JWT token закінчився, будь-ласка увійдіть знову");
               this.authService.logout();
               console.log("logout");
             }

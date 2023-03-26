@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
-import {takeUntil} from "rxjs";
+import {map, switchMap, takeUntil} from "rxjs";
 import {Address} from "../../../models/address.model";
 import {UtilityType} from "../../../models/utility-type.model";
 import {AddressService} from "../../../services/address.service";
@@ -58,10 +58,21 @@ export class CreateUtilityComponent extends Base implements OnInit {
         this.addresses = addresses;
       });
 
-    this.utilityTypeService.getUtilityTypes()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((utilityTypes: UtilityType[]) => {
-        this.utilityTypes = utilityTypes;
+    this.utilityService.getUtilitiesByUserId(this.userId)
+      .pipe(
+        switchMap((utilities: Utility[]) => {
+          const usedUtilityTypeIds = utilities.map(u => u.utilityTypeId);
+          return this.utilityTypeService.getUtilityTypes()
+            .pipe(
+              map((utilityTypes: UtilityType[]) => {
+                return utilityTypes.filter(ut => !usedUtilityTypeIds.includes(ut.id));
+              })
+            );
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((filteredUtilityTypes: UtilityType[]) => {
+        this.utilityTypes = filteredUtilityTypes;
       });
   }
 
@@ -85,9 +96,9 @@ export class CreateUtilityComponent extends Base implements OnInit {
             this.notificationService.showSuccessMessage(`Послугу успішно створено.`);
             this.dialogRef.close('update');
           },
-          error: () => {
+          error: (response) => {
             console.log("error");
-            this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
+            this.notificationService.showErrorMessage(response.error.message);
           }
         })
     }

@@ -73,7 +73,7 @@ export class UtilityTypesComponent extends Base implements OnInit {
       });
   }
 
-  updateCategory(utilityType: UtilityType) {
+  updateUtilityType(utilityType: UtilityType) {
     this.dialog.open(UpdateUtilityTypeComponent, {
       width: '35%',
       data: utilityType

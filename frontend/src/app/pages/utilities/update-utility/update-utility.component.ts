@@ -52,18 +52,20 @@ export class UpdateUtilityComponent extends Base implements OnInit {
 
   updateCategory() {
     if (this.utilityForm.valid) {
+      console.log(this.utilityUpdateData);
       this.utilityService.updateUtility(this.utilityUpdateData.id, this.utilityForm.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.notificationService.showSuccessMessage(`Категорію успішно оновлено.`);
+            this.notificationService.showSuccessMessage(`Покази були успішно надані.`);
             this.dialogRef.close('update');
           },
-          error: () => {
+          error: (response) => {
             console.log("error");
-            this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
+            console.log(response);
+            this.notificationService.showErrorMessage(response.error.message);
           }
-        })
+        });
     }
   }
 }

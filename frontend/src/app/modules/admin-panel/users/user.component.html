@@ -41,6 +41,16 @@
         <mat-cell *matCellDef="let user">{{user.role.name}}</mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="streetAddress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Номер будинку і вулиця</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{getStreetAddress(user.addressId)}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Місто</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{getCity(user.addressId)}}</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Дія</mat-header-cell>
         <mat-cell *matCellDef="let user">

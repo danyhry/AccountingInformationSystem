@@ -70,7 +70,6 @@ CREATE TABLE utilities
     user_id         BIGINT       NOT NULL,
     address_id      BIGINT,
     utility_type_id BIGINT       NOT NULL,
-    personal_number VARCHAR(100) NOT NULL,
     previous_value  BIGINT       NOT NULL,
     current_value   BIGINT       NOT NULL,
     tariff          BIGINT       NOT NULL,

@@ -55,6 +55,11 @@ export class UserService {
     return this.http.get<User>(this.usersUrl + '/user/me');
   }
 
+  getUserById(userId: number): Observable<User> {
+    const url = `${this.usersUrl}/${userId}`;
+    return this.http.get<User>(url);
+  }
+
   getRoles(): Observable<Role[]> {
     return this.http.get<Role[]>(this.usersUrl + '/roles');
   }

@@ -20,6 +20,7 @@ import {DashboardComponent} from "../../pages/dashboard/dashboard.component";
 import {UtilitiesComponent} from "../../pages/utilities/utilities.component";
 import {UpdateUtilityComponent} from "../../pages/utilities/update-utility/update-utility.component";
 import {CreateUtilityComponent} from "../../pages/utilities/create-utility/create-utility.component";
+import {CreateAddressComponent} from "../../pages/utilities/create-address/create-address.component";
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import {CreateUtilityComponent} from "../../pages/utilities/create-utility/creat
     ConfirmationDialogComponent,
     UtilitiesComponent,
     CreateUtilityComponent,
-    UpdateUtilityComponent
+    UpdateUtilityComponent,
+    CreateAddressComponent
   ],
   exports: [],
   providers: []

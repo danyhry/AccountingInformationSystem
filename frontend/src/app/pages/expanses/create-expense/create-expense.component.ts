@@ -72,9 +72,9 @@ export class CreateExpenseComponent extends Base implements OnInit {
                 this.notificationService.showSuccessMessage(`Витрату успішно створено.`);
                 this.dialogRef.close('update');
               },
-              error: () => {
+              error: (response) => {
                 console.log("error");
-                this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
+                this.notificationService.showErrorMessage(response.error.message);
               }
             })
         });

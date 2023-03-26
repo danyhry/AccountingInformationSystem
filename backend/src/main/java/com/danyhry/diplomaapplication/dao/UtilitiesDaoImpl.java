@@ -38,6 +38,35 @@ public class UtilitiesDaoImpl implements UtilitiesDao {
     }
 
     @Override
+    public Optional<Utility> updateUtility(Utility existingUtility) {
+        String sql = """
+                UPDATE utilities
+                SET previous_value = ?, current_value = ?, tariff = ?, usage = ?, amount_to_pay = ?
+                WHERE id = ?
+                """;
+        jdbcTemplate.update(sql,
+                existingUtility.getPreviousValue(),
+                existingUtility.getCurrentValue(),
+                existingUtility.getTariff(),
+                existingUtility.getUsage(),
+                existingUtility.getAmountToPay(),
+                existingUtility.getId()
+        );
+        return Optional.of(existingUtility);
+    }
+
+    @Override
+    public Optional<Utility> getUtilityById(Long id) {
+        String sql = """
+                SELECT * FROM utilities
+                WHERE id = ?
+                """;
+        return jdbcTemplate.query(sql, new UtilityRowMapper(), id)
+                .stream()
+                .findFirst();
+    }
+
+    @Override
     public Optional<List<Utility>> getUtilitiesByUserId(Long userId) {
         String sql = """
                 SELECT * FROM utilities

@@ -45,9 +45,9 @@ export class UpdateCategoryComponent extends Base implements OnInit {
             this.notificationService.showSuccessMessage(`Категорію успішно оновлено.`);
             this.dialogRef.close('update');
           },
-          error: () => {
+          error: (response) => {
             console.log("error");
-            this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
+            this.notificationService.showErrorMessage(response.error.message);
           }
         })
     }

@@ -48,7 +48,7 @@ export class UpdateUtilityTypeComponent extends Base implements OnInit {
           },
           error: (response) => {
             console.log(response)
-            this.notificationService.showErrorMessage(response.error.error);
+            this.notificationService.showErrorMessage(response.error.message);
           }
         })
     }

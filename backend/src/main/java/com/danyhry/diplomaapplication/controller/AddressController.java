@@ -26,4 +26,10 @@ public class AddressController {
         List<Address> addresses = addressService.getAddressesByUserId(userId);
         return ResponseEntity.ok().body(addresses);
     }
+
+    @GetMapping
+    public ResponseEntity<List<Address>> getAddresses() {
+        List<Address> addresses = addressService.getAddresses();
+        return ResponseEntity.ok().body(addresses);
+    }
 }

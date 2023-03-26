@@ -9,6 +9,12 @@ import java.util.Optional;
 public interface UtilitiesDao {
     Optional<Utility> saveUtility(Utility utilities);
 
+    Optional<Utility> updateUtility(Utility existingUtility);
+
+    Optional<Utility> getUtilityById(Long id);
+
+    int deleteUtilityById(Long id);
+
     Optional<List<Utility>> getUtilitiesByUserId(Long userId);
 
     Optional<UtilityType> createUtilityType(UtilityType utilityType);
@@ -21,5 +27,4 @@ public interface UtilitiesDao {
 
     Optional<UtilityType> updateUtilityType(UtilityType utilityType, Long id);
 
-    int deleteUtilityById(Long id);
 }

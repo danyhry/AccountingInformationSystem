@@ -1,73 +1,93 @@
-<mat-card class="card">
-  <ng-container *ngIf="!!utilities">
-    <mat-card-title-group>
-      <mat-card-title class="title">Комунальні послуги</mat-card-title>
+<ng-container *ngIf="userId; else showModeTemplate">
+  <ng-container *ngIf="!!addresses?.length; else createAddressTemplate">
+    <mat-card class="card">
+      <ng-container *ngIf="!!utilities">
+        <mat-card-title-group>
+          <mat-card-title class="title">Комунальні послуги</mat-card-title>
           <button mat-raised-button color="primary" (click)="createUtility()">
             Додати послугу
           </button>
-    </mat-card-title-group>
-    <mat-card-content>
-      <mat-table [dataSource]="utilitiesDataSource">
+        </mat-card-title-group>
+        <mat-card-content>
+          <mat-table [dataSource]="utilitiesDataSource">
 
-        <ng-container matColumnDef="title">
-          <mat-header-cell *matHeaderCellDef>Назва</mat-header-cell>
-          <mat-cell *matCellDef="let utility">{{getUtilityName(utility.utilityTypeId)}}</mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="title">
+              <mat-header-cell *matHeaderCellDef>Назва</mat-header-cell>
+              <mat-cell *matCellDef="let utility">{{getUtilityName(utility.utilityTypeId)}}</mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="previousValue">
-          <mat-header-cell *matHeaderCellDef>Минулі покази</mat-header-cell>
-          <mat-cell *matCellDef="let utility">{{utility.previousValue}}</mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="previousValue">
+              <mat-header-cell *matHeaderCellDef>Минулі покази</mat-header-cell>
+              <mat-cell *matCellDef="let utility">{{utility.previousValue}}</mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="currentValue">
-          <mat-header-cell *matHeaderCellDef>Поточні покази</mat-header-cell>
-          <mat-cell *matCellDef="let utility">{{utility.currentValue}}</mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="currentValue">
+              <mat-header-cell *matHeaderCellDef>Поточні покази</mat-header-cell>
+              <mat-cell *matCellDef="let utility">{{utility.currentValue}}</mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="usage">
-          <mat-header-cell *matHeaderCellDef>Різниця</mat-header-cell>
-          <mat-cell *matCellDef="let utility">{{utility.usage}}</mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="usage">
+              <mat-header-cell *matHeaderCellDef>Різниця</mat-header-cell>
+              <mat-cell *matCellDef="let utility">{{utility.usage}}</mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="tariff">
-          <mat-header-cell *matHeaderCellDef>Тариф</mat-header-cell>
-          <mat-cell *matCellDef="let utility">{{utility.tariff}}</mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="tariff">
+              <mat-header-cell *matHeaderCellDef>Тариф</mat-header-cell>
+              <mat-cell *matCellDef="let utility">{{utility.tariff}}</mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="amountToPay">
-          <mat-header-cell *matHeaderCellDef>До оплати</mat-header-cell>
-          <mat-cell *matCellDef="let utility">{{utility.amountToPay}}</mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="amountToPay">
+              <mat-header-cell *matHeaderCellDef>До сплати</mat-header-cell>
+              <mat-cell *matCellDef="let utility">{{utility.amountToPay}}</mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="action">
-          <mat-header-cell *matHeaderCellDef>Дія</mat-header-cell>
-          <mat-cell *matCellDef="let utility">
-            <button mat-button color="primary" (click)="updateUtility(utility)">Дати покази</button>
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef>Дія</mat-header-cell>
+              <mat-cell *matCellDef="let utility">
+                <button mat-button color="primary" (click)="updateUtility(utility)">Дати покази</button>
 
-            <button mat-icon-button
-                    color="warn"
-                    (click)="deleteUtility(utility)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-
-
-        <!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
-        <!--      <tr mat-row *matRowDef="let user; columns: displayedColumns;"></tr>-->
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <button mat-icon-button
+                        color="warn"
+                        (click)="deleteUtility(utility)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
 
 
+            <!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+            <!--      <tr mat-row *matRowDef="let user; columns: displayedColumns;"></tr>-->
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-        <!--      &lt;!&ndash; Row shown when there is no matching data. &ndash;&gt;-->
-        <!--      <tr class="mat-row" *matNoDataRow>-->
-        <!--        <td class="mat-cell" colspan="4">Нічого не знайдено за фільтром - "{{input.value}}"</td>-->
-        <!--      </tr>-->
-      </mat-table>
 
-      <!--    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Обрати сторінку користувачів"></mat-paginator>-->
+            <!--      &lt;!&ndash; Row shown when there is no matching data. &ndash;&gt;-->
+            <!--      <tr class="mat-row" *matNoDataRow>-->
+            <!--        <td class="mat-cell" colspan="4">Нічого не знайдено за фільтром - "{{input.value}}"</td>-->
+            <!--      </tr>-->
+          </mat-table>
 
-    </mat-card-content>
+          <!--    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Обрати сторінку користувачів"></mat-paginator>-->
+
+        </mat-card-content>
+      </ng-container>
+    </mat-card>
   </ng-container>
-</mat-card>
+</ng-container>
+
+<ng-template #showModeTemplate>
+  <section class="section error-404 mt-5 min-vh-50 d-flex flex-column align-items-center justify-content-center">
+    <h2>Будь-ласка увійдіть або зареєструйтесь щоб побачити цю страницю.</h2>
+    <a class="btn" routerLink="/login">
+      <i class="bi bi-arrow-left-square"></i>
+      Перейти на вікно входу
+    </a>
+  </section>
+</ng-template>
+
+
+<ng-template #createAddressTemplate>
+  <button mat-raised-button color="primary" (click)="createAddress()">
+    Додати адресу
+  </button>
+</ng-template>

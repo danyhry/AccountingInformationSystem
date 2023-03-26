@@ -102,7 +102,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     MatDatepickerModule,
     TooltipModule,
     FormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

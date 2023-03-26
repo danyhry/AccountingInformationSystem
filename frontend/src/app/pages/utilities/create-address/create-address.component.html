@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Додати адресу</h1>
+<div mat-dialog-content>
+  <form [formGroup]="addressForm" class="form">
+
+    <mat-form-field>
+      <input matInput placeholder="Номер будинку та вулиці" formControlName="streetAddress">
+      <mat-error *ngIf="addressForm.controls['streetAddress'].hasError('required')">Номер будинку та вулиці обов'язкові</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Місто" formControlName="city">
+      <mat-error *ngIf="addressForm.controls['city'].hasError('required')">Місто обов'язкове</mat-error>
+    </mat-form-field>
+
+  </form>
+
+  <div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Зачинити</button>
+    <button mat-raised-button color="primary" (click)="createAddress()">Додати</button>
+  </div>
+
+</div>

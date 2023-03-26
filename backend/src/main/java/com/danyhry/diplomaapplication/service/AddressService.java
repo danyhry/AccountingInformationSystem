@@ -21,4 +21,9 @@ public class AddressService {
         return addressDao.getAddressesByUserId(userId)
                 .orElseThrow();
     }
+
+    public List<Address> getAddresses() {
+        return addressDao.getAddresses()
+                .orElseThrow();
+    }
 }

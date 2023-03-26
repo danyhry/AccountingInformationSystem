@@ -65,12 +65,12 @@ export class UpdateIncomeComponent extends Base implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.notificationService.showSuccessMessage(`Income was successfully updated.`);
+            this.notificationService.showSuccessMessage(`Дохід успішно оновлено.`);
             this.dialogRef.close('update');
           },
-          error: () => {
+          error: (response) => {
             console.log("error");
-            this.notificationService.showErrorMessage(`Something is wrong.`);
+            this.notificationService.showErrorMessage(response.error.message);
           }
         })
     } else {

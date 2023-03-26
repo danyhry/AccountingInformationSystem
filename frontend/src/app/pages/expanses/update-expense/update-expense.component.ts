@@ -68,9 +68,9 @@ export class UpdateExpenseComponent extends Base implements OnInit {
             this.notificationService.showSuccessMessage(`Витрату успішно оновлено.`);
             this.dialogRef.close('update');
           },
-          error: (error) => {
+          error: (response) => {
             console.log("error");
-            this.notificationService.showErrorMessage(error);
+            this.notificationService.showErrorMessage(response.error.message);
           }
         })
     } else {

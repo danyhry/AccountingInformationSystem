@@ -53,8 +53,8 @@ export class ContactComponent extends Base implements OnInit {
 
             console.log("contact submit successfully");
           },
-          error: () => {
-            this.notificationService.showErrorMessage('Помилка');
+          error: (response) => {
+            this.notificationService.showErrorMessage(response.error.message);
             this.isShowError = true;
           }
         });

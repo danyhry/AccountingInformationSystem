@@ -25,11 +25,11 @@ $my-theme: mat.define-light-theme((
 @include mat.all-component-themes($my-theme);
 @include mat.typography-hierarchy($typography);
 
-.material-icons {
-  font-size: 24px;
-  font-family: 'Material Icons', 'Material Icons', sans-serif;
-
-  .mat-badge-content {
-    font-family: 'Roboto', sans-serif;
-  }
-}
+//.material-icons {
+//  font-size: 24px;
+//  font-family: 'Material Icons', 'Material Icons', sans-serif;
+//
+//  .mat-badge-content {
+//    font-family: 'Roboto', sans-serif;
+//  }
+//}

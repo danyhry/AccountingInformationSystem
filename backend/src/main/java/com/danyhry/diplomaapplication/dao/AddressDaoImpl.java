@@ -25,6 +25,21 @@ public class AddressDaoImpl implements AddressDao {
                 VALUES (?, ?, ?)
                 """;
         jdbcTemplate.update(sql, address.getUserId(), address.getStreetAddress(), address.getCity());
+
+        // Get the ID of the last inserted address
+        Long addressId = jdbcTemplate.queryForObject("SELECT LASTVAL()", Long.class);
+
+        // Update the user's addressId with the new addressId
+        String updateUserSql = """
+            UPDATE users
+            SET address_id = ?
+            WHERE id = ?
+            """;
+        jdbcTemplate.update(updateUserSql, addressId, address.getUserId());
+
+        // Set the addressId of the created address
+        address.setId(addressId);
+
         return Optional.of(address);
     }
 
@@ -32,6 +47,12 @@ public class AddressDaoImpl implements AddressDao {
     public Optional<List<Address>> getAddressesByUserId(Long userId) {
         String sql = "SELECT id, user_id, street_address, city FROM address WHERE user_id = ?";
         return Optional.of(jdbcTemplate.query(sql, new Object[]{userId}, new AddressRowMapper()));
+    }
+
+    @Override
+    public Optional<List<Address>> getAddresses() {
+        String sql = "SELECT * FROM address";
+        return Optional.of(jdbcTemplate.query(sql, new AddressRowMapper()));
     }
 
     private static class AddressRowMapper implements RowMapper<Address> {

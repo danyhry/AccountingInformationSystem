@@ -12,6 +12,8 @@ import {EditUserComponent} from "./edit-user/edit-user.component";
 import {NotificationService} from "../../../services/notification.service";
 import {CreateUserComponent} from "./create-user/create-user.component";
 import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmation-dialog.component";
+import {Address} from "../../../models/address.model";
+import {AddressService} from "../../../services/address.service";
 
 @Component({
   selector: "app-user",
@@ -26,20 +28,32 @@ export class UserComponent extends Base implements OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'action'];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'streetAddress', 'city', 'action'];
 
   usersDataSource!: MatTableDataSource<any>;
+
+  addresses!: Address[];
 
   constructor(private userService: UserService,
               private notificationService: NotificationService,
               private formBuilder: FormBuilder,
               private dialog: MatDialog,
+              private addressService: AddressService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.userService.getUser().subscribe();
+
+    this.addressService.getAddresses()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (addresses: Address[]) => {
+          this.addresses = addresses;
+        }
+      });
+
     this.getAllUsers();
   }
 
@@ -47,8 +61,8 @@ export class UserComponent extends Base implements OnInit {
     this.userService.getAllUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res) => {
-          this.usersDataSource = new MatTableDataSource(res);
+        next: (users: User[]) => {
+          this.usersDataSource = new MatTableDataSource(users);
           this.usersDataSource.paginator = this.paginator;
           this.usersDataSource.sort = this.sort;
         }
@@ -109,5 +123,15 @@ export class UserComponent extends Base implements OnInit {
           )
       }
     });
+  }
+
+  getStreetAddress(addressId: number) {
+    const address = this.addresses.find(c => c.id === addressId);
+    return address ? address.streetAddress : '';
+  }
+
+  getCity(addressId: number) {
+    const address = this.addresses.find(c => c.id === addressId);
+    return address ? address.city : '';
   }
 }

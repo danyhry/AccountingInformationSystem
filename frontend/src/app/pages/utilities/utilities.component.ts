@@ -15,6 +15,7 @@ import {UpdateUtilityComponent} from "./update-utility/update-utility.component"
 import {MatDialog} from "@angular/material/dialog";
 import {CreateUtilityComponent} from "./create-utility/create-utility.component";
 import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
+import {CreateAddressComponent} from "./create-address/create-address.component";
 
 @Component({
   selector: 'app-utilities',
@@ -46,12 +47,7 @@ export class UtilitiesComponent extends Base implements OnInit {
   ngOnInit() {
     this.userId = this.userService.getUserFromStorage().id;
 
-    this.addressService
-      .getAddressesByUserId(this.userId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((addresses: Address[]) => {
-        this.addresses = addresses;
-      });
+    this.getAddresses();
 
     this.utilityTypeService.getUtilityTypes()
       .pipe(takeUntil(this.destroy$))
@@ -68,6 +64,14 @@ export class UtilitiesComponent extends Base implements OnInit {
       .subscribe((utilities: Utility[]) => {
         this.utilities = utilities;
         this.utilitiesDataSource = new MatTableDataSource(utilities);
+      });
+  }
+
+  getAddresses(): void {
+    this.addressService.getAddressesByUserId(this.userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((addresses: Address[]) => {
+        this.addresses = addresses;
       });
   }
 
@@ -118,6 +122,18 @@ export class UtilitiesComponent extends Base implements OnInit {
           });
       }
     });
+  }
 
+  createAddress(): void {
+    this.dialog.open(CreateAddressComponent, {
+      width: '35%'
+    }).afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        if (value === 'update') {
+          this.getAddresses();
+          this.getUpdatedUtilities();
+        }
+      });
   }
 }

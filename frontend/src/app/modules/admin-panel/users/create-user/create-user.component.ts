@@ -14,7 +14,6 @@ import {MustMatch} from "../../../auth/validators/must-match.validator";
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent extends Base implements OnInit {
-
   userForm !: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public userData: User,
@@ -54,9 +53,9 @@ export class CreateUserComponent extends Base implements OnInit {
             this.notificationService.showSuccessMessage(`Користувача успішно створено.`);
             this.dialogRef.close('update');
           },
-          error: () => {
+          error: (response) => {
             console.log("error");
-            this.notificationService.showErrorMessage(`Упс, щось пішло не так.`);
+            this.notificationService.showErrorMessage(response.error.message);
           }
         })
     }

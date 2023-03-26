@@ -23,6 +23,12 @@ public class UtilitiesController {
         return ResponseEntity.ok(utilityResponse);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Utility> updateUtilityById(@PathVariable Long id, @RequestBody Utility utility) {
+        Utility newUtility = utilitiesService.updateUtilityById(id, utility);
+        return ResponseEntity.ok(newUtility);
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<List<Utility>> getUtilitiesByUserId(@PathVariable Long userId) {
         List<Utility> utilities = utilitiesService.getUtilitiesByUserId(userId);

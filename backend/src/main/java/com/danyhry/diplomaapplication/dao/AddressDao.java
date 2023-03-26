@@ -10,4 +10,6 @@ public interface AddressDao {
     Optional<Address> createAddress(Address address);
 
     Optional<List<Address>> getAddressesByUserId(Long userId);
+
+    Optional<List<Address>> getAddresses();
 }

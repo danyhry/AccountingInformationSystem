@@ -15,8 +15,7 @@ import {Category} from "../../models/category";
 import {CategoryService} from "../../services/category.service";
 import {ConfirmationDialogComponent} from "../../modules/confirmation-dialog/confirmation-dialog.component";
 import {NotificationService} from "../../services/notification.service";
-import {jsPDF} from 'jspdf';
-import autoTable from "jspdf-autotable";
+import {TableUtils} from "../../utils/TableUtils";
 
 
 @Component({
@@ -140,33 +139,34 @@ export class IncomesComponent extends Base implements OnInit {
 
 
   exportPDF() {
-    // Initialize jsPDF
-    const doc = new jsPDF("p", "mm", "a4");
+    TableUtils.exportTableToExcel("incomesTable", "Доходи");
 
-
-    // Define columns and rows for the table
-    const columns = ['Категорія', 'Кількість', 'Дата', 'Опис'];
-    let rows: any[][] = [];
-
-    const sortedIncomes = this.dataSource.filteredData.sort((a, b) => {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    });
-
-    sortedIncomes.forEach((income) => {
-      const category = this.getCategoryName(income.categoryId);
-      const amount = income.amount;
-      const date = new Date(income.date);
-      const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-      const description = income.description;
-      rows.push([category, amount, formattedDate, description]);
-    });
-
-    autoTable(doc, {
-      head: [columns],
-      body: rows
-    });
-
-    doc.save('Доходи.pdf');
+    // // Initialize jsPDF
+    // const doc = new jsPDF("p", "mm", "a4");
+    //
+    // // Define columns and rows for the table
+    // const columns = ['Категорія', 'Кількість', 'Дата', 'Опис'];
+    // let rows: any[][] = [];
+    //
+    // const sortedIncomes = this.dataSource.filteredData.sort((a, b) => {
+    //   return new Date(b.date).getTime() - new Date(a.date).getTime();
+    // });
+    //
+    // sortedIncomes.forEach((income) => {
+    //   const category = this.getCategoryName(income.categoryId);
+    //   const amount = income.amount;
+    //   const date = new Date(income.date);
+    //   const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    //   const description = income.description;
+    //   rows.push([category, amount, formattedDate, description]);
+    // });
+    //
+    // autoTable(doc, {
+    //   head: [columns],
+    //   body: rows
+    // });
+    //
+    // doc.save('Доходи.pdf');
   }
 
 

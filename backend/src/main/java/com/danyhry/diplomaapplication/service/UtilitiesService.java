@@ -4,6 +4,7 @@ import com.danyhry.diplomaapplication.dao.UtilitiesDao;
 import com.danyhry.diplomaapplication.exception.NotFoundException;
 import com.danyhry.diplomaapplication.model.Utility;
 import com.danyhry.diplomaapplication.model.UtilityType;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,33 @@ public class UtilitiesService {
                 .orElseThrow();
     }
 
+    public Utility updateUtilityById(Long id, Utility utility) {
+        Utility existingUtility = utilitiesDao.getUtilityById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Комунальний тип з id: " + id + " не знайдено"));
+
+        log.info("utilityEdit: {}", existingUtility);
+        existingUtility.setPreviousValue(existingUtility.getCurrentValue());
+        existingUtility.setCurrentValue(utility.getCurrentValue());
+
+        UtilityType utilityType = getUtilityTypeById(existingUtility.getUtilityTypeId());
+        existingUtility.setTariff(utilityType.getTariff());
+
+        // Calculate usage
+        Long usage = existingUtility.getCurrentValue() - existingUtility.getPreviousValue();
+
+        if (usage < 0) {
+            throw new IllegalStateException("Різниця не може бути від'ємною");
+        }
+
+        existingUtility.setUsage(usage);
+
+        Long amountToPay = usage * existingUtility.getTariff();
+        existingUtility.setAmountToPay(amountToPay);
+
+        return utilitiesDao.updateUtility(existingUtility)
+                .orElseThrow(() -> new IllegalStateException("Послуга не оновлена"));
+    }
+
     public List<Utility> getUtilitiesByUserId(Long userId) {
         return utilitiesDao.getUtilitiesByUserId(userId)
                 .orElseThrow();
@@ -80,8 +108,7 @@ public class UtilitiesService {
 
     public UtilityType updateUtilityType(UtilityType utilityType, Long id) {
         return utilitiesDao.updateUtilityType(utilityType, id)
-                .orElseThrow(() -> new NotFoundException("Тип не оновлен"));
+                .orElseThrow(() -> new IllegalStateException("Тип не оновлен"));
     }
-
 
 }

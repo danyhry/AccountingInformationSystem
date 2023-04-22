@@ -7,7 +7,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +25,6 @@ public class IncomeService {
     }
 
     public Income createIncome(Income income) {
-//        income.setDate(income.getDate().plusDays(1));
         return incomeDao.createIncome(income)
                 .orElseThrow(() -> new NotFoundException("Дохід не створений"));
     }
@@ -56,11 +54,6 @@ public class IncomeService {
 
     public List<Income> getIncomesByUserId(Long userId) {
         return this.incomeDao.getIncomesByUserId(userId)
-                .orElseThrow(() -> new NotFoundException("Доходи не знайдено"));
-    }
-
-    public List<Income> getIncomesByUserIdAndDate(Long userId, LocalDate date) {
-        return incomeDao.getIncomesByUserIdAndDate(userId, date)
                 .orElseThrow(() -> new NotFoundException("Доходи не знайдено"));
     }
 }

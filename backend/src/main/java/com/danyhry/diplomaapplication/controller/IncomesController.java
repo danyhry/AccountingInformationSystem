@@ -47,11 +47,4 @@ public class IncomesController {
         return ResponseEntity.ok(isIncomeDeleted);
     }
 
-//    @GetMapping("/{userId}")
-//    public ResponseEntity<List<Income>> getIncomesByUserIdAndDate(@PathVariable Long userId, @RequestBody Income income) {
-//        List<Income> incomes = incomeService.getIncomesByUserIdAndDate(userId, income.getDate());
-//        return ResponseEntity.ok(incomes);
-//    }
-
-
 }

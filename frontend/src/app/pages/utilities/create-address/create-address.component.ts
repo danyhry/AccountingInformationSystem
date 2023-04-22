@@ -15,7 +15,7 @@ import {Base} from "../../../services/destroy.service";
 })
 export class CreateAddressComponent extends Base implements OnInit {
 
-  addressForm !: FormGroup;
+  addressForm!: FormGroup;
 
   userId!: number;
 
